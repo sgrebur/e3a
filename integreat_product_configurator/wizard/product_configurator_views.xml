@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--<record id="product_configurator_view_tree" model="ir.ui.view">
+        <field name="name">Quick Product Configurator</field>
+        <field name="model">product.configurator.integreat</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <header>
+                    <button name="button_create_product" type="object" string="Crear Producto"/>
+                </header>
+                <field name="configurator_type"/>
+                <field name="wizard_type" invisible="1"/>
+                <field name="prd_model" invisible="1"/>
+                <field name="tmpl_categ_id" invisible="1"/>
+                <field name="lamina_tmpl_id" invisible="1"/>
+                <field name="new_combination" invisible="1"/>
+                <field name="new_combination_lamina" invisible="1"/>
+                <field name="tmpl_attribute_line_ids" invisible="1"/>
+                <field name="product_template_id" widget="selection" attrs="{'readonly': [('product_id', '!=', False)], 'invisible': [('configurator_type', '!=', 'box')]}"/>
+                <field name="pattr1"/>
+                <field name="pattr2"/>
+                <field name="pattr3"/>
+                <field name="pattr4"/>
+                <field name="pcattr1"/>
+                <field name="pcattr2"/>
+                <field name="picking_type_id"/>
+                <field name="bom_id" invisible="1"/>
+                <field name="bom_qty" string="Pza/Herr"/>
+                <field name="lattr3"/>
+                <field name="lcattr1" attrs="{'invisible': [('tmpl_categ_id', '=', '%(integreat_sale_product_configurator.lamina)d')]}"/>
+                <field name="lcattr2" attrs="{'invisible': [('tmpl_categ_id', '=', '%(integreat_sale_product_configurator.lamina)d')]}"/>
+                <field name="marca1" attrs="{'invisible': [('tmpl_categ_id', '=', '%(integreat_sale_product_configurator.lamina)d')]}"/>
+                <field name="marca2" attrs="{'invisible': [('tmpl_categ_id', '=', '%(integreat_sale_product_configurator.lamina)d')]}"/>
+                <field name="marca3" attrs="{'invisible': [('tmpl_categ_id', '=', '%(integreat_sale_product_configurator.lamina)d')]}"/>
+                <field name="product_id" decoration-bf="1"/>
+                <field name="lamina_id" decoration-bf="1"/>
+            </tree>
+        </field>
+    </record>-->
+    <record id="product_configurator_view_form" model="ir.ui.view">
+        <field name="name">product.configurator.wizard</field>
+        <field name="model">product.configurator.integreat</field>
+        <field name="arch" type="xml">
+            <form js_class="integreat_configurator_button">
+                <group>
+                    <field name="product_model" widget="selection" required="1" attrs="{'readonly': [('product_id', '!=', False)]}"/>
+                    <field name="model_code" invisible="1"/>
+                    <field name="product_style" attrs="{'required': [('model_code', '=', 'P')], 'invisible': [('model_code', '!=', 'P')], 'readonly': [('product_id', '!=', False)]}"/>
+                    <field name="company_id" invisible="1"/>
+                </group>
+                <div attrs="{'invisible': [('product_model', '=', False)]}">
+                    <group>
+                        <field name="lamina_tmpl_id" invisible="1"/>
+                        <field name="new_combination_lamina" invisible="1"/>
+                        <field name="product_id" attrs="{'invisible': [('product_id', '=', False)]}" decoration-bf="1"/>
+                        <field name="product_tmpl_id" invisible="1"/>
+                    </group>
+                    <group attrs="{'invisible': [('product_id', '!=', False)]}">
+                            <field name="prd_name"/>
+                            <field name="prd_unspsc"/>
+                            <field name="partner_id" attrs="{'required': [('model_code', 'in', ['P', 'E', 'Q', 'M'])], 'invisible': [('model_code', 'not in', ['P', 'E', 'Q', 'M'])], 'readonly': [('product_id', '!=', False)]}"/>
+                    </group>
+                    <field name="customer_product_id" invisible="1"/>
+                    <group attrs="{'invisible': ['|', ('model_code', 'not in', ['P', 'E', 'Q', 'M']), ('customer_product_id', '!=', False)]}">
+                        <group >
+                            <field name="product_code" attrs="{'required': [('model_code', 'in', ['P', 'E', 'Q', 'M']), ('customer_product_id', '=', False)]}"/>
+                        </group>
+                        <group>
+                            <field name="product_name" attrs="{'required': [('model_code', 'in', ['P', 'E', 'Q', 'M']), ('customer_product_id', '=', False)]}"/>
+                        </group>
+                    </group>
+                    <group attrs="{'invisible': ['|', ('model_code', 'not in', ['P', 'E', 'Q', 'M']), ('customer_product_id', '=', False)]}">
+                        <group >
+                            <field name="customer_product_code"/>
+                        </group>
+                        <group>
+                            <field name="customer_product_name"/>
+                        </group>
+                    </group>
+                    <div id="product_spec">
+                        <separator string="Especificaciones"/><hr/>
+                        <group>
+                            <label for="specification_docs" string=""/>
+                            <field name="specification_docs" widget="many2many_binary" string="Archivos"/>
+                        </group>
+                    </div>
+                    <div attrs="{'invisible': [('model_code', 'not in', ('P', 'Q', 'L'))]}">
+                        <group>
+                            <group>
+                                <field name="calibre_search" context="{'show_attribute': 0}" attrs="{'readonly': [('product_id', '!=', False)]}"/>
+                                <field name="papel_search" context="{'show_attribute': 0}" attrs="{'readonly': [('product_id', '!=', False)]}"/>
+                                <field name="flauta_search" context="{'show_attribute': 0}" attrs="{'readonly': [('product_id', '!=', False)]}"/>
+                                <field name="recub_search" context="{'show_attribute': 0}" attrs="{'readonly': [('product_id', '!=', False)]}"/>
+                                <field name="origen" attrs="{'readonly': [('product_id', '!=', False)]}"/>
+                            </group>
+                            <group attrs="{'invisible': [('model_code', '=', 'L')]}">
+                                <field name="uom_input" string="UdM"/>
+                                <field name="largo_input" string="Largo" attrs="{'invisible': [('uom_input', '=', 'mm')], 'readonly': [('product_id', '!=', False)]}"/>
+                                <field name="ancho_input" string="Ancho" attrs="{'invisible': [('uom_input', '=', 'mm')], 'readonly': [('product_id', '!=', False)]}"/>
+                                <field name="alto_input" string="Alto" attrs="{'invisible': [('uom_input', '=', 'mm')], 'readonly': [('product_id', '!=', False)]}"/>
+                                <field name="largo" attrs="{'invisible': [('uom_input', '=', 'in')], 'readonly': [('product_id', '!=', False)]}"/>
+                                <field name="ancho" attrs="{'invisible': [('uom_input', '=', 'in')], 'readonly': [('product_id', '!=', False)]}"/>
+                                <field name="alto" attrs="{'invisible': [('uom_input', '=', 'in')], 'readonly': [('product_id', '!=', False)]}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group >
+                                <field name="ancho_lamina" attrs="{'readonly': [('product_id', '!=', False)]}"/>
+                                <field name="largo_lamina" attrs="{'readonly': [('product_id', '!=', False)]}"/>
+                            </group>
+                            <group>
+                                <field name="marca1"/>
+                                <field name="marca2"/>
+                                <field name="marca3"/>
+                            </group>
+                        </group>
+                        <!--<button name="button_create_product" type="object" string="Crear Lámina" class="btn-primary" attrs="{'invisible': ['|', '|', ('lamina_id', '=', True), ('product_id', '=', False), ('model_code', '=', 'L')]}"/>-->
+                    </div>
+                    <div id="product_bom" attrs="{'invisible': [('model_code', 'not in', ['P', 'E', 'Q'])]}">
+                        <separator string="Datos de producción"/><hr/>
+                        <group attrs="{'invisible': [('bom_id', '!=', False)]}">
+                            <field name="picking_type_id"/>
+                        </group>
+                        <div attrs="{'invisible': [('bom_id', '=', False)]}">
+                            <group>
+                                <group attrs="{'invisible': [('bom_id', '=', False)]}">
+                                    <field name="lamina_id" string="Lámina básico" decoration-bf="1" readonly="1" attrs="{'invisible': [('lamina_id', '=', False)]}"/>
+                                </group>
+                                <group>
+                                    <field name="bom_id" readonly="1"/>
+                                </group>
+                            </group>
+                            <notebook>
+                                <page name="components" string="Componentes">
+                                    <group>
+                                        <group>
+                                            <button name="button_add_component_line" type="object" string=" Crear componente" icon="fa-plus" class="btn-primary"/>
+                                        </group>
+                                        <group>
+                                            <field name="bom_qty"/>
+                                        </group>
+                                    </group>
+                                    <field name="bom_line_ids" widget="one2many">
+                                        <tree editable="bottom">
+                                            <field name="bom_id" invisible="1"/>
+                                            <field name="company_id" invisible="1"/>
+                                            <field name="product_id"/>
+                                            <field name="product_qty"/>
+                                            <field name="route_id"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                                <page name="operations" string="Operaciones">
+                                    <group>
+                                        <group>
+                                            <field name="bom_qty"/>
+                                            <field name="picking_type_id"/>
+                                        </group>
+                                        <group>
+                                            <field name="suaje"/>
+                                            <field name="grabado"/>
+                                        </group>
+                                    </group>
+                                    <field name="operation_ids" context="{'default_bom_id': bom_id}">
+                                        <tree editable="bottom">
+                                            <field name="bom_id" invisible="1"/>
+                                            <field name="company_id" invisible="1"/>
+                                            <field name="sequence" widget="handle"/>
+                                            <field name="operation_template_id"/>
+                                            <field name="operation_group" invisible="1"/>
+                                            <field name="name" invisible="1"/>
+                                            <field name="workcenter_id"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                            </notebook>
+                        </div>
+                    </div>
+                    <div id="sales_data" attrs="{'invisible': [('model_code', 'not in', ['P', 'E', 'Q', 'M'])]}">
+                        <separator string="Datos de venta"/><hr/>
+                        <notebook>
+                            <page name="customer_codes" string="Tarifas">
+                                <field name="pricelist_items_model" widget="one2many" context="{'default_applied_on': '0_product_variant', 'default_product_id': product_model, 'default_compute_price': 'fixed'}" attrs="{'invisible': [('product_id', '!=', False)]}">
+                                    <tree editable="bottom">
+                                        <field name="applied_on" invisible="1"/>
+                                        <field name="product_id" invisible="1"/>
+                                        <field name="company_id" invisible="1"/>
+                                        <field name="currency_id" invisible="1"/>
+                                        <field name="compute_price" invisible="1"/>
+                                        <field name="pricelist_id" width="0.5"/>
+                                        <field name="fixed_price" widget="monetary" options="{'currency_field': 'currency_id'}" width="1"/>
+                                        <field name="min_quantity" string="MOQ" width="1"/>
+                                        <field name="date_start" width="1"/>
+                                    </tree>
+                                </field>
+                                <field name="pricelist_items" widget="one2many" context="{'default_applied_on': '0_product_variant', 'default_product_id': product_id, 'default_compute_price': 'fixed'}" attrs="{'invisible': [('product_id', '=', False)]}">
+                                    <tree editable="bottom">
+                                        <field name="applied_on" invisible="1"/>
+                                        <field name="product_id" invisible="1"/>
+                                        <field name="company_id" invisible="1"/>
+                                        <field name="currency_id" invisible="1"/>
+                                        <field name="compute_price" invisible="1"/>
+                                        <field name="pricelist_id" width="0.5"/>
+                                        <field name="fixed_price" widget="monetary" options="{'currency_field': 'currency_id'}" width="1"/>
+                                        <field name="min_quantity" string="MOQ" width="1"/>
+                                        <field name="date_start" width="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </div>
+                    <div id="purchase_data" attrs="{'invisible': [('model_code', '=', 'L')]}">
+                        <separator string="Datos de compra"/><hr/>
+                        <notebook>
+                            <page name="supplierinfos" string="Proveedores y Tarifas">
+                                <field name="product_model_tmpl" invisible="1"/>
+                                <field name="supplierinfos_model" widget='one2many' context="{'default_product_tmpl_id': product_model_tmpl,'default_product_id': product_model}" attrs="{'invisible': [('product_id', '!=', False)]}">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="company_id" invisible="1"/>
+                                        <field name="product_tmpl_id" invisible="1"/>
+                                        <field name="product_id" invisible="1"/>
+                                        <field name="name" width="1.5"/>
+                                        <field name="product_code" width="1"/>
+                                        <field name="product_name" width="1.5"/>
+                                        <field name="min_qty" string="MOQ" width="1"/>
+                                        <field name="currency_id" width="0.5"/>
+                                        <field name="price" width="1"/>
+                                        <field name="date_start" width="1"/>
+                                        <field name="delay" optional="hide"/>
+                                    </tree>
+                                </field>
+                                <field name="supplierinfos" widget='one2many' context="{'default_product_tmpl_id': product_tmpl_id,'default_product_id': product_id}" attrs="{'invisible': [('product_id', '=', False)]}">
+                                    <tree>
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="company_id" invisible="1"/>
+                                        <field name="product_tmpl_id" invisible="1"/>
+                                        <field name="product_id" invisible="1"/>
+                                        <field name="name" width="1.5"/>
+                                        <field name="product_code" width="1"/>
+                                        <field name="product_name" width="1.5"/>
+                                        <field name="min_qty" string="MOQ" width="1"/>
+                                        <field name="currency_id" width="0.5"/>
+                                        <field name="price" width="1"/>
+                                        <field name="date_start" width="1"/>
+                                        <field name="delay" optional="hide"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </div>
+                </div>
+                <footer>
+                    <button name="button_create_product" type="object" string="Crear Producto" class="btn-primary" />
+                    <button name="button_update_and_add" type="button" string="Actualizar producto y agregar a orden" class="btn-primary" attrs="{'invisible': [('product_id', '=', False)]}"/>
+                    <button string="Cancelar" type="button" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="product_configurator_action" model="ir.actions.act_window">
+        <field name="name">Configurador de productos</field>
+        <field name="res_model">product.configurator.integreat</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="product_configurator_view_form"/>
+    </record>
+    <record id="product_configurator_action_tree_caja" model="ir.actions.act_window">
+        <field name="name">Quick Config. CAJA</field>
+        <field name="res_model">product.configurator.integreat</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="product_configurator_view_form"/>
+        <field name="context">{'configure_product': 'caja'}</field>
+    </record>
+    <!--<record id="product_configurator_action_tree_lamina" model="ir.actions.act_window">
+        <field name="name">Quick Config. LAMINA</field>
+        <field name="res_model">product.configurator.integreat</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="product_configurator_view_form"/>
+        <field name="context">{'configure_product': 'lamina'}</field>
+    </record>-->
+    <menuitem
+        action="product_configurator_action_tree_caja" id="menu_product_configurator_action_tree_caja"
+        parent="stock.menu_product_in_config_stock" sequence="5" groups="product.group_product_variant"/>
+    <!--<menuitem
+        action="product_configurator_action_tree_lamina" id="menu_product_configurator_action_tree_lamina"
+        parent="stock.menu_product_in_config_stock" sequence="5" groups="product.group_product_variant"/>-->
+</odoo>

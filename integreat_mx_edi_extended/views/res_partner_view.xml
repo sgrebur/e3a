@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="l10n_mx_edi_inh_res_partner_form_complementos" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.l10n_mx_edi.addenda_and_complementos</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="l10n_mx_edi.l10n_mx_edi_inh_res_partner_form"/>
+        <field name="arch" type="xml">
+            <page name="addenda" position="attributes">
+                <attribute name="string">Addenda y Complementos</attribute>
+            </page>
+            <page name="addenda" position="inside">
+                <group name="leyenda">
+                    <field name="l10n_mx_edi_leyenda"/>
+                    <div attrs="{'invisible': [('l10n_mx_edi_leyenda', '=', False)]}">
+                        <field name="l10n_mx_edi_leyenda_texto"/>
+                        <group>
+                            <field name="l10n_mx_edi_leyenda_norma"/>
+                        </group>
+                        <group>
+                            <field name="l10n_mx_edi_leyenda_disposicion"/>
+                        </group>
+                    </div>
+                </group>
+            </page>
+        </field>
+    </record>
+</odoo>

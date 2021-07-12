@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" name="Web Studio Assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/integreat_web_assets/static/src/js/background_image.js"></script>
+        </xpath>
+    </template>
+    <template id="_assets_primary_variables" inherit_id="web._assets_primary_variables" priority="5">
+        <xpath expr="//link[last()]" position="after">
+            <link rel="stylesheet" type="text/scss" href="/integreat_web_assets/static/src/css/primary_variables.scss"/>
+        </xpath>
+    </template>
+</odoo>

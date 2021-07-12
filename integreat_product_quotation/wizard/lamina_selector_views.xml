@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="wizard_lamina_selection_form_quotation" model="ir.ui.view">
+        <field name="name">wizard.lamina.selection.form.quotation</field>
+        <field name="model">wizard.lamina.selection</field>
+        <field name="inherit_id" ref="integreat_econsa_laminas.wizard_lamina_selection_form"/>
+        <field name="arch" type="xml">
+            <button name="action_add_to_mo" position="after">
+                <field name="quotation_id" invisible="1"/>
+                <button name="action_add_to_quot" type="object" string="Agregar a Cotizacion" class="btn-primary" attrs="{'invisible': ['|', ('total_qty', '=', 0), ('quotation_id', '=', False)]}"/>
+            </button>
+        </field>
+    </record>
+</odoo>

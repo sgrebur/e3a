@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- OVERRIDE -->
+    <template id="web.internal_layout">
+        <t t-if="not o" t-set="o" t-value="doc"/>
+        <t t-if="not company">
+            <!-- Multicompany -->
+            <t t-if="company_id">
+                <t t-set="company" t-value="company_id"/>
+            </t>
+            <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+                <t t-set="company" t-value="o.company_id.sudo()"/>
+            </t>
+            <t t-else="else">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+        </t>
+        <div t-attf-class="header o_company_#{company.id}_layout">
+            <div class="row mb8 text-muted" style="font-family:Roboto; font-size:15px;">
+                <div class="col-9 border-bottom border-dark">
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height:50px; padding-bottom:3px;" alt="Logo"/>
+                </div>
+                <div class="col-3 border border-dark rounded-top text-right">
+                    <div class="text-right">
+                        <strong><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/></strong><br/>
+                        <div>Page: <span class="page"/> / <span class="topage"/></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="article" style="font-family:Roboto;" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-raw="0"/>
+        </div>
+    </template>
+
+    <template id="web.external_layout_boxed">
+        <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
+            <div class="row mb8 text-muted" style="font-size: 15px;">
+                <div class="col-6">
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 70px; padding-bottom:5px" alt="Logo"/>
+                </div>
+                <div class="col-6 text-right mb4">
+                    <h4 class="mt0" t-field="company.report_header"/>
+                    <div class="float-right mb4">
+                        <span t-field="company.name"/><br/>
+                        <span t-field="company.zip"/>
+                        <span t-field="company.city"/>,
+                        <span t-field="company.state_id.code"/>
+                            (<span t-field="company.country_id.code"/>)<br/>
+                            RFC: <span t-field="company.vat"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div t-attf-class="article o_report_layout_boxed o_company_#{company.id}_layout" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')" style="font-size: 16px;" >
+            <div class="pt-4">
+                <!-- This div ensures that the address is not cropped by the header. -->
+                <t t-call="web.address_layout"/>
+            </div>
+            <t t-raw="0"/>
+        </div>
+
+        <div t-attf-class="footer o_company_#{company.id}_layout text-muted" style="font-size: 15px;">
+            <!--<div t-if="report_type == 'pdf'" class="row text-center">
+              <div class="col-2 offset-9 border-top border-left border-right border-dark rounded-top">
+                Page: <span class="page"/> / <span class="topage"/>
+              </div>
+            </div>-->
+            <div class="row border-top border-dark">
+                <div class="col-10" style="padding-top:5px">
+                    Tel: <span t-field="company.phone" style="padding-right:5px;"/>|
+                    <span style="padding-left:5px;"> Email: </span>
+                    <span t-field="company.email" style="padding-right:5px;"/>|<span t-field="company.website" style="padding-left:5px; padding-right:5px;"/>
+                <!--<div t-field="company.report_footer"/>-->
+                </div>
+                <div class="col-2 border-bottom border-left border-right border-dark rounded-bottom text-center">
+                <div style="padding-top:5px">Page: <span class="page"/> / <span class="topage"/></div>
+                </div>
+            </div>
+        </div>
+    </template>
+</odoo>

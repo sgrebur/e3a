@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_shipment" model="ir.actions.report">
+        <field name="name">Delivery Note</field>
+        <field name="model">shipment</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">integreat_econsa_reports.shipment_delivery_note</field>
+        <field name="report_file">integreat_econsa_reports.shipment_delivery_note</field>
+        <field name="print_report_name">'Delivery Note - %s' % object.name</field>
+        <field name="binding_model_id" ref="integreat_stock_shipment.model_shipment"/>
+        <field name="binding_type">report</field>
+    </record>
+    <template id="shipment_delivery_note">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="integreat_econsa_reports.shipment_delivery_note_print" t-lang="o.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+    <template id="shipment_delivery_note_print">
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
+            <div class="page">
+                <div class="row">
+                    <div class="col-6">
+                        <strong>Loading address</strong><br/>
+                        <address t-field="o.warehouse_id.partner_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' />
+                    </div>
+                    <div class="col-6">
+                        <strong>Delivery address</strong><br/>
+                        <address t-field="o.partner_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' />
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-6">
+                        <h3>
+                            <span>Shipping Note</span>
+                            <span t-field="o.name"/>
+                        </h3>
+                    </div>
+                    <div class="col-6">
+                        <strong>Shipping date: </strong><span t-field="o.shipment_date"/><br/>
+                        <t t-if="o.incoterm">
+                            <strong>Incoterms: </strong>
+                            <t t-if="o.incoterm.code == 'FCA'">
+                                <span>(FCA) Recogido de la dirección de envío</span>
+                            </t>
+                            <t t-if="o.incoterm.code == 'DAP'">
+                                <span>(DAP) Entregado a la dirección de entrega</span>
+                            </t>
+                            <br/>
+                        </t>
+                        <t t-if="o.single_order">
+                            <strong>Purchase Order:</strong><span t-field="o.single_order"/><br/>
+                        </t>
+                        <br/>
+                    </div>
+                </div>
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th><strong>#</strong></th>
+                            <th><strong>Packaging</strong></th>
+                            <t t-if="not o.single_order">
+                                <th><strong>PO#</strong></th>
+                            </t>
+                            <th><strong>Material/Description</strong></th>
+                            <th><strong class="text-right">Quantity</strong></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="lines" t-value="o.line_ids"/>
+                        <tr t-foreach="lines" t-as="line">
+                            <t t-set="moves" t-value="line.content_ids"/>
+                            <td>
+                                <span t-field="line.sequence"/>
+                            </td>
+                            <td>
+                                <span t-field="line.pack_qty"/>
+                                <span t-field="line.pack_type"/>
+                            </td>
+                            <t t-if="not o.single_order">
+                                <td>
+                                    <div t-foreach="moves" t-as="move">
+                                        <span t-field="move.client_order_ref"/>
+                                    </div>
+                                </td>
+                            </t>
+                            <td>
+                                <div t-foreach="moves" t-as="move">
+                                    <span t-field="move.product_id.partner_ref" class="text-dark"/><br/>
+                                    <t t-if="move.product_id.code not in move.product_id.partner_ref">
+                                        <i><span t-field="move.product_id.code"/></i>
+                                    </t>
+                                </div>
+                            </td>
+                            <td class="o_line_section text-right text-dark">
+                                <div t-foreach="moves" t-as="move">
+                                    <span t-field="move.qty"/>
+                                    <span t-field="move.product_uom"/>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-3">
+                        <br/>
+                        <strong>Plate No:</strong><br/>
+                        <span t-field="o.plate_no"/>
+                    </div>
+                    <div class="col-3">
+                        <br/>
+                        <strong>Driver:</strong><br/>
+                        <span t-field="o.driver"/>
+                    </div>
+                    <div class="col-6">
+                        <br/>
+                        <strong>Acknowledgement of Receipt (Signature, Date):</strong>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright InteGreat
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="vpicktree_mtso" model="ir.ui.view">
+        <field name="name">stock.picking.tree.mtso</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+            <field name="origin" position="replace">
+                <field name="sale_order_ids" widget="many2many_tags"/>
+                <field name="production_ids" widget="many2many_tags"/>
+                <field name="purchase_id" widget="badge" string="OC"/>
+            </field>
+        </field>
+    </record>
+    <record id="view_picking_form_mtso" model="ir.ui.view">
+        <field name="name">stock.picking.form.mtso</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <button name="action_cancel" position="attributes">
+                <attribute name="attrs">{'invisible': ['|', ('state', 'not in', ('assigned', 'confirmed', 'partially_available', 'draft', 'waiting')), ('picking_type_group', '=', 'Selección')]}</attribute>
+            </button>
+            <div name="button_box" position="inside">
+                <field name="picking_orig_ids" invisible="1"/>
+                <field name="picking_dest_ids" invisible="1"/>
+                <field name="production_orig_ids" invisible="1"/>
+                <button name="action_show_orig_picking" type="object" class="oe_stat_button" icon="fa-sign-in" attrs="{'invisible': [('picking_orig_ids','=', [])]}">
+                    <span>Origen</span>
+                </button>
+                <button name="action_show_orig_production" type="object" class="oe_stat_button" icon="fa-sign-in" attrs="{'invisible': [('production_orig_ids','=', [])]}">
+                    <span>OP Origen</span>
+                </button>
+                <button name="action_show_dest_picking" type="object" class="oe_stat_button" icon="fa-sign-out" attrs="{'invisible': [('picking_dest_ids','=', [])]}">
+                    <span>Destino</span>
+                </button>
+            </div>
+            <field name="origin" position="replace">
+                <field name="picking_type_group" invisible="1"/>
+                <field name="sale_order_ids" widget="many2many_tags"/>
+                <field name="production_ids" widget="many2many_tags"/>
+            </field>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_picking_type_form">
+        <field name="name">Operation Types</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form"/>
+        <field name="arch" type="xml">
+            <field name="code" position="after">
+                <field name="type_group"/>
+            </field>
+        </field>
+    </record>
+    <record id="view_pickingtype_filter" model="ir.ui.view">
+        <field name="name">stock.picking.type.filter</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_pickingtype_filter"/>
+        <field name="arch" type="xml">
+            <filter name="groupby_code" position="before">
+                <filter string="Operaciones Agrupados" name="groupby_type_group" domain="[]" context="{'group_by': 'type_group'}"/>
+            </filter>
+        </field>
+    </record>
+    <record id="stock.stock_picking_type_action" model="ir.actions.act_window">
+        <field name="name">Inventory Overview</field>
+        <field name="res_model">stock.picking.type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">kanban,form</field>
+        <field name="domain">[('type_group', '!=', 'Ordenes de Producción')]</field>
+        <field name="context">{'search_default_groupby_type_group': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            Create a new operation type
+            </p><p>
+            The operation type system allows you to assign each stock
+            operation a specific type which will alter its views accordingly.
+            On the operation type you could e.g. specify if packing is needed by default,
+            if it should show the customer.
+            </p>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,1262 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* integreat_product_quotation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-06-23 09:16+0000\n"
+"PO-Revision-Date: 2021-06-23 12:41+0300\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0\n"
+"Last-Translator: \n"
+"Language: es_MX\n"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__name
+#, fuzzy
+msgid "# Cotización"
+msgstr "# Cotización"
+
+#. module: integreat_product_quotation
+#: model:mail.template,report_name:integreat_product_quotation.email_template_quotation_integreat
+msgid "${(object.name or '').replace('/','_')}"
+msgstr "${(object.name or '').replace('/','_')}"
+
+#. module: integreat_product_quotation
+#: model:mail.template,subject:integreat_product_quotation.email_template_quotation_integreat
+msgid ""
+"${object.company_id.name} ${object.state in ('draft', 'sent') and  "
+"'Cotizacion'} (Ref ${object.name or 'n/a' })"
+msgstr ""
+"${object.company_id.name} ${object.state in ('draft', 'sent') and  "
+"'Cotizacion'} (Ref ${object.name or 'n/a' })"
+
+#. module: integreat_product_quotation
+#: model:ir.actions.report,print_report_name:integreat_product_quotation.action_report_productquotation
+msgid "'Quotation - %s' % (object.name)"
+msgstr "'Quotation - %s' % (object.name)"
+
+#. module: integreat_product_quotation
+#: model:mail.template,body_html:integreat_product_quotation.email_template_quotation_integreat
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        % set doc_name = 'quotation'\n"
+"        Hello,\n"
+"        <br/><br/>\n"
+"        Your\n"
+"        <br/><br/>\n"
+"        Do not hesitate to contact us if you have any questions.\n"
+"        <br/>\n"
+"    </p>\n"
+"</div>\n"
+"            "
+msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        % set doc_name = 'quotation'\n"
+"        Hola,\n"
+"        <br/><br/>\n"
+"        Se adjunta un documento de cotización.\n"
+"        <br/><br/>\n"
+"        No dude en contactarnos si tiene alguna pregunta.\n"
+"        <br/>\n"
+"    </p>\n"
+"</div>\n"
+"            "
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.report_productquotation_document
+#, fuzzy
+msgid "<strong><span>Cotización</span></strong><br/>"
+msgstr "<strong><span>Cotización</span></strong><br/>"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.report_productquotation_document
+#, fuzzy
+msgid "<strong>Cliente</strong><br/>"
+msgstr "<strong>Cliente</strong><br/>"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.report_productquotation_document
+msgid "<strong>Contact:</strong>"
+msgstr "<strong>Contacto:</strong>"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.report_productquotation_document
+#, fuzzy
+msgid "<strong>Descripción</strong>"
+msgstr "<strong>Descripción</strong>"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.report_productquotation_document
+#, fuzzy
+msgid "<strong>Fecha de expiración:</strong>"
+msgstr "<strong>Fecha de expiración:</strong>"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.report_productquotation_document
+msgid "<strong>Item</strong>"
+msgstr "<strong>Artículo</strong>"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.report_productquotation_document
+#, fuzzy
+msgid "<strong>MOQ</strong>"
+msgstr "<strong>MOQ</strong>"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.report_productquotation_document
+#, fuzzy
+msgid "<strong>Moneda:</strong>"
+msgstr "<strong>Moneda:</strong>"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.report_productquotation_document
+#, fuzzy
+msgid "<strong>Ref/Drawing</strong>"
+msgstr "<strong>Ref/Dibujo</strong>"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.report_productquotation_document
+#, fuzzy
+msgid "<strong>Términos y condiciones</strong>"
+msgstr "<strong>Términos y condiciones</strong>"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.report_productquotation_document
+msgid "<strong>Unit Price</strong>"
+msgstr "<strong>Precio Unitario</strong>"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__access_warning
+#, fuzzy
+msgid "Access warning"
+msgstr "Advertencia de acceso"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__message_needaction
+msgid "Action Needed"
+msgstr "Acción requerida"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__activity_ids
+msgid "Activities"
+msgstr "Actividades"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "Decoración de excepción de actividad"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__activity_state
+msgid "Activity State"
+msgstr "Estado de la Actividad"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__activity_type_icon
+#, fuzzy
+msgid "Activity Type Icon"
+msgstr "Icono de tipo de actividad"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.wizard_lamina_selection_form_quotation
+#, fuzzy
+msgid "Agregar a Cotizacion"
+msgstr "Agregar a Cotización"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__alto
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+msgid "Alto"
+msgstr "Alto"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__alto_input
+#, fuzzy
+msgid "Alto (in)"
+msgstr "Alto (en)"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__ancho
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+msgid "Ancho"
+msgstr "Ancho"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__ancho_input
+#, fuzzy
+msgid "Ancho (in)"
+msgstr "Ancho (en)"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_configuration_integreat__formula_ancho
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__ancho_lamina
+msgid "Ancho Lamina"
+msgstr "Ancho Lámina"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+#, fuzzy
+msgid "Archivos"
+msgstr "Archivos"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__specification_docs
+#, fuzzy
+msgid "Archivos "
+msgstr "Archivos "
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__message_attachment_count
+msgid "Attachment Count"
+msgstr "Conteo de Archivos Adjuntos"
+
+#. module: integreat_product_quotation
+#: model:ir.model,name:integreat_product_quotation.model_mrp_bom
+#, fuzzy
+msgid "Bill of Material"
+msgstr "Lista de materiales"
+
+#. module: integreat_product_quotation
+#: model:ir.model,name:integreat_product_quotation.model_mrp_bom_line
+#, fuzzy
+msgid "Bill of Material Line"
+msgstr "Lista de líneas de materiales"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_bom__type
+#, fuzzy
+msgid "BoM Type"
+msgstr "Tipo de lista de materiales"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__bom_id
+msgid "Bom"
+msgstr "LdM"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__bom_line_ids
+#, fuzzy
+msgid "Bom Line"
+msgstr "Línea Bom"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields.selection,name:integreat_product_quotation.selection__product_quotation_integreat__state__draft
+#, fuzzy
+msgid "Borrador"
+msgstr "Borrador"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+#, fuzzy
+msgid "Buscar/Crear Producto"
+msgstr "Buscar/Crear Producto"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_bom_line__lamina_factor
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+#, fuzzy
+msgid "Cajas/Lamina"
+msgstr "Cajas/Lámina"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__calibre
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+#, fuzzy
+msgid "Calibre"
+msgstr "calibre"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__calibre_search
+#, fuzzy
+msgid "Calibre "
+msgstr "calibre "
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__campaign_id
+msgid "Campaign"
+msgstr "Campaña"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields.selection,name:integreat_product_quotation.selection__product_quotation_integreat__tooling_buyer__customer
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+#, fuzzy
+msgid "Cliente"
+msgstr "Cliente"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: integreat_product_quotation
+#: model:ir.actions.act_window,name:integreat_product_quotation.product_quotation_configuration_integreat_action
+#: model:ir.ui.menu,name:integreat_product_quotation.menu_sale_product_quotation_configuration_integreat
+#, fuzzy
+msgid "Configurar Cotizador"
+msgstr "Configurar Cotizador"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields.selection,name:integreat_product_quotation.selection__product_quotation_integreat__state__confirmed
+#, fuzzy
+msgid "Confirmado"
+msgstr "Confirmado"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+#, fuzzy
+msgid "Confirmar"
+msgstr "Confirmar"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_line_integreat__cost_additional
+#, fuzzy
+msgid "Correccion +/-"
+msgstr "Correccion +/-"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__cost_tooling
+#, fuzzy
+msgid "Costo Herramentales"
+msgstr "Costo Herramentales"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__cost_material
+#, fuzzy
+msgid "Costo materiales"
+msgstr "Materiales de costo"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__cost_operation
+#, fuzzy
+msgid "Costo proceso"
+msgstr "Costo proceso"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_routing_workcenter__quot_unit_cost
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_routing_workcenter_template__quot_unit_cost
+#, fuzzy
+msgid "Costo unitario"
+msgstr "Costo unitario"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_bom_line__quot_cost_component
+#, fuzzy
+msgid "Costo/Comp"
+msgstr "Costo/Comp"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_line_integreat__moq_cost
+#, fuzzy
+msgid "Costo/MOQ"
+msgstr "Costo/MOQ"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_bom_line__quot_unit_cost
+#, fuzzy
+msgid "Costo/Prod"
+msgstr "Costo/Prod"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_line_integreat__unit_cost
+#, fuzzy
+msgid "Costo/pza"
+msgstr "Costo/pza"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+#, fuzzy
+msgid "Costos"
+msgstr "Costos"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+#, fuzzy
+msgid "Costos y Precios"
+msgstr "Costos y Precios"
+
+#. module: integreat_product_quotation
+#: model:ir.actions.act_window,name:integreat_product_quotation.product_quotation_integreat_action
+#: model:ir.ui.menu,name:integreat_product_quotation.menu_sale_product_quotation_integreat
+#, fuzzy
+msgid "Cotizaciones"
+msgstr "Cotizaciones"
+
+#. module: integreat_product_quotation
+#: model:ir.actions.report,name:integreat_product_quotation.action_report_productquotation
+#, fuzzy
+msgid "Cotización"
+msgstr "Cotización"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_configuration_integreat__create_uid
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__create_uid
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_line_integreat__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_configuration_integreat__create_date
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__create_date
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_line_integreat__create_date
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+#, fuzzy
+msgid "Ctd cotizado"
+msgstr "Ctd cotizado"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_bom_line__quot_free
+#, fuzzy
+msgid "Ctd libre"
+msgstr "Ctd libre"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_bom_line__quot_qty
+#, fuzzy
+msgid "Ctd requerida"
+msgstr "Ctd requerida"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_bom_line__quot_currency
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_routing_workcenter__quot_currency
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_routing_workcenter_template__quot_currency
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__currency_id
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_line_integreat__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__currency_rate
+msgid "Currency Rate"
+msgstr "Tipo de cambio"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__partner_id
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,help:integreat_product_quotation.field_product_quotation_integreat__access_url
+#, fuzzy
+msgid "Customer Portal URL"
+msgstr "URL del portal del cliente"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__customer_product_id
+#, fuzzy
+msgid "Customer Product"
+msgstr "Producto del cliente"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__product_code
+#, fuzzy
+msgid "Customer Product Code"
+msgstr "Código de producto del cliente"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__product_name
+#, fuzzy
+msgid "Customer Product Name"
+msgstr "Nombre del producto del cliente"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_configuration_integreat__quotation_terms
+#, fuzzy
+msgid "Default Terms and Conditions"
+msgstr "Términos y condiciones predeterminados"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_bom__display_name
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_bom_line__display_name
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_routing_workcenter__display_name
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_configuration_integreat__display_name
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__display_name
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_line_integreat__display_name
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_wizard_lamina_selection__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+#, fuzzy
+msgid "Documentos"
+msgstr "Documentos"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields.selection,name:integreat_product_quotation.selection__product_quotation_integreat__tooling_buyer__company
+#, fuzzy
+msgid "Econsa"
+msgstr "Econsa"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields.selection,name:integreat_product_quotation.selection__product_quotation_integreat__state__sent
+#, fuzzy
+msgid "Enviado"
+msgstr "Enviado"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+#, fuzzy
+msgid "Enviar"
+msgstr "Enviar"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+#, fuzzy
+msgid "Especificaciones"
+msgstr "Especificaciones"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+#, fuzzy
+msgid "Establecer a Borrador"
+msgstr "Establecer a Borrador"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_configuration_integreat__name
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__quot_conf_id
+#, fuzzy
+msgid "Estilo"
+msgstr "Estilo"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__validity_date
+msgid "Expiration"
+msgstr "Vencimiento"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_line_integreat__factor
+msgid "Factor"
+msgstr "Factor"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__flauta
+#, fuzzy
+msgid "Flauta"
+msgstr "Flauta"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__flauta_search
+#, fuzzy
+msgid "Flauta "
+msgstr "Flauta "
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__message_follower_ids
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "Seguidores (Canales)"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguidores (Contactos)"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,help:integreat_product_quotation.field_product_quotation_integreat__activity_type_icon
+#, fuzzy
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "Icono impresionante de fuente, por ejemplo, fa-tasks"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,help:integreat_product_quotation.field_mrp_bom_line__quot_free
+#, fuzzy
+msgid ""
+"Forecast quantity (computed as Quantity On Hand - reserved quantity)\n"
+"In a context with a single Stock Location, this includes goods stored in "
+"this location, or any of its children.\n"
+"In a context with a single Warehouse, this includes goods stored in the "
+"Stock Location of this Warehouse, or any of its children.\n"
+"Otherwise, this includes goods stored in any Stock Location with 'internal' "
+"type."
+msgstr ""
+"Cantidad de previsión (calculada como Cantidad disponible - cantidad "
+"reservada)\n"
+"En un contexto con una única ubicación de stock, esto incluye las mercancías "
+"almacenadas en esta ubicación o en cualquiera de sus elementos secundarios.\n"
+"En un contexto con un único almacén, esto incluye las mercancías almacenadas "
+"en el almacén de stock de este almacén o en cualquiera de sus hijos.\n"
+"De lo contrario, esto incluye las mercancías almacenadas en cualquier "
+"almacén con tipo 'interno'."
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_configuration_view_form
+#, fuzzy
+msgid "Fórmula de cálculo"
+msgstr "Fórmula de cálculo"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+#, fuzzy
+msgid "Generar Lista de materiales y Procesos"
+msgstr "Generar Lista de materiales y Procesos"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__grabado
+#, fuzzy
+msgid "Grabado"
+msgstr "Grabado"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields.selection,name:integreat_product_quotation.selection__product_quotation_integreat__origen__haz
+#, fuzzy
+msgid "HAZ"
+msgstr "HAZ"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_bom__id
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_bom_line__id
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_routing_workcenter__id
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_configuration_integreat__id
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__id
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_line_integreat__id
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_wizard_lamina_selection__id
+msgid "ID"
+msgstr "ID"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields.selection,name:integreat_product_quotation.selection__product_quotation_integreat__origen__ind
+msgid "IND"
+msgstr "IND"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__activity_exception_icon
+msgid "Icon"
+msgstr "Icono"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,help:integreat_product_quotation.field_product_quotation_integreat__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "Ícono para indicar una actividad de excepción"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,help:integreat_product_quotation.field_product_quotation_integreat__message_needaction
+#: model:ir.model.fields,help:integreat_product_quotation.field_product_quotation_integreat__message_unread
+msgid "If checked, new messages require your attention."
+msgstr "Si está marcado, hay nuevos mensajes que requieren tu atención."
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,help:integreat_product_quotation.field_product_quotation_integreat__message_has_error
+#: model:ir.model.fields,help:integreat_product_quotation.field_product_quotation_integreat__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Si está marcado, algunos mensajes tienen error de envío."
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+#, fuzzy
+msgid "Imprimir"
+msgstr "Imprimir"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__message_is_follower
+msgid "Is Follower"
+msgstr "Es seguidor"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+msgid "Lamina"
+msgstr "Lámina"
+
+#. module: integreat_product_quotation
+#: model:ir.model,name:integreat_product_quotation.model_wizard_lamina_selection
+#, fuzzy
+msgid "Lamina Selection"
+msgstr "Selección de láminas"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+#, fuzzy
+msgid "Laminas y componentes"
+msgstr "Láminas y componentes"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__largo
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+#, fuzzy
+msgid "Largo"
+msgstr "Largo"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__largo_input
+msgid "Largo (in)"
+msgstr "Largo (in)"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_configuration_integreat__formula_largo
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__largo_lamina
+msgid "Largo Lamina"
+msgstr "Largo Lámina"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_bom____last_update
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_bom_line____last_update
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_routing_workcenter____last_update
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_configuration_integreat____last_update
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat____last_update
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_line_integreat____last_update
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_wizard_lamina_selection____last_update
+msgid "Last Modified on"
+msgstr "Última modificación el"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_configuration_integreat__write_uid
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__write_uid
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_line_integreat__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización de"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_configuration_integreat__write_date
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__write_date
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_line_integreat__write_date
+msgid "Last Updated on"
+msgstr "Última actualización en"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_configuration_integreat__mm_tolerancia
+#, fuzzy
+msgid "MM Tolerancia"
+msgstr "MM Tolerancia"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_line_integreat__moq
+#, fuzzy
+msgid "MOQ"
+msgstr "MOQ"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__quotation_moq_ids
+#, fuzzy
+msgid "MOQ Lines"
+msgstr "Líneas MOQ"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "Adjunto principal"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__margin_unit
+#, fuzzy
+msgid "Margen"
+msgstr "Margen"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__margin_qty
+#, fuzzy
+msgid "Margen View"
+msgstr "Vista margen"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_configuration_integreat__margin_target
+msgid "Margin"
+msgstr "Margen"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+#, fuzzy
+msgid "Materiales"
+msgstr "Materiales"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+#, fuzzy
+msgid "Medida"
+msgstr "Medida"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__medium_id
+msgid "Medium"
+msgstr "Mediano"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__message_has_error
+msgid "Message Delivery error"
+msgstr "Error de entrega de mensajes"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__message_ids
+msgid "Messages"
+msgstr "Mensajes"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__my_activity_date_deadline
+#, fuzzy
+msgid "My Activity Deadline"
+msgstr "Fecha límite de mi actividad"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields.selection,name:integreat_product_quotation.selection__product_quotation_integreat__origen__nal
+#, fuzzy
+msgid "NAL"
+msgstr "NAL"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Fecha límite de la siguiente actividad"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__activity_summary
+msgid "Next Activity Summary"
+msgstr "Resumen de la siguiente actividad"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__activity_type_id
+msgid "Next Activity Type"
+msgstr "Tipo de la siguiente actividad"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__tooling_notes
+#, fuzzy
+msgid "Notas"
+msgstr "Notas"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Número de acciones"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__message_has_error_counter
+msgid "Number of errors"
+msgstr "Número de errores"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,help:integreat_product_quotation.field_product_quotation_integreat__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "Cantidad de mensajes que requieren una acción"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,help:integreat_product_quotation.field_product_quotation_integreat__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Cantidad de mensajes con error de entrega"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,help:integreat_product_quotation.field_product_quotation_integreat__message_unread_counter
+msgid "Number of unread messages"
+msgstr "Número de mensajes no leídos"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__operation_ids
+msgid "Operation"
+msgstr "Operacion"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__origen
+#, fuzzy
+msgid "Origen"
+msgstr "Origen"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_line_integreat__price_unit
+#, fuzzy
+msgid "PVta"
+msgstr "PVta"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__papel
+#, fuzzy
+msgid "Papel"
+msgstr "Papel"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__papel_search
+#, fuzzy
+msgid "Papel "
+msgstr "Papel "
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__picking_type_id
+#, fuzzy
+msgid "Planta por defecto"
+msgstr "Planta por defecto"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__access_url
+#, fuzzy
+msgid "Portal Access URL"
+msgstr "URL de acceso al portal"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__price_sale_unit
+#, fuzzy
+msgid "Precio"
+msgstr "Precio"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+#, fuzzy
+msgid "Precios / MOQ"
+msgstr "Precios / MOQ"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__pricelist_id
+#, fuzzy
+msgid "Pricelist"
+msgstr "Lista de precios"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+#, fuzzy
+msgid "Proceso"
+msgstr "Proceso"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__product_id
+msgid "Product"
+msgstr "Producto"
+
+#. module: integreat_product_quotation
+#: model:ir.model,name:integreat_product_quotation.model_product_quotation_integreat
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_line_integreat__quot_id
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+msgid "Product Quotation"
+msgstr "Cotización de productos"
+
+#. module: integreat_product_quotation
+#: model:ir.model,name:integreat_product_quotation.model_product_quotation_configuration_integreat
+msgid "Product Quotation Configuration"
+msgstr "Configuración del Cotizador de productos"
+
+#. module: integreat_product_quotation
+#: model:ir.model,name:integreat_product_quotation.model_product_quotation_line_integreat
+msgid "Product Quotation Price Line"
+msgstr "Línea de Cotización MOQ"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_bom__quotation_id
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_bom_line__quotation_id
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_routing_workcenter__quotation_id
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_routing_workcenter_template__quotation_id
+#, fuzzy
+msgid "Product Quotations"
+msgstr "Cotizaciones de productos"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+#, fuzzy
+msgid "Producto"
+msgstr "Producto"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__tooling_buyer
+#, fuzzy
+msgid "Proveer Herr."
+msgstr "Proveer Herr."
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__bom_qty
+#, fuzzy
+msgid "Pza/Herr"
+msgstr "Pza/Herr"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_wizard_lamina_selection__quotation_id
+#: model:ir.model.fields.selection,name:integreat_product_quotation.selection__mrp_bom__type__quotation
+msgid "Quotation"
+msgstr "Cotización"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__product_qty
+msgid "Quotation Qty"
+msgstr "Ctd. cot."
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+msgid "Re-Enviar"
+msgstr "Re-Enviar"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields.selection,name:integreat_product_quotation.selection__product_quotation_integreat__state__rejected
+#, fuzzy
+msgid "Rechazado"
+msgstr "Rechazado"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+#, fuzzy
+msgid "Rechazar"
+msgstr "Rechazar"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__recub
+#, fuzzy
+msgid "Recubrimiento"
+msgstr "Recubrimiento"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__recub_search
+#, fuzzy
+msgid "Recubrimiento "
+msgstr "Recubrimiento "
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__drawing_ref
+#, fuzzy
+msgid "Ref/Drawing"
+msgstr "Ref/Dibujo"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__activity_user_id
+#, fuzzy
+msgid "Responsible User"
+msgstr "Usuario responsable"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "Error de entrega de SMS"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__access_token
+#, fuzzy
+msgid "Security Token"
+msgstr "Token de seguridad"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+msgid "Seleccione lámina"
+msgstr "Seleccione Lámina"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__show_button
+msgid "Show Button"
+msgstr "Mostrar botón"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__source_id
+msgid "Source"
+msgstr "Origen"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__state
+msgid "Status"
+msgstr "Estatus"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,help:integreat_product_quotation.field_product_quotation_integreat__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"Estado basado en actividades\n"
+"Vencidas: la fecha tope ya ha pasado\n"
+"Hoy: La fecha limite es hoy\n"
+"Planificada: futuras actividades."
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__suaje
+#, fuzzy
+msgid "Suaje"
+msgstr "Suaje"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+#, fuzzy
+msgid "Tarifa"
+msgstr "Tarifa"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__note
+msgid "Terms and conditions"
+msgstr "Términos y condiciones"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,help:integreat_product_quotation.field_product_quotation_integreat__product_code
+#, fuzzy
+msgid ""
+"This\n"
+"        customer's product code will be used when searching into a request "
+"for\n"
+"        quotation."
+msgstr ""
+"éste\n"
+"        el código del producto del cliente se utilizará al buscar en una "
+"solicitud de\n"
+"        cita."
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,help:integreat_product_quotation.field_product_quotation_integreat__product_name
+#, fuzzy
+msgid ""
+"This\n"
+"        customer's product name will be used when searching into a request "
+"for\n"
+"        quotation."
+msgstr ""
+"éste\n"
+"        nombre del producto del cliente se utilizará al buscar en una "
+"solicitud de\n"
+"        cita."
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,help:integreat_product_quotation.field_product_quotation_integreat__campaign_id
+#, fuzzy
+msgid ""
+"This is a name that helps you keep track of your different campaign efforts, "
+"e.g. Fall_Drive, Christmas_Special"
+msgstr ""
+"Este es un nombre que le ayuda a realizar un seguimiento de sus diferentes "
+"esfuerzos de campaña, por ejemplo, Fall_Drive, Christmas_Special"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,help:integreat_product_quotation.field_product_quotation_integreat__medium_id
+#, fuzzy
+msgid "This is the method of delivery, e.g. Postcard, Email, or Banner Ad"
+msgstr ""
+"Este es el método de entrega, por ejemplo, postal, correo electrónico o "
+"banner publicitario"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,help:integreat_product_quotation.field_product_quotation_integreat__source_id
+#, fuzzy
+msgid ""
+"This is the source of the link, e.g. Search Engine, another domain, or name "
+"of email list"
+msgstr ""
+"Esta es la fuente del enlace, por ejemplo, motor de búsqueda, otro dominio o "
+"nombre de la lista de correo electrónico"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+#, fuzzy
+msgid "Total/pza"
+msgstr "Total/pza"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,help:integreat_product_quotation.field_product_quotation_integreat__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "Tipo de excepción en el registro."
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+#, fuzzy
+msgid "Términos y condiciones"
+msgstr "Términos y condiciones"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+#, fuzzy
+msgid "UdM"
+msgstr "UdM"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__unit_cost
+#, fuzzy
+msgid "Unit costs"
+msgstr "Costes unitarios"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__message_unread
+msgid "Unread Messages"
+msgstr "Mensajes no leídos"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "Contador de mensajes no leídos"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__uom_input
+#, fuzzy
+msgid "Uom Input"
+msgstr "Entrada Uom"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_line_integreat__margin_moq
+#, fuzzy
+msgid "Util. Pedido"
+msgstr "Util. Pedido"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_line_integreat__margin_iva
+#, fuzzy
+msgid "Util. c/iva costo"
+msgstr "Util.c/iva costo"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_configuration_view_form
+#, fuzzy
+msgid "Utilice las siguientes variables: w = ancho, l = largo, h = alto"
+msgstr "Utilice las siguientes variables: w = ancho, l = largo, h = alto"
+
+#. module: integreat_product_quotation
+#: model_terms:ir.ui.view,arch_db:integreat_product_quotation.product_qutation_view_form
+#, fuzzy
+msgid "Utilice otra lámina"
+msgstr "Utilice otra lámina"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_line_integreat__margin_unit
+#, fuzzy
+msgid "Utilidad"
+msgstr "Utilidad"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__price_sale_qty
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_line_integreat__price_moq
+#, fuzzy
+msgid "Venta"
+msgstr "Venta"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields.selection,name:integreat_product_quotation.selection__product_quotation_integreat__state__checked
+#, fuzzy
+msgid "Verificado"
+msgstr "Verificado"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__website_message_ids
+msgid "Website Messages"
+msgstr "Mensajes del sitio Web"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,help:integreat_product_quotation.field_product_quotation_integreat__website_message_ids
+msgid "Website communication history"
+msgstr "Historial de comunicaciones Web"
+
+#. module: integreat_product_quotation
+#: model:ir.model,name:integreat_product_quotation.model_mrp_routing_workcenter
+#, fuzzy
+msgid "Work Center Usage"
+msgstr "Uso del centro de trabajo"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields.selection,name:integreat_product_quotation.selection__product_quotation_integreat__uom_input__in
+msgid "in"
+msgstr "in"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_line_integreat__surface
+msgid "m2"
+msgstr "m²"
+
+#. module: integreat_product_quotation
+#: model:ir.model.fields.selection,name:integreat_product_quotation.selection__product_quotation_integreat__uom_input__mm
+msgid "mm"
+msgstr "mm"
+
+#. module: integreat_product_quotation
+#: model:ir.model.constraint,message:integreat_product_quotation.constraint_product_quotation_configuration_integreat_name_uniq
+#, fuzzy
+msgid "¡La definición de estilo debe ser única!"
+msgstr "¡La definición de estilo debe ser única!"

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="mrp_equipment_type_tree_view" model="ir.ui.view">
+            <field name="name">mrp.equipment.type.tree.view</field>
+            <field name="model">mrp.equipment.type</field>
+            <field name="arch" type="xml">
+                <tree string="Tipo Herramentales" editable="bottom">
+                    <header>
+                        <button name="create_sequence" type="object" string="Create Sequence"/>
+                    </header>
+                    <field name="type"/>
+                    <field name="name"/>
+                    <field name="sequence_id" widget="many2one"/>
+                    <field name="sequence_prefix"/>
+                </tree>
+            </field>
+        </record>
+        <record id="mrp_equipment_type_form_view" model="ir.ui.view">
+            <field name="name">mrp.equipment.type.tree.view</field>
+            <field name="model">mrp.equipment.type</field>
+            <field name="arch" type="xml">
+                <form string="Tipo Herramentales">
+                    <header>
+                        <button name="create_sequence" type="object" string="Create Sequence"/>
+                    </header>
+                    <group>
+                        <group>
+                            <field name="type"/>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="sequence_id" widget="many2one"/>
+                            <field name="sequence_prefix"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="mrp_equipment_tree_view" model="ir.ui.view">
+            <field name="name">mrp.equipment.tree.view</field>
+            <field name="model">mrp.equipment</field>
+            <field name="arch" type="xml">
+                <tree string="Mrp Herramentales">
+                    <field name="type_type"/>
+                    <field name="type_id"/>
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="product_id" widget="many2one"/>
+                    <field name="default_location_id" widget="many2one"/>
+                    <field name="dest_location_id" widget="many2one"/>
+                    <field name="contact_name"/>
+                    <field name="state" widget="badge" decoration-success="state == 'ready'" decoration-danger="state == 'blocked'"/>
+                    <field name="elem_por_herr" decoration-bf="1"/>
+                    <field name="elem_por_prod" decoration-bf="1"/>
+                    <field name="ancho" attrs="{'invisible': [('type_type', '!=', 'suaje')]}"/>
+                    <field name="largo" attrs="{'invisible': [('type_type', '!=', 'suaje')]}"/>
+                    <field name="write_date"/>
+                    <field name="write_uid" widget="many2one_avatar_user"/>
+                </tree>
+            </field>
+        </record>
+        <record id="mrp_equipment_form_view" model="ir.ui.view">
+            <field name="name">mrp.equipment.form.view</field>
+            <field name="model">mrp.equipment</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="button_ready" string="Inspeccionado" type="object" states="draft,blocked" class="btn-success"/>
+                        <button name="button_block" string="Bloquear" type="object" states="draft,ready" class="btn-danger"/>
+                        <button name="button_transfer_equipment" string="Transferir a otra ubicación" type="object" class="btn"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button type="object" name="action_view_bom" class="oe_stat_button" icon="fa-flask" attrs="{'invisible': [('bom_count', '=', 0)]}">
+                                <field name="bom_count" widget="statinfo" string="Lista de materiales"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="No. Herramental" nolabel="1" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="type_id"/>
+                                <field name="type_type" readonly="1"/>
+                                <field name="description"/>
+                            </group>
+                            <group>
+                                <field name="product_id"/>
+                                <field name="observaciones"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="default_location_id"/>
+                                <field name="dest_location_id" readonly="1"/>
+                                <field name="production_id" attrs="{'invisible': [('production_id', '=', False)]}"/>
+                                <field name="contact_name"/>
+                            </group>
+                            <group attrs="{'invisible': [('type_type', '!=', 'suaje')]}">
+                                <field name="elem_por_herr"/>
+                                <field name="elem_por_prod"/>
+                                <field name="elem_por_herr" decoration-bf="1"/>
+                                <field name="elem_por_prod" decoration-bf="1"/>
+                                <field name="ancho"/>
+                                <field name="largo"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="create_date"/>
+                                <field name="create_uid" widget="many2one_avatar_user"/>
+                            </group>
+                            <group>
+                                <field name="write_date"/>
+                                <field name="write_uid" widget="many2one_avatar_user"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="mrp_equipment_search" model="ir.ui.view">
+            <field name="name">Herramental.selection</field>
+            <field name="model">mrp.equipment</field>
+            <field name="arch" type="xml">
+                <search string="Buscar Herramental">
+                    <field name="product_id"/>
+                    <field name="name"/>
+                    <field name="description"/>
+                    <filter string="Suaje" name="type_suaje" domain="[('type_type', '=', 'suaje')]"/>
+                    <filter string="Grabado" name="type_grabado" domain="[('type_type', '=', 'grabado')]"/>
+                    <filter string="Ubicación por defecto" name="default_location"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Tipo" name="type" domain="[]" context="{'group_by': 'type_type'}"/>
+                        <filter string="Producto" name="product" domain="[]" context="{'group_by': 'product_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="mrp_equipment_type_action" model="ir.actions.act_window">
+            <field name="name">Tipo Herramental</field>
+            <field name="res_model">mrp.equipment.type</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" eval="False"/>
+        </record>
+        <menuitem id="mrp_equipment_type"
+                  action="mrp_equipment_type_action"
+                  name="Tipo Herramental"
+                  parent="mrp.menu_mrp_configuration"
+                  groups="mrp.group_mrp_manager"
+                  sequence="199"/>
+        <record id="mrp_equipment_action" model="ir.actions.act_window">
+            <field name="name">Herramental</field>
+            <field name="res_model">mrp.equipment</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" eval="False"/>
+        </record>
+        <menuitem id="mrp_equipment"
+                  action="mrp_equipment_action"
+                  name="Herramental"
+                  parent="mrp.menu_mrp_bom"
+                  groups="mrp.group_mrp_manager"
+                  sequence="89"/>
+    </data>
+</odoo>

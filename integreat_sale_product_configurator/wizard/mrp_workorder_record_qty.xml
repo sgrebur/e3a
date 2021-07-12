@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mrp_workorder_record_qty_wizard_form" model="ir.ui.view">
+        <field name="name">mrp.workorder.record.qty.wizard</field>
+        <field name="model">mrp.workorder.record.qty.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="mark_done" invisible="1"/>
+                <field name="to_backorder" invisible="1"/>
+                <field name="finish" invisible="1"/>
+                <div attrs="{'invisible': [('mark_done', '=', False)]}">
+                    Se registrará la cantidad producida de <bold><field name="qty_info"/></bold> pieza(s).<br/>
+                </div>
+                <div attrs="{'invisible': [('to_backorder', '=', False)]}">
+                    Para la cantidad restante se creará una OP-parcial.
+                </div>
+                <div attrs="{'invisible': [('finish', '=', True)]}">
+                    <group>
+                        <group>
+                            <field name="mo_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="wo_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="qty"/>
+                    </group>
+                </div>
+                <footer>
+                    <button name="record_workorder_qty" type="object" string="Registrar cantidad" class="btn-primary"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="mrp_workorder_record_qty_wizard_action" model="ir.actions.act_window">
+        <field name="name">Registrar cantidad producida</field>
+        <field name="res_model">mrp.workorder.record.qty.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="mrp_workorder_record_qty_wizard_form"/>
+    </record>
+</odoo>

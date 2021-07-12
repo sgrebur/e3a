@@ -1,0 +1,209 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* customer_product_code
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-16 06:44+0000\n"
+"PO-Revision-Date: 2021-04-16 09:46+0300\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.4.2\n"
+"Last-Translator: \n"
+"Language: es_MX\n"
+
+#. module: customer_product_code
+#: model:ir.model,name:customer_product_code.model_product_customer_code
+#, fuzzy
+msgid "Add Code and Name of customer's product"
+msgstr "Agregar código y nombre del producto del cliente"
+
+#. module: customer_product_code
+#: model:ir.model.fields,field_description:customer_product_code.field_product_customer_code__company_id
+#: model_terms:ir.ui.view,arch_db:customer_product_code.view_product_customer_code_filter
+msgid "Company"
+msgstr "Compañía"
+
+#. module: customer_product_code
+#: model:ir.model,name:customer_product_code.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: customer_product_code
+#: model:ir.model.fields,field_description:customer_product_code.field_product_customer_code__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: customer_product_code
+#: model:ir.model.fields,field_description:customer_product_code.field_product_customer_code__create_date
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: customer_product_code
+#: model:ir.model.fields,field_description:customer_product_code.field_product_customer_code__partner_id
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: customer_product_code
+#: model:ir.model.fields,field_description:customer_product_code.field_product_template__product_customer_code_ids
+#: model_terms:ir.ui.view,arch_db:customer_product_code.product_normal_form_inh_product_customer_code_01
+#: model_terms:ir.ui.view,arch_db:customer_product_code.product_variant_easy_customer_code
+#, fuzzy
+msgid "Customer Code"
+msgstr "Código del cliente"
+
+#. module: customer_product_code
+#: model:ir.model.fields,field_description:customer_product_code.field_product_product__product_customer_code_ids
+#, fuzzy
+msgid "Customer Codes"
+msgstr "Códigos de cliente"
+
+#. module: customer_product_code
+#: model:ir.model.fields,field_description:customer_product_code.field_product_customer_code__product_code
+#, fuzzy
+msgid "Customer Product Code"
+msgstr "Código de producto del cliente"
+
+#. module: customer_product_code
+#: model:ir.model.fields,field_description:customer_product_code.field_product_customer_code__product_name
+#, fuzzy
+msgid "Customer Product Name"
+msgstr "Nombre del producto del cliente"
+
+#. module: customer_product_code
+#: model:ir.model.fields,field_description:customer_product_code.field_product_product__partner_ref
+#, fuzzy
+msgid "Customer ref"
+msgstr "Referencia del cliente"
+
+#. module: customer_product_code
+#: model:ir.model.fields,field_description:customer_product_code.field_product_customer_code__display_name
+#: model:ir.model.fields,field_description:customer_product_code.field_product_product__display_name
+#: model:ir.model.fields,field_description:customer_product_code.field_product_template__display_name
+#: model:ir.model.fields,field_description:customer_product_code.field_res_partner__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: customer_product_code
+#: model_terms:ir.ui.view,arch_db:customer_product_code.view_product_customer_code_filter
+msgid "Group By..."
+msgstr "Agrupar por..."
+
+#. module: customer_product_code
+#: model:ir.model.fields,field_description:customer_product_code.field_product_customer_code__id
+#: model:ir.model.fields,field_description:customer_product_code.field_product_product__id
+#: model:ir.model.fields,field_description:customer_product_code.field_product_template__id
+#: model:ir.model.fields,field_description:customer_product_code.field_res_partner__id
+msgid "ID"
+msgstr "ID (identificación)"
+
+#. module: customer_product_code
+#: model:ir.model.fields,field_description:customer_product_code.field_product_customer_code____last_update
+#: model:ir.model.fields,field_description:customer_product_code.field_product_product____last_update
+#: model:ir.model.fields,field_description:customer_product_code.field_product_template____last_update
+#: model:ir.model.fields,field_description:customer_product_code.field_res_partner____last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: customer_product_code
+#: model:ir.model.fields,field_description:customer_product_code.field_product_customer_code__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización de"
+
+#. module: customer_product_code
+#: model:ir.model.fields,field_description:customer_product_code.field_product_customer_code__write_date
+msgid "Last Updated on"
+msgstr "Última actualización en"
+
+#. module: customer_product_code
+#: model_terms:ir.ui.view,arch_db:customer_product_code.view_product_customer_code_filter
+msgid "Partner"
+msgstr "Colaborador"
+
+#. module: customer_product_code
+#: model:ir.model.fields,field_description:customer_product_code.field_res_partner__partner_code
+#: model:ir.model.fields,field_description:customer_product_code.field_res_users__partner_code
+#, fuzzy
+msgid "Partner code"
+msgstr "Código de socio"
+
+#. module: customer_product_code
+#: model:ir.model,name:customer_product_code.model_product_product
+#: model:ir.model.fields,field_description:customer_product_code.field_product_customer_code__product_id
+#: model_terms:ir.ui.view,arch_db:customer_product_code.view_product_customer_code_filter
+msgid "Product"
+msgstr "Producto"
+
+#. module: customer_product_code
+#: model:ir.model.constraint,message:customer_product_code.constraint_product_customer_code_unique_code
+#, fuzzy
+msgid "Product Code of customer must be unique"
+msgstr "El código de producto del cliente debe ser único"
+
+#. module: customer_product_code
+#: model:ir.actions.act_window,name:customer_product_code.action_product_customer_code_tree
+#: model:ir.ui.menu,name:customer_product_code.menu_product_customer_code
+#: model_terms:ir.ui.view,arch_db:customer_product_code.product_normal_form_inh_product_customer_code_01
+#: model_terms:ir.ui.view,arch_db:customer_product_code.product_variant_easy_customer_code
+#: model_terms:ir.ui.view,arch_db:customer_product_code.view_product_customer_code_filter
+#: model_terms:ir.ui.view,arch_db:customer_product_code.view_product_customer_code_form
+#: model_terms:ir.ui.view,arch_db:customer_product_code.view_product_customer_code_tree
+#, fuzzy
+msgid "Product Customer Code"
+msgstr "Código del cliente del producto"
+
+#. module: customer_product_code
+#: model:ir.model,name:customer_product_code.model_product_template
+#: model:ir.model.fields,field_description:customer_product_code.field_product_customer_code__product_tmpl_id
+msgid "Product Template"
+msgstr "Plantilla de producto"
+
+#. module: customer_product_code
+#: model:res.groups,name:customer_product_code.group_product_customer_code_manager
+#, fuzzy
+msgid "Product_Customer / Manager"
+msgstr "Product_Customer / Gerente"
+
+#. module: customer_product_code
+#: model:res.groups,name:customer_product_code.group_product_customer_code_user
+#, fuzzy
+msgid "Product_Customer / User"
+msgstr "Product_Customer / Usuario"
+
+#. module: customer_product_code
+#: model:ir.model.fields,field_description:customer_product_code.field_product_customer_code__sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: customer_product_code
+#: model:ir.model.fields,help:customer_product_code.field_product_customer_code__product_code
+#, fuzzy
+msgid ""
+"This\n"
+"        customer's product code will be used when searching into a request "
+"for\n"
+"        quotation."
+msgstr ""
+"éste\n"
+"        el código del producto del cliente se utilizará al buscar en una "
+"solicitud de\n"
+"        cita."
+
+#. module: customer_product_code
+#: model:ir.model.fields,help:customer_product_code.field_product_customer_code__product_name
+#, fuzzy
+msgid ""
+"This\n"
+"        customer's product name will be used when searching into a request "
+"for\n"
+"        quotation."
+msgstr ""
+"éste\n"
+"        nombre del producto del cliente se utilizará al buscar en una "
+"solicitud de\n"
+"        cita."

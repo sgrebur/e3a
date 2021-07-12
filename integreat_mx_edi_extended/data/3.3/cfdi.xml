@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="cfdiv33_integreat_leyenda_fiscal">
+        <leyendasFisc:LeyendasFiscales xmlns:leyendasFisc="http://www.sat.gob.mx/leyendasFiscales" version="1.0">
+            <leyendasFisc:Leyenda
+                t-att-textoLeyenda="record.l10n_mx_edi_leyenda_texto"
+                t-att-norma="record.l10n_mx_edi_leyenda_norma"
+                t-att-disposicionFiscal="record.l10n_mx_edi_leyenda_disposicion"/>
+        </leyendasFisc:LeyendasFiscales>
+    </template>
+    <template id="cfdiv33_integreat" inherit_id="l10n_mx_edi.cfdiv33">
+        <!-- external trade must be overvritten, otherwise we don't know if node Complemento already exists -->
+        <xpath expr="//*[name()='cfdi:Comprobante']" position="inside">
+            <t t-if="not record.l10n_mx_edi_external_trade and record.l10n_mx_edi_leyenda">
+                <cfdi:Complemento xmlns:cfdi="http://www.sat.gob.mx/cfd/3">
+                    <t t-call="integreat_mx_edi_extended.cfdiv33_integreat_leyenda_fiscal"/>
+                </cfdi:Complemento>
+            </t>
+            <t t-elif="record.l10n_mx_edi_leyenda">
+                <t t-call="integreat_mx_edi_extended.cfdiv33_integreat_leyenda_fiscal"/>
+            </t>
+        </xpath>
+        <!-- replace template unspsc with product unspsc -->
+        <xpath expr="//*[name()='cfdi:Concepto']" position="attributes">
+            <attribute name="t-att-ClaveProdServ">line.product_unspsc_code_id.code</attribute>
+        </xpath>
+    </template>
+    <template id="payment10_integreat_migration" inherit_id="l10n_mx_edi.payment10">
+        <xpath expr="//*[name()='pago10:DoctoRelacionado']" position="replace">
+            <t t-if="invoice.journal_id.code == 'MIGR'">
+                <pago10:DoctoRelacionado xmlns:pago10="http://www.sat.gob.mx/Pagos"
+                    t-att-IdDocumento="invoice.narration"
+                    t-att-Folio="format_string(invoice_vals['folio_number'], 40)"
+                    t-att-Serie="format_string(invoice_vals['serie_number'], 25)"
+                    t-att-MonedaDR="invoice.currency_id.name"
+                    t-att-TipoCambioDR="invoice_vals['exchange_rate'] if invoice.currency_id != record.currency_id else False"
+                    MetodoDePagoDR="PPD"
+                    t-att-NumParcialidad="invoice_vals['number_of_payments']"
+                    t-att-ImpSaldoAnt="format_float(invoice.amount_residual + invoice_vals['amount_paid'], record.currency_id.decimal_places)"
+                    t-att-ImpPagado="format_float(invoice_vals['amount_paid'] if invoice.currency_id == record.currency_id else 0.0, record.currency_id.decimal_places)"
+                    t-att-ImpSaldoInsoluto="format_float(invoice.amount_residual if invoice.currency_id == record.currency_id else 0.0, record.currency_id.decimal_places)"/>
+            </t>
+            <t t-else="">
+                <pago10:DoctoRelacionado xmlns:pago10="http://www.sat.gob.mx/Pagos"
+                    t-att-IdDocumento="invoice.l10n_mx_edi_cfdi_uuid"
+                    t-att-Folio="format_string(invoice_vals['folio_number'], 40)"
+                    t-att-Serie="format_string(invoice_vals['serie_number'], 25)"
+                    t-att-MonedaDR="invoice.currency_id.name"
+                    t-att-TipoCambioDR="invoice_vals['exchange_rate'] if invoice.currency_id != record.currency_id else False"
+                    t-att-MetodoDePagoDR="invoice_vals['payment_policy']"
+                    t-att-NumParcialidad="invoice_vals['number_of_payments']"
+                    t-att-ImpSaldoAnt="format_float(invoice.amount_residual + invoice_vals['amount_paid'], record.currency_id.decimal_places)"
+                    t-att-ImpPagado="format_float(invoice_vals['amount_paid'] if invoice.currency_id == record.currency_id else 0.0, record.currency_id.decimal_places)"
+                    t-att-ImpSaldoInsoluto="format_float(invoice.amount_residual if invoice.currency_id == record.currency_id else 0.0, record.currency_id.decimal_places)"/>
+            </t>
+        </xpath>
+    </template>
+</odoo>

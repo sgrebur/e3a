@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- PICKING VIEWS -->
+    <record id="view_picking_delivery_shipment" model="ir.ui.view">
+        <field name="name">stock.picking.shipment.tree</field>
+        <field name="model">stock.picking</field>
+        <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <tree string="Picking list" multi_edit="1" sample="1" create="0">
+                    <field name="show_check_availability" invisible="1"/>
+                    <header>
+                        <!--<button name="button_ready_for_shipment" type="object" string="Listo y Crear Transporte(s)"/>-->
+                        <button name="create_shipment" type="object" string="Crear Transporte" class="oe_highlight" invisible="context.get('no_create_shipment', True)"/>
+                    </header>
+                    <field name="name" decoration-bf="1"/>
+                    <field name="partner_id" optional="show"/>
+                    <field name="incoterm"/>
+                    <field name="user_id" optional="hide" widget="many2one_avatar_user"/>
+                    <field name="scheduled_date"/>
+                    <field name="sale_order_ids" widget="many2many_tags"/>
+                    <field name="group_id" invisible="1"/>
+                    <field name="company_id" groups="base.group_multi_company" optional="show"/>
+                    <field name="shipment_state" widget="badge" decoration-warning="shipment_state == 'partial_available'" decoration-info="shipment_state in ('assign')"/>
+                    <field name="shipment_id"/>
+                    <field name="no_shipment" optional="hide"/>
+                    <field name="state" optional="show" widget="badge" decoration-success="state == 'done'" decoration-info="state not in ('done', 'cancel')"/>
+                </tree>
+            </field>
+    </record>
+    <record id="vpicktree_shipment_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.tree.mtso</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+            <field name="state" position="after">
+                <field name="shipment_id" optional="hide"/>
+                <field name="shipment_state" optional="hide"/>
+            </field>
+        </field>
+    </record>
+    
+    <record id="picking_delivery_shipment_action" model="ir.actions.act_window">
+        <field name="name">Entregas para Transporte</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.picking</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('picking_type_code', '=', 'outgoing'), ('assign_to_shipment', '=', True), ('shipment_id', '=', False), ('state', 'not in', ('done', 'cancel'))]</field>
+        <field name="context">{'no_create_shipment': False}</field>
+        <field name="view_id" ref="view_picking_delivery_shipment"/>
+    </record>
+    <record id="stock_picking_type_kanban_shipment" model="ir.ui.view">
+        <field name="name">stock.picking.type.kanban.shipment</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.stock_picking_type_kanban"/>
+        <field name="arch" type="xml">
+            <field name="count_picking_ready" position="after">
+                <field name="count_shipment"/>
+                <field name="count_picking_to_ship"/>
+            </field>
+            <button name="get_action_picking_tree_ready" position="after">
+                <button t-if="record.code.raw_value =='outgoing'" class="btn" name="%(integreat_stock_shipment.picking_delivery_shipment_action)d" type="action">
+                    <span><t t-esc="record.count_picking_to_ship.value"/> A transportar</span>
+                </button>
+            </button>
+        </field>
+    </record>
+    <record id="view_picking_internal_search_shipment" model="ir.ui.view">
+        <field name="name">stock.picking.internal.search.shipment</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="sale_order_ids"/>
+                <field name="production_ids"/>
+            </field>
+            <filter name="late" position="before">
+                <filter name="shipment" string="En transporte" domain="[('shipment_state', 'in', ('partial_available', 'loading'))]" help="En transporte, no enviado"/>
+                <separator/>
+            </filter>
+            <filter name="available" position="replace">
+                <filter name="available" string="Ready" domain="[('state', 'in', ('assigned', 'partially_available')),('shipment_state', 'not in', ('assign', 'loading'))]" help="Assigned Moves"/>
+            </filter>
+        </field>
+    </record>
+    
+    <record id="view_picking_form_shipment" model="ir.ui.view">
+        <field name="name">stock.picking.form.mtso</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <button name="button_validate" position="replace">
+                <field name="shipment_state" invisible="1"/>
+                <button name="button_ready_for_shipment" attrs="{'invisible': [('shipment_state', '!=', 'ready')]}" string="Listo para Transporte" type="object" class="oe_highlight" groups="stock.group_stock_user"/>
+                <button name="button_validate" attrs="{'invisible': ['|', '|', ('shipment_state', '!=', 'not_relevant'), ('state', 'in', ('waiting','confirmed')), ('show_validate', '=', False)]}" string="Validar" type="object" class="oe_highlight" groups="stock.group_stock_user"/>
+            </button>
+            <xpath expr="//button[@name='button_validate'][hasclass('o_btn_validate')]" position="replace">
+                <button name="button_validate" attrs="{'invisible': ['|', '|', ('shipment_state', '!=', 'not_relevant'), ('state', 'not in', ('waiting', 'confirmed')), ('show_validate', '=', False)]}" string="Validar" type="object" groups="stock.group_stock_user" class="o_btn_validate"/>
+            </xpath>
+            <field name="partner_id" position="after">
+                <field name="incoterm" attrs="{'invisible': [('picking_type_code', '!=', 'outgoing')]}"/>
+            </field>
+            <field name="location_id" position="after">
+                <label for="shipment_id" string="Transporte"/>
+                <div class="o_row" attrs="{'invisible': [('picking_type_code', '!=', 'outgoing'), ('no_shipment', '=', True)]}">
+                    <field name="shipment_id" attrs="{'invisible': [('picking_type_code', '!=', 'outgoing'), ('no_shipment', '=', True)]}"/>
+                    <button name="create_shipment" type="object" class="btn btn-primary fa fa-plus" aria-label="Crear Transporte" title="Crear Transporte" role="img"  attrs="{'invisible': [('shipment_state', '!=', 'assign')]}"/>
+                </div>
+                <field name="no_shipment" attrs="{'invisible': ['|', ('picking_type_code', '!=', 'outgoing'), ('shipment_id', '!=', False)]}"/>
+            </field>
+        </field>
+    </record>
+
+    <menuitem id="menu_shipment" name="Envío" parent="stock.menu_stock_root" sequence="3" groups="stock.group_stock_user"/>
+    <menuitem id="menu_shipment_delivery" action="picking_delivery_shipment_action" parent="menu_shipment" sequence="2" groups="stock.group_stock_user"/>
+
+</odoo>

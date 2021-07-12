@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- full OVERRIDE: otherwise is difficult to xpath different values -->
+    <template id="report_payment_receipt_override" inherit_id="account.report_payment_receipt">
+        <xpath expr="//t[@t-call='account.report_payment_receipt_document']" position="replace">
+            <t t-call="integreat_econsa_reports.report_payment_receipt_document_override" t-lang="lang"/>
+        </xpath>
+    </template>
+
+    <template id="report_payment_receipt_document_override">
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="o.with_context(lang=lang)"/>
+            <!-- Global variables -->
+            <t t-set="cfdi_vals" t-value="o.move_id._l10n_mx_edi_decode_cfdi()"/>
+            <t t-set="is_cfdi_signed" t-value="bool(o.move_id._get_l10n_mx_edi_signed_edi_document())"/>
+
+            <t t-if="o.payment_type == 'inbound' and o.l10n_mx_edi_cfdi_request == 'on_payment' and not is_cfdi_signed">
+                <button t-attf-class="btn-danger #{'btn' if report_type != 'html' else ''}">
+                    <h1>A signature of this payment is required, but it is not signed.</h1>
+                </button>
+            </t>
+            <div class="page" style="font-size:1rem;">
+                <div class="row">
+                    <div class="col-auto">
+                        <t t-if="o.date">
+                            <strong>Payment Date: </strong> <span t-field="o.date"/><br/>
+                        </t>
+                        <t t-if="o.partner_type">
+                            <t t-if="o.partner_type == 'customer'">
+                                <strong>Customer: </strong>
+                            </t>
+                            <t t-if="o.partner_type == 'supplier'">
+                                <strong>Vendor: </strong>
+                            </t><span t-field="o.partner_id"/>
+                            <br/>
+                        </t>
+                        <t t-if="is_cfdi_signed and o.company_id.vat != o.l10n_mx_edi_cfdi_supplier_rfc">
+                            <span>XML VAT: </span><span t-esc="o.l10n_mx_edi_cfdi_supplier_rfc"></span><br/>
+                        </t>
+                        <t t-if="o.currency_id">
+                            <strong>Moneda: </strong><span t-esc="o.currency_id.name"></span><br/>
+                        </t>
+                        <t t-if="o.amount">
+                            <strong>Payment Amount: </strong><span t-field="o.amount" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/><br/>
+                        </t>
+                    </div>
+                    <div class="col-auto text-right">
+                        <h3><strong>Payment Receipt</strong><br/><span t-field="o.name"/></h3>
+                        <br/>
+                        <t t-if="o.ref">
+                            <strong>Memo: </strong><span t-field="o.ref"/>
+                        </t>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-auto">
+                        <t t-if="is_cfdi_signed and o.l10n_mx_edi_payment_method_id">
+                            <strong>Payment Way CFDI:</strong>
+                            <span t-esc="'%s - %s' % (o.l10n_mx_edi_payment_method_id.code, o.l10n_mx_edi_payment_method_id.name)"/>
+                        </t>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <t t-if="o.move_id.l10n_mx_edi_cfdi_uuid">
+                    <t t-set="docs_related" t-value="cfdi_vals.get('cfdi_node') and cfdi_vals['cfdi_node'].Complemento.xpath('//pago10:DoctoRelacionado', namespaces={'pago10': 'http://www.sat.gob.mx/Pagos'})"/>
+                    <!--Section to bank accounts-->
+                    <t t-set="vat_em" t-value="docs_related[0].getparent().get('RfcEmisorCtaOrd', '') if docs_related else ''"/>
+                    <t t-set="bank_em" t-value="docs_related[0].getparent().get('NomBancoOrdExt', '') if docs_related else ''"/>
+                    <t t-set="acc_em" t-value="docs_related[0].getparent().get('CtaOrdenante', '') if docs_related else ''"/>
+                    <t t-set="vat_re" t-value="docs_related[0].getparent().get('RfcEmisorCtaBen', '') if docs_related else ''"/>
+                    <t t-set="acc_re" t-value="docs_related[0].getparent().get('CtaBeneficiario', '') if docs_related else ''"/>
+                    <div t-if="acc_em or acc_re">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th t-if="vat_em"><t t-esc="o.company_id.country_id.vat_label or 'VAT'"/><span>Emitter Acc. Ord.</span></th>
+                                    <th t-if="bank_em">Bank Name Acc. Ord.</th>
+                                    <th t-if="acc_em">Account Ord.</th>
+                                    <th t-if="vat_re"><t t-esc="o.company_id.country_id.vat_label or 'VAT'"/> <span>Emitter Acc. Ben.</span></th>
+                                    <th t-if="acc_re">Account Ben.</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td t-if="vat_em"><span t-esc="vat_em"/></td>
+                                    <td t-if="bank_em"><span t-esc="bank_em"/></td>
+                                    <td t-if="acc_em"><span t-esc="acc_em"/></td>
+                                    <td t-if="vat_re"><span t-esc="vat_re"/></td>
+                                    <td t-if="acc_re"><span t-esc="acc_re"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                    </div>
+                    <!-- Finish section to bank accounts-->
+                    <table class="table table-sm">
+                        <thead style="font-size:0.8em;">
+                            <tr>
+                                <th>Invoice</th>
+                                <th>UUID</th>
+                                <th class="text-right"><span>Original Amount</span></th>
+                                <th class="text-right"><span>Descuentos y<br/>Pagos Anteriores</span></th>
+                                <th class="text-right">Partiality</th>
+                                <th class="text-right">Previous balance</th>
+                                <th class="text-right">Amount Paid</th>
+                                <th class="text-right">Balance</th>
+                                <!--<th>Currency</th>-->
+                            </tr>
+                        </thead>
+                        <tbody style="font-size:0.9em;">
+                            <t t-set="reconciled_invoices" t-value="o.move_id._get_reconciled_invoices()"/>
+                            <tr t-foreach="docs_related" t-as="inv">
+                                <t t-set="anterior" t-value="float(inv.get('ImpSaldoAnt', ''))"/>
+                                <t t-set="this_invoice" t-value="reconciled_invoices.filtered(lambda i: i.l10n_mx_edi_cfdi_uuid == inv.get('IdDocumento'))"/>
+                                <t t-if="this_invoice.journal_id.code == 'MIGR'">
+                                    <td><span t-esc="this_invoice.ref"/></td>
+                                    <td><span t-esc="inv.get('IdDocumento')"/></td>
+                                    <td class="text-right"><span t-esc="this_invoice.migration_invoice_value" t-options='{"widget": "float", "precision": 2}'/></td>
+                                    <td class="text-right"><span t-esc="this_invoice.migration_invoice_value - anterior" t-options='{"widget": "float", "precision": 2}'/></td>
+                                    <td class="text-right"><span t-esc="inv.get('NumParcialidad', '')"/></td>
+                                    <td class="text-right"><span t-esc="inv.get('ImpSaldoAnt', '')"/></td>
+                                    <td class="text-right"><span t-esc="inv.get('ImpPagado', '')"/></td>
+                                    <td class="text-right"><span t-esc="float(inv.get('ImpSaldoInsoluto', ''))" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/></td>
+                                </t>
+                                <t t-if="this_invoice.is_invoice(include_receipts=True)">
+                                    <t t-set="total" t-value="reconciled_invoices.filtered(lambda i: i.l10n_mx_edi_cfdi_uuid == inv.get('IdDocumento')).amount_total"/>
+                                    <td><span t-esc="this_invoice.name"/></td>
+                                    <td><span t-esc="inv.get('IdDocumento')"/></td>
+                                    <td class="text-right"><span t-esc="total" t-options='{"widget": "float", "precision": 2}'/></td>
+                                    <td class="text-right"><span t-esc="total - anterior" t-options='{"widget": "float", "precision": 2}'/></td>
+                                    <td class="text-right"><span t-esc="inv.get('NumParcialidad', '')"/></td>
+                                    <td class="text-right"><span t-esc="inv.get('ImpSaldoAnt', '')"/></td>
+                                    <td class="text-right"><span t-esc="inv.get('ImpPagado', '')"/></td>
+                                    <td class="text-right"><span t-esc="float(inv.get('ImpSaldoInsoluto', ''))" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/></td>
+                                </t>
+                                    <!--<td><span t-esc="inv.get('MonedaDR')"/></td>-->
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+                <t t-else="">
+                    <table class="table table-sm">
+                        <thead style="font-size:0.8em;">
+                            <tr>
+                                <th><span>Invoice Date</span></th>
+                                <!--<th><span>Invoice Number</span></th>-->
+                                <th><span>Reference</span></th>
+                                <th class="text-right"><span>Original Amount</span></th>
+                                <th class="text-right"><span>Descuentos y<br/>Pagos Anteriores</span></th>
+                                <th class="text-right"><span>Amount Paid</span></th>
+                                <th class="text-right"><span>Balance</span></th>
+                            </tr>
+                        </thead>
+                        <tbody style="font-size:0.9em;">
+                            <tr t-foreach="o.move_id._get_reconciled_invoices_partials()" t-as="rec">
+                                <t t-set="amount" t-value="rec[1]"/>
+                                <t t-set="inv" t-value="rec[2].move_id"/>
+                                <td><span t-field="inv.invoice_date"/></td>
+                                <td>
+                                    <t t-if="inv.ref">
+                                        <span t-field="inv.ref"/>
+                                    </t>
+                                    <t t-else="">
+                                        <span t-field="inv.name"/>
+                                    </t>
+                                </td>
+                                <td class="text-right"><span t-field="inv.amount_total"/></td>
+                                <td class="text-right">
+                                        <span t-esc="inv.amount_total - amount - inv.amount_residual" t-options="{'widget': 'monetary', 'display_currency': inv.currency_id}"/>
+                                </td>
+                                <td class="text-right"><span t-esc="amount" t-options="{'widget': 'monetary', 'display_currency': inv.currency_id}"/></td>
+                                <td class="text-right"><span t-field="inv.amount_residual"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+                <t t-if="o.narration">
+                    <p><span t-field="o.narration"/></p>
+                </t>
+                <t t-if="is_cfdi_signed">
+                    <div class="row" id='complement'>
+                        <div t-if="cfdi_vals.get('sello')" class="barcode col-3">
+                            <img alt="Barcode" t-att-src="'/report/barcode/?type=QR&amp;value=%s&amp;width=180&amp;height=180' % quote_plus(
+                                'https://verificacfdi.facturaelectronica.sat.gob.mx/default.aspx?' + keep_query(
+                                    re=o.l10n_mx_edi_cfdi_supplier_rfc, rr=o.l10n_mx_edi_cfdi_customer_rfc,
+                                    tt=0, id=o.l10n_mx_edi_cfdi_uuid)
+                                    + '&amp;fe=%s' % quote_plus(cfdi_vals['sello'], 'utf-8', 'strict', '=/').replace('%2B', '+'))"/>
+                        </div>
+                        <div class="col-9" style="font-size:0.7em;">
+                            <div class="digital-stamp">
+                                <span>Digital stamp of the emitter</span>
+                            </div>
+                            <div class="digital-stamp-content">
+                                <span t-esc="cfdi_vals.get('sello')"/>
+                            </div>
+                            <div class="digital-stamp">
+                                <span>Digital stamp SAT</span>
+                            </div>
+                            <div class="digital-stamp-content">
+                                <span t-esc="cfdi_vals.get('sello_sat')"/>
+                            </div>
+                            <div class="digital-stamp">
+                                <span>Original chain complement of digital certification SAT</span>
+                            </div>
+                            <div class="digital-stamp-content">
+                                <span class="nowrap" t-esc="cfdi_vals.get('cadena')"/>
+                            </div>
+                            <div class="digital-stamp">
+                                <span>Extra Info</span>
+                            </div>
+                            <div class="digital-stamp-content">
+                                <span>Emitter certificate:</span> <span t-esc="cfdi_vals.get('certificate_number')"/>
+                                <span> | SAT Certificate:</span> <span t-esc="cfdi_vals.get('certificate_sat_number')"/>
+                                <span> | Expedition place:</span> <span t-esc="cfdi_vals.get('expedition')"/>
+                                <span> | Fiscal Regime:</span><span t-esc="cfdi_vals.get('fiscal_regime')"/>
+                                <span> | Emission Date:</span> <span t-esc="cfdi_vals.get('emission_date_str')"/>
+                                <span> | Certification Date:</span> <span t-esc="cfdi_vals.get('stamp_date')"/>
+                                <span> | Fiscal Folio:</span> <span t-esc="cfdi_vals.get('uuid')"/>
+                            </div>
+                            <div class="digital-stamp-content text-center">
+                                <strong>This document is a printed representation of a CFDI</strong>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </div>
+        </t>
+    </template>
+</odoo>

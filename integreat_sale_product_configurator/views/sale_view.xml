@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_order_view_form_inherit_custom_variant" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.sale.product.custom.variant</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="order_line" position="attributes">
+                <attribute name="context">
+                    {'default_customer': partner_id, 'default_pricelist_id': pricelist_id}
+                </attribute>
+            </field>
+            <create name="add_product_control" position="after">
+                <create name="configure_product_control" string="Configure new product" context="{'configure_product': True, 'tmpl_categ_id': '%(integreat_sale_product_configurator.caja_troquelada)d'}"/>
+            </create>
+        </field>
+    </record>
+    <!-- Override standard sale_product_configurator views -->
+    <record id="sale_product_configurator.product_template_view_form" model="ir.ui.view">
+        <field name="arch" type="xml"/>
+    </record>
+    <!-- As addition to override we change the domain of sale order line product field -->
+    <record id="sale_product_configurator.sale_order_view_form" model="ir.ui.view">
+        <field name="arch" type="xml">
+            <xpath expr="//tree/field[@name='product_id']" position="attributes">
+                <attribute name="domain">[('product_customer_code_ids.partner_id','=',parent.partner_id),('sale_ok', '=', True),'|',('company_id','=',False),('company_id','=',parent.company_id)]</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

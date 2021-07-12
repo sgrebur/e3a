@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mrp_production_form_view_lamina" model="ir.ui.view">
+        <field name="name">mrp.production.form.mtso</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <button name="button_mark_done" position="before">
+                <field name="is_lamina_required" invisible="1"/>
+                <field name="lamina_open_qty" invisible="1"/>
+                <button name="action_select_lamina" string="Select Lamina" type="object" class="btn-danger" attrs="{'invisible': ['|',('is_lamina_required', '=', False),('lamina_open_qty', '=', 0)]}"/>
+            </button>
+            <xpath expr="//sheet" position="before">
+                <div class="alert alert-danger" role="alert" style="margin-bottom:0px;" attrs="{'invisible': [('lamina_open_qty', '&gt;=', 0)]}">
+                    La cantidad de la orden de producción es menor que la cantidad posible de las láminas asignadas con <bold><field name="lamina_open_qty"></field></bold> pzs.<br/>
+                    Corrija mediante uno de los siguientes métodos:<br/>
+                    - Reduciendo la cantidad de láminas en la pestaña Componentes o<br/>
+                    - Aumentando la cantidad de producción.
+                </div>
+                <field name="count_lamina" invisible="1"/>
+                <div class="alert alert-info" role="alert" style="margin-bottom:0px;" attrs="{'invisible': [('count_lamina', '&lt;=', 1)]}">
+                    La orden tiene diferentes láminas. Se dividirá automáticamente durante la confirmación.
+                </div>
+            </xpath>
+            <button name="action_view_mrp_production_backorders" position="replace">
+                <button class="oe_stat_button" name="action_view_mrp_production_backorders" type="object" icon="fa-wrench" attrs="{'invisible': [('mrp_production_backorder_count', '&lt;', 2)]}">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value"><field name="mrp_production_backorder_count"/></span>
+                        <span class="o_stat_text">Parciales</span>
+                    </div>
+                </button>
+                <field name="purchase_request_count" invisible="1"/>
+                <field name="purchase_request_ids" invisible="1"/>
+                <button class="oe_stat_button" name="action_view_purchase_requests" type="object" icon="fa-shopping-cart" attrs="{'invisible': [('purchase_request_count', '&lt;', 1)]}">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value"><field name="purchase_request_count"/></span>
+                        <span class="o_stat_text">Compras</span>
+                    </div>
+                </button>
+            </button>
+
+
+            <field name="bom_id" position="after">
+                <label for="unit_factor" string="Pzs/Herr"/>
+                <div>
+                    <field name="unit_factor" class="oe_inline"/>
+                    <!--<i>
+                        <span> (Lote mínimo: </span>
+                        <field name="min_factor" readonly="1"/>
+                        <span>)</span>
+                    </i>-->
+                </div>
+                <field name="lamina_open_qty" decoration-danger="1" decoration-bf="1" attrs="{'invisible': [('lamina_open_qty', '&lt;=', 0)]}"/>
+            </field>
+            <button name="action_show_details" position="after">
+                <field name="allowed_operation_ids" invisible="1"/>
+                <field name="operation_id" domain="[('id', 'in', allowed_operation_ids)]"/>
+                <field name="products_possible_qty"/>
+                <field name="unit_factor" string="Factor"/>
+            </button>
+        </field>
+    </record>
+    <record id="product_template_only_form_view_lamina" model="ir.ui.view">
+        <field name="name">product.template.product.form.lamina</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <page name="variants" position="inside">
+                <group>
+                    <field name="is_lamina_required" string="Is lamina required?" groups="base.group_system"/>
+                    <field name="is_model" string="Is a product model?" groups="base.group_system"/>
+                </group>
+            </page>
+            <notebook position="inside">
+                <page string="Datos adicionales Lámina" name="additional_data_lamina" attrs="{'invisible': [('categ_id', '!=', %(integreat_sale_product_configurator.lamina)d)]}">
+                    <field name="categ_id" invisible="1"/>
+                    <group>
+                        <group string="Resistencia">
+                            <field name="tmpl_calibre"/>
+                            <field name="tmpl_papel"/>
+                            <field name="tmpl_flauta"/>
+                            <field name="tmpl_recub"/>
+                            <field name="tmpl_origen"/>
+                        </group>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+    <record id="view_change_production_qty_wizard_lamina_selector" model="ir.ui.view">
+        <field name="name">Change Quantity To Produce from Lamina Selector</field>
+        <field name="model">change.production.qty</field>
+        <field name="inherit_id" ref="mrp.view_change_production_qty_wizard"/>
+        <field name="arch" type="xml">
+            <group position="before">
+                <field name="lamina_selector" invisible="1"/>
+                <div attrs="{'invisible': [('lamina_selector', '=', False)]}">
+                    <p><i>La cantidad de producción no es múltiplo de las láminas asignadas.\n Para no desperdiciar material adicional, confirme la cantidad actualizada.</i></p>
+                </div>
+            </group>
+        </field>
+    </record>
+    <record id="view_mrp_workcenter_search_econsa" model="ir.ui.view">
+        <field name="name">mrp.workcenter.search</field>
+        <field name="model">mrp.workcenter</field>
+        <field name="inherit_id" ref="mrp.view_mrp_workcenter_search"/>
+        <field name="arch" type="xml">
+            <filter name="company" position="after">
+                <filter string="Planta" name="planta" domain="[]" context="{'group_by': 'warehouse_id'}"/>
+            </filter>
+        </field>
+    </record>
+ </odoo>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright InteGreat
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+<!-- Change SO views -->
+	<record id="sale_order_form_line_orderpoint" model="ir.ui.view">
+		<field name="model">sale.order</field>
+		<field name="inherit_id" ref="sale.view_order_form"/>
+		<field name="arch" type="xml">
+            <field name="authorized_transaction_ids" position="before">
+                <field name="to_be_replenished" invisible="1"/>
+            </field>
+            <xpath expr="//button[@name='action_confirm']" position="replace"/>
+            <xpath expr="//button[@name='action_confirm']" position="replace"/>
+            <xpath expr="//header/button[@name='action_quotation_send'][1]" position="replace">
+                <button name="action_run_order_replenishment" string="Suministrar" class="btn-primary" type="object"
+                    attrs="{'invisible': [('to_be_replenished', 'in', ['new', 'no'])]}"/>
+                <button name="action_confirm" id="action_confirm" string="Confirm" class="btn-primary" type="object" attrs="{'invisible': ['|', ('state', 'not in', ['sent']), ('to_be_replenished', 'in', ['new', 'yes'])]}"/>
+                <button name="action_confirm" string="Confirm" class="btn-primary" type="object" attrs="{'invisible': ['|', ('state', 'not in', ['draft']), ('to_be_replenished', 'in', ['new', 'yes'])]}"/>
+                <button name="action_quotation_send" string="Send by Email" type="object" states="draft"/>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button" name="action_view_purchase_request" type="object" icon="fa-shopping-cart" attrs="{'invisible': [('purchase_request_line_count', '=', 0)]}">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value"><field name="purchase_request_line_count"/></span>
+                        <span class="o_stat_text">Compras</span>
+                    </div>
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='validity_date'][1]" position="before">
+                <field name="warehouse_id" attrs="{'readonly': ['|', ('purchase_request_line_count', '&gt;', 0), ('mrp_production_count', '&gt;', 0)]}" groups="stock.group_stock_multi_warehouses" force_save="1" />
+            </xpath>
+            <field name="tax_id" position="attributes">
+                <attribute name="domain">[('type_tax_use','=','sale'),('company_id','=',parent.company_id), ('price_include', '=', False)]</attribute>
+            </field>
+            <page name="order_lines" position="after">
+                <page name="order_replenishments" string="Abastecimiento" attrs="{'invisible': [('order_replenishment_ids', '=', [])]}">
+                    <field name="order_replenishment_ids">
+                        <tree string="Replenishments" create="false" delete="false" editable="bottom">
+                            <!--<field name="sequence" readonly="1"/>-->
+                            <field name="product_id" readonly="1" width="2"/>
+                            <field name="qty_planned" string="Suministrado" readonly="1" width="0.5"/>
+                            <field name="qty_reserved_delivery" string="Reservado" readonly="1" width="0.5"/>
+                            <field name="qty_free_product" string="Libre" readonly="1" width="0.5"/>
+                            <field name="production_ids" string="OP" widget="many2many_tags" readonly="1" width="1"/>
+                            <field name="purchase_request_line_ids" string="OC" widget="many2many_tags" readonly="1" width="1"/>
+                            <field name="route_id" invisible="1"/>
+                            <field name="warehouse_id" invisible="1"/>
+                            <field name="location_dest_id" invisible="1"/>
+                            <field name="procurement_action" width="1.5"/>
+                            <field name="qty_open_demand" string="Abierto" decoration-danger="(qty_open_demand &gt; 0)" decoration-success="(qty_open_demand &lt;= 0)" decoration-bf="1" width="0.5"/>
+                            <field name="qty_to_order" string="Ctd.diferente" decoration-bf="1" width="0.5"/>
+                            <button name="action_replenish_line" string="Crear OP" type="object" icon="fa-wrench" class="btn-primary" attrs="{'invisible': ['|', ('procurement_action', '!=', 'manufacture'), '&amp;', ('qty_to_order', '&lt;', 1), ('qty_open_demand', '&lt;', 1)]}"/>
+                            <button name="action_replenish_line" string="Crear OC" type="object" icon="fa-shopping-cart" class="btn-primary" attrs="{'invisible': ['|', ('procurement_action', '!=', 'buy'), '&amp;', ('qty_to_order', '&lt;', 1), ('qty_open_demand', '&lt;', 1)]}"/>
+                        </tree>
+                    </field>
+                </page>
+            </page>
+		</field>
+	</record>
+</odoo>

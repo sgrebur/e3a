@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="wizard_lamina_selection_form" model="ir.ui.view">
+        <field name="name">wizard.lamina.selection.form</field>
+        <field name="model">wizard.lamina.selection</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="production_id" invisible="1"/>
+                <field name="company_id" invisible="1"/>
+                <field name="currency_id" invisible="1"/>
+                <group col="12">
+                    <group colspan="6">
+                        <strong class="oe_form_label">Producto</strong><br/>
+                        <h3>
+                            <field name="product_id" attrs="{'readonly': [('production_id', '!=', False)]}"/>
+                        </h3>
+                    </group>
+                </group>
+                <group col="12">
+                    <group string="Calibre" colspan="3" attrs="{'invisible': [('product_id', '=', False)]}">
+                        <field name="papel" attrs="{'readonly': [('product_id', '!=', False)]}"/>
+                        <field name="flauta" attrs="{'readonly': [('product_id', '!=', False)]}"/>
+                        <field name="recub" attrs="{'readonly': [('product_id', '!=', False)]}"/>
+                        <field name="calibre_search"/>
+                    </group>
+                    <group string="Calibre" colspan="3" attrs="{'invisible': [('product_id', '!=', False)]}">
+                        <field name="papel_search" context="{'show_attribute': 0}"/>
+                        <field name="flauta_search" context="{'show_attribute': 0}"/>
+                        <field name="recub_search" context="{'show_attribute': 0}"/>
+                        <field name="calibre_search" context="{'show_attribute': 0}"/>
+                    </group>
+                    <group string="Medida" colspan="3">
+                        <field name="ancho" attrs="{'readonly': [('product_id', '!=', False)]}"/>
+                        <field name="largo" attrs="{'readonly': [('product_id', '!=', False)]}"/>
+                        <field name="pza_por_herr" attrs="{'readonly': [('product_id', '!=', False)]}"/>
+                        <field name="origen"/>
+                    </group>
+                    <group string="Cantidades" colspan="2">
+                        <field name="update" invisible="1"/>
+                        <field name="qty" attrs="{'readonly': [('production_id', '!=', False)]}"/>
+                        <field name="total_qty" decoration-bf="1" readonly="1"/>
+                        <field name="warehouse_id" string="Planta" readonly="0" attrs="{'invisible': [('production_id', '!=', False)]}"/>
+                        <button name="action_reload" type="object" class="btn-danger"><i class="fa fa-refresh"/> Recargar</button>
+                    </group>
+                    <group string="Costos" colspan="2">
+                        <field name="total_cost" widget="monetary" decoration-bf="1" decoration-success="1"/>
+                        <field name="total_waste" widget="monetary" decoration-bf="1" decoration-danger="1"/>
+                    </group>
+                    <group colspan="2">
+                        <field name="total_qty_gauge" nolabel="1" widget="gauge" style="width:120px;height:90px;cursor:pointer;" options="{'max_field':'qty', 'title': 'Planificado'}"/>
+                    </group>
+                </group>
+                <button name="add_lamina" string="Seleccionar otra lámina" type="object" class="oe_highlight"/>
+                <field name="line_ids">
+                    <tree create="0" delete="0" editable="bottom" expand="1" default_order="line_group, warehouse_id, util desc, unit_cost desc">
+                        <field name="line_group" invisible="1"/>
+                        <field name="util" invisible="1"/>
+                        <field name="select" invisible="1"/>
+                        <field name="currency_id" invisible="1"/>
+                        <field name="product_id" decoration-bf="1" readonly="1" decoration-success="line_group == '0' and free_qty &gt;= qty_required" decoration-warning="line_group == '0' and free_qty &lt; qty_required" decoration-danger="line_group == '2'"/>
+                        <field name="ancho" widget="badge"/>
+                        <field name="largo" widget="badge"/>
+                        <field name="util" decoration-bf="1" widget="percentage"/>
+                        <field name="qty_selected" decoration-success="free_qty &gt;= qty_selected" decoration-danger="free_qty &lt; qty_selected" decoration-bf="1"/>
+                        <button name="select_line" readonly="1" type="object" class="btn btn-dark" icon="fa-square" attrs="{'invisible': ['|', ('select', '=', True), ('qty_selected', '>', 0)]}"/>
+                        <button name="select_line" readonly="1" type="object" class="btn btn-danger" icon="fa-square" attrs="{'invisible': ['|', ('select', '=', True), ('qty_selected', '=', 0)]}"/>
+                        <button name="deselect_line" readonly="1" type="object" class="btn btn-success" icon="fa-check-square" attrs="{'invisible': [('select', '=', False)]}"/>
+                        <field name="marca1"/>
+                        <field name="marca2"/>
+                        <field name="marca3"/>
+                        <field name="qty_cajas" readonly="1"/>
+                        <field name="qty_required" readonly="1"/>
+                        <field name="warehouse_id" string="Planta" readonly="1" widget="badge" decoration-danger="warehouse_id != parent.warehouse_id" decoration-success="warehouse_id == parent.warehouse_id"/>
+                        <field name="free_qty" string="Libre" decoration-success="free_qty &gt; 0" decoration-danger="free_qty &lt;= 0" decoration-bf="1"/>
+                        <field name="sob_ancho" widget="badge" decoration-danger="1" readonly="1"/>
+                        <field name="sob_largo" widget="badge" decoration-danger="1" readonly="1"/>
+                        <field name="unit_cost" widget="monetary"/>
+                        <field name="unit_waste" decoration-danger="1" widget="monetary"/>
+                        <field name="qty_available" string="A mano"/>
+                        <field name="incoming_qty" string="Entrante"/>
+                        <field name="line_waste" readonly="1" widget="monetary"/>
+                        <field name="line_cost" readonly="1" widget="monetary"/>
+                    </tree>
+                </field>
+                <footer>
+                    <button name="action_add_to_mo" type="object" string="Agregar a OP" class="btn-primary" attrs="{'invisible': ['|', ('total_qty', '=', 0), ('production_id', '=', False)]}"/>
+                    <button name="action_reload" type="object" class="btn-secondary"><i class="fa fa-refresh"/> Recargar</button>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="wizard_lamina_selection_product_select" model="ir.ui.view">
+        <field name="name">wizard.lamina.selection.product.select</field>
+        <field name="model">wizard.lamina.selection.product.select</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="wiz_id" invisible="1"/>
+                    <field name="categ_id" invisible="1"/>
+                    <field name="wiz_lamina_ids" invisible="1"/>
+                    <field name="papel" invisible="1"/>
+                    <field name="flauta" invisible="1"/>
+                    <field name="recub" invisible="1"/>
+                    <field name="ancho" invisible="1"/>
+                    <field name="largo" invisible="1"/>
+                    <field name="product_id" domain="[('categ_id', '=', categ_id),('id', 'not in', wiz_lamina_ids),('spec_papel', '=', papel),('spec_flauta', '=', flauta),('spec_recub', 'in', ['Sin recub.', recub]),('spec_ancho', '>=', ancho),('spec_largo', '>=', largo)]"/>
+                </group>
+                <footer>
+                    <button name="add_product_to_wizard" type="object" string="Seleccionar lámina" class="btn-primary" attrs="{'invisible': [('product_id', '=', False)]}"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="lamina_selector_action">
+        <field name="name">Buscador de Lámina</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">wizard.lamina.selection</field>
+        <field name="view_mode">form</field>
+        <field name="context">{'fullscreen': True}</field>
+    </record>
+    <menuitem id="menu_stock_lamina_selector" parent="stock.menu_stock_inventory_control" action="lamina_selector_action" sequence="101"/>
+    <menuitem id="menu_sale_lamina_selector" parent="sale.product_menu_catalog" action="lamina_selector_action" sequence="101"/>
+    <menuitem id="menu_purchase_lamina_selector" parent="purchase.menu_purchase_products" action="lamina_selector_action" sequence="101"/>
+    <menuitem id="menu_mrp_lamina_selector" parent="mrp.menu_mrp_bom" action="lamina_selector_action" sequence="101"/>
+</odoo>

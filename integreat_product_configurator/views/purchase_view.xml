@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="purchase_order_form_integreat_product_configurator" model="ir.ui.view">
+        <field name="name">purchase.order.form.integreat.product.configurator</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <create name="add_product_control" position="after">
+                <create name="configure_product_control" string="Configurar lámina nueva" context="{'configure_product': 'purchase'}"/>
+            </create>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright InteGreat
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="mrp_production_tree_view_mtso" model="ir.ui.view">
+        <field name="name">mrp.production.tree.mtso</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="sale_partner_name"/>
+                <field name="sale_order_id" string="OV" widget="many2one"/>
+            </field>
+        </field>
+    </record>
+    <record id="mrp_production_form_view_mtso" model="ir.ui.view">
+        <field name="name">mrp.production.form.mtso</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field name="sale_partner_name"/>
+                <field name="sale_order_id"/>
+            </field>
+            <button name="action_view_mrp_production_childs" position="replace">
+                <button class="oe_stat_button" name="action_view_mrp_production_childs" type="object" icon="fa-level-down" attrs="{'invisible': [('mrp_production_child_count', '=', 0)]}">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value"><field name="mrp_production_child_count"/></span>
+                        <span class="o_stat_text">OP Inferior</span>
+                    </div>
+                </button>
+            </button>
+            <button name="action_view_mrp_production_sources" position="replace">
+                <button class="oe_stat_button" name="action_view_mrp_production_sources" type="object" icon="fa-level-up" attrs="{'invisible': [('mrp_production_source_count', '=', 0)]}">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value"><field name="mrp_production_source_count"/></span>
+                        <span class="o_stat_text">OP Superior</span>
+                    </div>
+                </button>
+            </button>
+            <xpath expr="//notebook[1]/page[@name='miscellaneous']/group[1]/group[2]/field[@name='origin']" position="after">
+                <field name="procurement_group_id" readonly="1"/>
+            </xpath>
+            <xpath expr="//field[@name='move_raw_ids']" position="attributes">
+                <attribute name="context">{'default_group_id': procurement_group_id, 'default_product_uom_qty': 1.0, 'default_date': date_planned_start, 'default_date_deadline': date_deadline, 'default_location_id': location_src_id, 'default_location_dest_id': production_location_id, 'default_state': 'draft', 'default_raw_material_production_id': id, 'default_picking_type_id': picking_type_id, 'default_company_id': company_id}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='move_raw_ids']/tree[1]" position="inside">
+                <field name="group_id" optional="hide" readonly="1"/>
+            </xpath>
+            <xpath expr="//field[@name='move_raw_ids']/tree[1]/field[@name='company_id']" position="after">
+                <field name="route_ids" string="Sum. esp." widget="many2many_tags" filter_domain="[('product_variant_selectable', '=', True)]"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="mrp_production_workorder_tree_editable_view_mtso" model="ir.ui.view">
+        <field name="name">mrp.production.work.order.tree.mtso</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp.mrp_production_workorder_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="production_id" position="after">
+                <field name="sale_partner_name"/>
+                <field name="sale_order_id" string="OV" widget="many2one"/>
+            </field>
+        </field>
+    </record>
+    <record id="view_mrp_production_filter_mtso" model="ir.ui.view">
+        <field name="name">mrp.production.select.mtso</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.view_mrp_production_filter"/>
+        <field name="arch" type="xml">
+            <field name="name" position="before">
+                <field name="sale_order_id" string="Orden de venta" filter_domain="[('sale_order_id', 'ilike', self)]"/>
+                <field name="sale_partner_name" string="Cliente" filter_domain="[('sale_partner_name.name', 'ilike', self)]"/>
+            </field>
+        </field>
+    </record>
+    <record id="view_mrp_production_workorder_form_view_filter_mtso" model="ir.ui.view">
+        <field name="name">mrp.production.work.order.select.mtso</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp.view_mrp_production_workorder_form_view_filter"/>
+        <field name="arch" type="xml">
+            <field name="name" position="replace">
+                <field name="sale_order_id"/>
+                <field name="sale_partner_name"/>
+                <field name="product_id" string="Producto" filter_domain="[('product_id', 'ilike', self)]"/>
+                <searchpanel>
+                    <field name="workcenter_id" icon="fa-desktop" select="multi" groupby="warehouse_id"/>
+                </searchpanel>
+            </field>
+        </field>
+    </record>
+
+    <!-- Workorder Tree LANZAMIENTO DE PRODUCCION -->
+    <record model="ir.ui.view" id="mrp_production_workorder_tree_launch_production">
+        <field name="name">mrp.workorder.launch.production</field>
+        <field name="model">mrp.workorder</field>
+        <field name="arch" type="xml">
+            <tree default_order="warehouse_id, operation_id, production_sequence">
+                <field name="warehouse_id"/>
+                <field name="production_sequence" widget="handle"/>
+                <field name="operation_display_name" decoration-bf="1"/>
+                <field name="production_id" string="OP" decoration-bf="1" readonly="1" widget="many2one"/>
+                <field name="product_id"/>
+                <field name="qty_production"/>
+                <field name="launch_status" invisible="1"/>
+                <button name="action_print_mo" string="Imprimir" type="object" attrs="{'invisible': [('launch_status', '!=', 'toprint')]}" class="btn-warning"/>
+                <field name="sale_partner_name"/>
+                <field name="sale_order_id"/>
+                <field name="citpa_c" widget="many2many_tags" options="{'color_field': 'state_color'}"/>
+                <field name="citpa_i" widget="many2many_tags" options="{'color_field': 'state_color'}"/>
+                <field name="citpa_t" widget="many2many_tags" options="{'color_field': 'state_color'}"/>
+                <field name="citpa_p" widget="many2many_tags" options="{'color_field': 'state_color'}"/>
+                <field name="citpa_a" widget="many2many_tags" options="{'color_field': 'state_color'}"/>
+                <field name="production_reservation_state"/>
+                <field name="name" invisible="1"/>
+                <field name="product_uom_id" invisible="1" readonly="0"/>
+                <field name="production_state" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="mrp.mrp_workorder_todo" model="ir.actions.act_window">
+        <field name="domain">[('state', 'in',('ready', 'progress'))]</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_mrp_workorder_launch_production">
+        <field name="name">Lanzamiento de producción</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mrp.workorder</field>
+        <field name="domain">[('launch_status','!=',False)]</field>
+        <field name="view_mode">tree,form,calendar</field>
+        <field name="view_id" ref="mrp_production_workorder_tree_launch_production"/>
+    </record>
+
+    <menuitem id="menu_mrp_workorder_launch_production"
+              action="action_mrp_workorder_launch_production"
+              parent="mrp.menu_mrp_manufacturing"
+              groups="mrp.group_mrp_routings"
+              sequence="5"/>
+
+</odoo>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_move_form_edi_inherit" model="ir.ui.view">
+        <field name="name">account.move.form.edi.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account_edi.view_move_form_inherit"/>
+        <field name="arch" type="xml">
+            <button name="button_cancel_posted_moves" position="attributes">
+                <attribute name="string">Cancelar CFDI</attribute>
+            </button>
+        </field>
+    </record>
+    <record id="view_l10n_mx_edi_invoice_form_leyenda" model="ir.ui.view">
+        <field name="name">l10n_mx_edi.invoice.form.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <header position="inside">
+                <field name="edi_xml_to_import" invisible="1"/>
+                <button name="process_attachment_edi_xml_invoice_import" string="Procesar adjuntos XML"
+                        class="oe_highlight" type="object" attrs="{'invisible': [('edi_xml_to_import', '=', False)]}"/>
+            </header>
+            <field name="partner_id" position="after">
+                <field name="partner_id" attrs="{'invisible': [('journal_id', '!=', 10)]}"/>
+            </field>
+            <xpath expr="//group[@id='header_right_group']" position="inside">
+                <field name="migration_invoice_value" decoration-bf="1" attrs="{'invisible': [('journal_id', '!=', 10)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']//field[@name='account_id']" position="before">
+                <field name="product_unspsc_code_id"/>
+            </xpath>
+            <!-- must be added to line_ids as well, otherwise won't be saved -->
+            <xpath expr="//field[@name='line_ids']//field[@name='product_id']" position="before">
+                <field name="product_unspsc_code_id" invisible="1"/>
+            </xpath>
+            <field name="analytic_account_id" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </field>
+            <field name="analytic_tag_ids" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </field>
+            <field name="tax_ids" position="attributes">
+                <attribute name="domain">[('type_tax_use', '=?', parent.invoice_filter_type_domain), ('company_id', '=', parent.company_id), ('price_include', '=', False)]</attribute>
+            </field>
+            <xpath expr="//page[@name='other_info']" position="inside">
+                <field name="l10n_mx_edi_leyenda" invisible="1"/>
+                <group attrs="{'invisible': [('move_type', 'not in', ('out_invoice', 'out_refund')), ('l10n_mx_edi_leyenda', '=', False)]}">
+                    <group string="Leyenda Fiscal">
+                        <field name="l10n_mx_edi_leyenda_texto"/>
+                        <field name="l10n_mx_edi_leyenda_norma"/>
+                        <field name="l10n_mx_edi_leyenda_disposicion"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_invoice_tree_integreat" model="ir.ui.view">
+        <field name="name">account.invoice.tree</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_invoice_tree"/>
+        <field name="arch" type="xml">
+            <field name="amount_untaxed_signed" position="attributes">
+                <attribute name="string">Subtotal MXN</attribute>
+            </field>
+            <field name="payment_state" position="attributes">
+                <attribute name="decoration-danger">payment_state == 'not_paid' and state == 'posted'</attribute>
+            </field>
+            <field name="amount_total_signed" position="replace">
+                <field name="amount_total_signed" string="Total MXN" sum="Total" optional="show" decoration-bf="1"/>
+                <field name="amount_untaxed" string="Subtotal" sum="Total" optional="show"/>
+                <field name="amount_total" sum="Total" optional="show" decoration-bf="1"/>
+                <field name="amount_residual" optional="show"/>
+            </field>
+        </field>
+    </record>
+</odoo>

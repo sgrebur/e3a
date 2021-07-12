@@ -1,0 +1,3 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_ir_model_data_wizard","access.ir.model.data.wizard","model_ir_model_data_wizard","base.group_user",1,1,1,1
+"access_ir_model_write_wizard","access.ir.model.write.wizard","model_ir_model_write_wizard","base.group_user",1,1,1,1

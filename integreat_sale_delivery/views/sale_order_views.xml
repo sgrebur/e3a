@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright InteGreat
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+<!-- Change SO views -->
+    <record id="sale_order_tree_integreat_delivery" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="client_order_ref"/>
+            </field>
+            <field name="commitment_date" position="before">
+				<field name="date_delivery" widget="date"/>
+            </field>
+            <field name="expected_date" position="replace">
+				<field name="expected_date" invisible="1"/>
+            </field>
+            <field name="invoice_status" position="before">
+                <field name="delivery_status" optional="show"/>
+            </field>
+        </field>
+    </record>
+    <record id="sale_quotation_tree_integreat_delivery" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+            <field name="invoice_status" position="before">
+                <field name="delivery_status" optional="show"/>
+            </field>
+            <field name="name" position="after">
+                <field name="client_order_ref"/>
+            </field>
+            <field name="commitment_date" position="before">
+				<field name="date_delivery" widget="date"/>
+            </field>
+            <field name="expected_date" position="replace">
+				<field name="expected_date" invisible="1"/>
+            </field>
+        </field>
+    </record>
+	<record id="sale_order_form_integreat_delivery" model="ir.ui.view">
+		<field name="model">sale.order</field>
+		<field name="inherit_id" ref="sale.view_order_form"/>
+		<field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="button_action_deliver" id="button_action_deliver"
+                    string="Deliver" class="btn-primary" type="object"
+                    attrs="{'invisible': [('delivery_status', 'not in', ['open', 'partial'])]}"/>
+            </xpath>
+            <field name="partner_shipping_id" position="after">
+                <field name="incoterm"/>
+                <field name="client_order_ref"/>
+                <field name="delivery_status"/>
+            </field>
+            <field name="show_update_pricelist" position="before">
+				<label for="date_delivery" string="Delivery Date" widget="date"/>
+				<div class="o_row">
+					<field name="date_delivery"/>
+					<span class="text-muted">Dispatch: <field name="commitment_date" widget="date"/></span>
+				</div>
+			</field>
+		</field>
+	</record>
+    <!-- Add transport days to res partner view -->
+    <record id="view_partner_form_transport_days" model="ir.ui.view">
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field name="transport_days"/>
+            </field>
+        </field>
+    </record>
+    <!-- Add existing field visible to Incoming Date to Quant view -->
+    <record id="stock_quant_tree_integreat_inherit" model="ir.ui.view">
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree"/>
+        <field name="arch" type="xml">
+            <field name="location_id" position="after">
+                <field name="in_date"/>
+            </field>
+        </field>
+    </record>
+    <record id="stock_quant_tree_editable_integreat_inherit" model="ir.ui.view">
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree_editable"/>
+        <field name="arch" type="xml">
+            <field name="location_id" position="after">
+                <field name="in_date"/>
+            </field>
+        </field>
+    </record>
+</odoo>

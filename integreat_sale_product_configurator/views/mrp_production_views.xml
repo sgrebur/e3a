@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="mrp_production_tree_view_econsa" model="ir.ui.view">
+            <field name="name">mrp.production.tree.econsa</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="origin" position="replace"/>
+                <field name="product_qty" position="attributes">
+                    <attribute name="decoration-bf">1</attribute>
+                </field>
+                <field name="product_uom_id" position="after">
+                    <field name="citpa_c" widget="many2many_tags" options="{'color_field': 'state_color'}"/>
+                    <field name="citpa_i" widget="many2many_tags" options="{'color_field': 'state_color'}"/>
+                    <field name="citpa_t" widget="many2many_tags" options="{'color_field': 'state_color'}"/>
+                    <field name="citpa_p" widget="many2many_tags" options="{'color_field': 'state_color'}"/>
+                    <field name="citpa_a" widget="many2many_tags" options="{'color_field': 'state_color'}"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="action_production_order_action_cancel" model="ir.actions.server">
+            <field name="name">Cancelar OP</field>
+            <field name="model_id" ref="mrp.model_mrp_production"/>
+            <field name="binding_model_id" ref="mrp.model_mrp_production"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">
+            if records:
+                res = records.filtered(lambda mo: mo.state in {'confirmed', 'to_close', 'progress'}).action_cancel()
+                if res is not True:
+                    action = res
+            </field>
+        </record>
+
+        <record id="mrp_production_form_view_econsa" model="ir.ui.view">
+            <field name="name">mrp.production.form.econsa</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='button_mark_done'][1]" position="replace">
+                    <button name="button_mark_done" attrs="{'invisible': ['|', ('state', 'not in', ('confirmed', 'progress', 'to_close')), ('is_planned', '=', False)]}" string="Marcar como hecho" type="object" class="oe_highlight"/>
+                </xpath>
+                <xpath expr="//button[@name='button_mark_done'][2]" position="replace"/>
+                <field name="user_id" position="after">
+                    <field name="suaje"/>
+                    <field name="grabado"/>
+                </field>
+                <field name="workorder_ids" position="replace">
+                    <field name="workorder_ids" attrs="{'readonly': [('state', '!=', 'draft')]}" context="{'form_view_ref': 'mrp.mrp_production_workorder_form_view_inherit', 'default_product_uom_id': product_uom_id, 'default_consumption': consumption, 'default_company_id': company_id}">
+                        <tree editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="consumption" invisible="1"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="is_produced" invisible="1"/>
+                            <field name="is_user_working" invisible="1"/>
+                            <field name="product_uom_id" invisible="1" readonly="0"/>
+                            <field name="state" invisible="1"/>
+                            <field name="qty_remaining" invisible="1"/>
+                            <field name="production_state" invisible="1"/>
+                            <field name="production_reservation_state" invisible="1"/>
+                            <field name="production_bom_id" invisible="1"/>
+                            <field name="time_ids" invisible="1"/>
+                            <field name="working_state" invisible="1"/>
+                            <field name="operation_id" invisible="1" domain="['|', ('bom_id', '=', production_bom_id), ('bom_id', '=', False)]" context="{'default_workcenter_id': workcenter_id, 'default_company_id': company_id}"/>
+                            <field name="operation_template_id" attrs="{'readonly': [('state', 'not in', 'pending')]}" width="2"/>
+                            <field name="operation_group" invisible="1"/>
+                            <field name="available_workcenter_ids" invisible="1"/>
+                            <field name="production_warehouse_id" invisible="1"/>
+                            <field name="name" invisible="1"/>
+                            <field name="workcenter_id" width="3"/>
+                            <field name="warehouse_id" decoration-warning="warehouse_id != production_warehouse_id" decoration-bf="warehouse_id != production_warehouse_id" width="1.5"/>
+                            <field name="date_planned_start" width="2" attrs="{'invisible': [('state', '!=', 'pending')]}"/>
+                            <field name="date_planned_finished" width="2" attrs="{'invisible': [('state', '!=', 'done')]}"/>
+                            <field name="date_start" readonly="1" width="2"  attrs="{'invisible': [('state', '=', 'pending')]}"/>
+                            <field name="date_finished" readonly="1" width="2" attrs="{'invisible': [('state', '=', 'done')]}"/>
+                            <field name="duration_expected" widget="float_time" width="1.5"/>
+                            <field name="duration" widget="mrp_time_counter" width="1.5"
+                              attrs="{'invisible': [('production_state','=', 'draft')], 'readonly': [('is_user_working', '=', True)]}"/>
+                            <field name="qty_production" string="Total" decoration-bf="1" width="1"/>
+                            <field name="qty_produced" string="Hecho" width="1"/>
+                            <field name="qty_possible" string="Posible" decoration-bf="1" decoration-success="1" width="1"/>
+                            <button name="button_start" type="object" string="Iniciar" class="btn-success"
+                                attrs="{'invisible': ['|', '|', '|', ('production_state','in', ('draft', 'done')), ('working_state', '=', 'blocked'), ('state', '!=', 'ready'), ('is_user_working', '!=', False)]}"/>
+                            <button name="button_start" type="object" string="Continuar" class="btn-success"
+                                attrs="{'invisible': ['|', '|', '|', ('production_state','in', ('draft', 'done')), ('working_state', '=', 'blocked'), ('state', '!=', 'progress'), ('is_user_working', '!=', False)]}"/>
+                            <button name="button_pending" type="object" string="Pause" class="btn-warning"
+                                attrs="{'invisible': ['|', '|', ('production_state', 'in', ('draft', 'done')), ('working_state', '=', 'blocked'), ('is_user_working', '=', False)]}"/>
+                            <button name="button_finish" type="object" string="Hecho" class="btn-success"
+                                attrs="{'invisible': ['|', '|', '|', ('production_state', 'in', ('draft', 'done')), ('working_state', '=', 'blocked'), ('is_user_working', '=', False), ('qty_remaining', '&gt;', 'qty_possible')]}"/>
+                            <button name="button_partial_done" type="object" string="Parcial" class="btn-info"
+                                attrs="{'invisible': ['|', '|', ('production_state', 'in', ('draft', 'done')), ('working_state', '=', 'blocked'), ('is_user_working', '=', False)]}"/>
+                            <button name="action_open_wizard" type="object" icon="fa-external-link" class="oe_edit_only"
+                                context="{'default_workcenter_id': workcenter_id}" attrs="{'invisible': ['|', ('production_state', 'in', ('draft', 'done')), ('is_user_working', '=', False), ('working_state', '=', 'blocked')]}"/>
+                            <field name="show_json_popover" invisible="1"/>
+                            <field name="json_popover" widget="mrp_workorder_popover" string=" " width="0.1" attrs="{'invisible': [('show_json_popover', '=', False)]}"/>
+                        </tree>
+                    </field>
+                </field>
+            </field>
+        </record>
+        <!-- OVERRIDE not inherit!-->
+        <record model="ir.ui.view" id="mrp.mrp_production_workorder_tree_editable_view">
+            <field name="arch" type="xml">
+                <tree expand="1" groups_limit="999" default_order="production_sequence">
+                    <field name="production_sequence" widget="handle"/>
+                    <field name="consumption" invisible="1"/>
+                    <field name="company_id" invisible="1"/>
+                    <field name="is_produced" invisible="1"/>
+                    <field name="is_user_working" invisible="1"/>
+                    <field name="name" invisible="1"/>
+                    <field name="product_uom_id" invisible="1" readonly="0"/>
+                    <field name="production_state" invisible="1"/>
+                    <field name="production_reservation_state" invisible="1"/>
+                    <field name="production_bom_id" invisible="1"/>
+                    <field name="qty_remaining" invisible="1"/>
+                    <field name="qty_producing" invisible="1"/>
+                    <field name="time_ids" invisible="1"/>
+                    <field name="working_state" invisible="1"/>
+                    <field name="operation_id" invisible="1" domain="['|', ('bom_id', '=', production_bom_id), ('bom_id', '=', False)]" context="{'default_workcenter_id': workcenter_id, 'default_company_id': company_id}"/>
+                    <field name="production_id" string="OP" decoration-bf="1" readonly="1" widget="many2one"/>
+                    <field name="warehouse_id"/>
+                    <field name="operation_display_name" decoration-bf="1"/>
+                    <field name="tinta_color" widget="color"/>
+                    <field name="tinta_name"/>
+                    <field name="product_code" readonly="1" invisible="1"/>
+                    <field name="product_id" readonly="1"/>
+                    <field name="qty_production" string="Total" decoration-bf="1"/>
+                    <field name="qty_produced" string="Hecho"/>
+                    <field name="qty_possible" string="Posible" decoration-bf="1" decoration-success="1"/>
+                    <button name="button_start" type="object" string="Iniciar" class="btn-success" attrs="{'invisible': ['|', '|', '|', ('production_state','in', ('draft', 'done')), ('working_state', '=', 'blocked'), ('state', '!=', 'ready'), ('is_user_working', '!=', False)]}"/>
+                    <button name="button_start" type="object" string="Continuar" class="btn-success" attrs="{'invisible': ['|', '|', '|', ('production_state','in', ('draft', 'done')), ('working_state', '=', 'blocked'), ('state', '!=', 'progress'), ('is_user_working', '!=', False)]}"/>
+                    <button name="button_pending" type="object" string="Pause" class="btn-warning" attrs="{'invisible': ['|', '|', ('production_state', 'in', ('draft', 'done')), ('working_state', '=', 'blocked'), ('is_user_working', '=', False)]}"/>
+                    <button name="button_finish" type="object" string="Hecho" class="btn-success" attrs="{'invisible': ['|', '|', '|', ('production_state', 'in', ('draft', 'done')), ('working_state', '=', 'blocked'), ('is_user_working', '=', False), ('qty_remaining', '&gt;', 'qty_possible')]}"/>
+                    <button name="button_partial_done" type="object" string="Parcial" class="btn-info" attrs="{'invisible': ['|', '|', ('production_state', 'in', ('draft', 'done')), ('working_state', '=', 'blocked'), ('is_user_working', '=', False)]}"/>
+                    <button name="action_open_wizard" type="object" icon="fa-external-link" class="oe_edit_only" context="{'default_workcenter_id': workcenter_id}" attrs="{'invisible': ['|', ('production_state', 'in', ('draft', 'done')), ('is_user_working', '=', False), ('working_state', '=', 'blocked')]}"/>
+                    <field name="show_json_popover" invisible="1"/>
+                    <field name="json_popover" widget="mrp_workorder_popover" string=" " width="0.1" attrs="{'invisible': [('show_json_popover', '=', False)]}"/>
+                    <field name="duration_expected" string="Duración" widget="float_time"/>
+                    <field name="citpa_c" widget="many2many_tags" options="{'color_field': 'state_color'}"/>
+                    <field name="citpa_i" widget="many2many_tags" options="{'color_field': 'state_color'}"/>
+                    <field name="citpa_t" widget="many2many_tags" options="{'color_field': 'state_color'}"/>
+                    <field name="citpa_p" widget="many2many_tags" options="{'color_field': 'state_color'}"/>
+                    <field name="citpa_a" widget="many2many_tags" options="{'color_field': 'state_color'}"/>
+                    <field name="state" optional="hide" widget="badge" decoration-muted="state == 'done'" decoration-success="state == 'ready'" decoration-warning="state == 'progress'" decoration-info="state == 'pending'" attrs="{'invisible': [('production_state', 'in', ('draft', 'done'))]}"/>
+                    <field name="date_planned_start" width="2" attrs="{'invisible': [('state', '!=', 'pending')]}" widget="date"/>
+                    <field name="date_planned_finished" optional="show" width="2" attrs="{'invisible': [('state', '!=', 'done')]}" widget="date"/>
+                    <field name="date_start" readonly="1" width="2"  attrs="{'invisible': [('state', '=', 'pending')]}" widget="date"/>
+                    <field name="date_finished" readonly="1" width="2" attrs="{'invisible': [('state', '=', 'done')]}" widget="date"/>
+                    <field name="duration" string="Efectivo" widget="mrp_time_counter" attrs="{'invisible': [('production_state','=', 'draft')], 'readonly': [('is_user_working', '=', True)]}"/>
+                    <field name="workcenter_id" invisible="1"/>
+                    <groupby name="workcenter_id">
+                        <field name="id" invisible="1"/>
+                        <field name="working_state" invisible="1"/>
+                        <button name="472" type="action" icon="fa-ban" title="BLOCK" class="btn-danger" style="color:red;" attrs="{'invisible': [('working_state', '=', 'blocked')]}"/>
+                        <button name="unblock" type="object" icon="fa-check" title="UNBLOCK" class="btn-danger" style="color:green;" attrs="{'invisible': [('working_state', '!=', 'blocked')]}"/>
+                    </groupby>
+                </tree>
+            </field>
+        </record>
+        <!-- OVERRIDE not inherit!-->
+        <record id="mrp.mrp_production_workorder_tree_view" model="ir.ui.view">
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">0</attribute>
+                    <attribute name="sample">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- override open tablet view just when state is ready or in progress -->
+        <record id="mrp_workorder.mrp_production_workorder_tree_editable_view_inherit_workorder" model="ir.ui.view">
+            <field name="arch" type="xml">
+                <tree position="attributes">
+                    <attribute name="js_class">tablet_list_view</attribute>
+                </tree>
+                <xpath expr="//field[@name='state']" position="after">
+                    <field name="production_state" invisible="1"/>
+                </xpath>
+                <xpath expr="//button[@name='action_open_wizard']" position="after">
+                    <button name="open_tablet_view" type="object" icon="fa-tablet" context="{'from_production_order': True}" attrs="{'invisible': ['|', ('production_state', 'in', ('draft', 'cancel', 'done')), ('state', '=', 'done')]}"/>
+                </xpath>
+            </field>
+        </record>
+        <!-- ADD older complexer view not just time ids -->
+        <record model="ir.ui.view" id="mrp_production_workorder_form_view_inherit_econsa">
+            <field name="name">mrp.production.work.order.form.econsa</field>
+            <field name="model">mrp.workorder</field>
+            <field name="inherit_id" ref="mrp.mrp_production_workorder_form_view_inherit"/>
+            <field name="arch" type="xml">
+                <header position="inside">
+                    <button name="button_scrap" type="object" string="Scrap" attrs="{'invisible': [('state', 'in', ('done', 'cancel'))]}"/>
+                </header>
+                <page name="time_tracking" position="before">
+                    <page string="Work Instruction" attrs="{'invisible': [('worksheet', '=', False),('worksheet_google_slide', '=', False)]}">
+                        <field name="worksheet_type" invisible="1"/>
+                        <field name="worksheet_google_slide" widget="embed_viewer" attrs="{'invisible': [('worksheet_type', '=', 'pdf')]}"/>
+                        <field name="worksheet" widget="pdf_viewer" attrs="{'invisible': [('worksheet_type', '=', 'google_slide')]}"/>
+                    </page>
+                    <page string="Miscellaneous" name="workorder_page_misc" groups="mrp.group_mrp_manager">
+                        <group>
+                            <group>
+                                <field name="available_workcenter_ids" invisible="1"/>
+                                <field name="workcenter_id"/>
+                                <field name="production_id" readonly="1"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                        </group>
+                    </page>
+                </page>
+            </field>
+        </record>
+        <!-- Manufacturing Orders for HERRAMENTALES -->
+        <record id="mrp_production_tree_herramentales_view" model="ir.ui.view">
+            <field name="name">mrp.production.herr.tree</field>
+            <field name="model">mrp.production</field>
+            <field name="arch" type="xml">
+                <tree string="Manufacturing Orders" default_order="priority desc, date_planned_start desc" multi_edit="1" sample="1">
+                    <field name="priority" optional="hide" widget="priority" nolabel="1"/>
+                    <field name="message_needaction" invisible="1"/>
+                    <field name="name" decoration-bf="1"/>
+                    <field name="date_planned_start" readonly="1" optional="show" widget="remaining_days"/>
+                    <field name="product_id" readonly="1" optional="show"/>
+                    <field name="suaje" widget="many2one"/>
+                    <field name="suaje_transfer_state" invisible="1"/>
+                    <button name="button_transfer_suaje" string="Transferir suaje" type="object" class="btn-success" attrs="{'invisible': [('suaje_transfer_state', '!=','transfer')]}"/>
+                    <button name="button_return_suaje" string="Regresar suaje" type="object" class="btn-warning" attrs="{'invisible': [('suaje_transfer_state', '!=', 'return')]}"/>
+                    <field name="grabado" widget="many2one"/>
+                    <field name="grabado_transfer_state" invisible="1"/>
+                    <button name="button_transfer_grabado" string="Transferir grabado" type="object" class="btn-success" attrs="{'invisible': [('grabado_transfer_state', '!=','transfer')]}"/>
+                    <button name="button_return_grabado" string="Regresar grabado" type="object" class="btn-warning" attrs="{'invisible': [('grabado_transfer_state','!=', 'return')]}"/>
+                    <field name="product_qty" sum="Total Qty" string="Quantity" readonly="1" optional="show"/>
+                    <field name="company_id" readonly="1" groups="base.group_multi_company" optional="hide"/>
+                    <field name="state" optional="show" widget='badge' decoration-success="state == 'done'" decoration-info="state not in ('done', 'cancel')"/>
+                </tree>
+            </field>
+        </record>
+        <record id="mrp_production_herramentales_action" model="ir.actions.act_window">
+            <field name="name">Herramentales para OP</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mrp.production</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="mrp_production_tree_herramentales_view"/>
+            <field name="domain">['|', ('suaje_transfer_state', 'not in', (False, 'done')), ('grabado_transfer_state', '!=', (False, 'done'))]</field>
+        </record>
+        <record id="mrp.mrp_production_action" model="ir.actions.act_window">
+            <field name="view_id" ref="mrp.mrp_production_tree_view"/>
+        </record>
+        <menuitem id="mrp_production_herramentales_menu"
+                  action="mrp_production_herramentales_action"
+                  name="Herramentales para OP"
+                  parent="mrp.menu_mrp_manufacturing"
+                  sequence="99"/>
+    </data>
+</odoo>

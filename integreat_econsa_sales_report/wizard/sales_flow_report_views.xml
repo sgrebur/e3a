@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="wizard_sales_flow_wizard" model="ir.ui.view">
+        <field name="name">wizard.sale.flow.wizard</field>
+        <field name="model">wizard.sale.flow.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="company_id" invisible="1"/>
+                        <field name="partner_id"/>
+                        <field name="product_id"/>
+                        <field name="order_id"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="button_create_report" type="object" string="Ver Reporte Estado" class="btn-primary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="wizard_sales_flow_report_tree" model="ir.ui.view">
+        <field name="name">wizard.sale.flow.report.details</field>
+        <field name="model">wizard.sale.flow.report.details</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="wiz_id" invisible="1"/>
+                <field name="sale_id" widget="many2one" decoration-bf="1"/>
+                <field name="sale_create_uid" optional="hide"/>
+                <field name="product_id" widget="many2one"/>
+                <field name="sale_date" widget="date"/>
+                <field name="state" widget="badge"
+                    decoration-muted="state in ('01')"
+                    decoration-warning="state in ('05', '06')"
+                    decoration-danger="state in ('02', '03', '04')"
+                    decoration-success="state in ('07', '09', '10', '11', '12')"
+                    decoration-info="state in ('08')"/>
+                <field name="product_qty"/>
+                <field name="product_qty_delivered" optional="hide"/>
+                <field name="product_qty_invoiced" optional="hide"/>
+                <field name="product_qty_free" optional="hide"/>
+                <field name="level_state" invisible="1"/>
+                <field name="level_color" invisible="1"/>
+                <field name="mo_id" decoration-bf="1" widget="many2one"
+                       options="{
+                            'bg_color': 'rgba(217, 83, 79, 0.4):level_color == 1; rgba(240, 173, 78, 0.4):level_color == 2; rgba(92, 184, 92, 0.4):level_color == 3; rgba(91, 192, 222, 0.4):level_color == 4',
+                       }"/>
+                <field name="mo_date" widget="date"/>
+                <field name="mo_raw_move" invisible="1"/>
+                <field name="comp_id" widget="many2one"/>
+                <field name="comp_qty"/>
+                <field name="comp_qty_reserved"/>
+                <field name="comp_qty_free"/>
+                <field name="picking_ids" widget="many2many_tags" options="{'color_field': 'report_color'}"/>
+                <field name="detail_color" invisible="1"/>
+                <field name="pur_line" widget="many2one" options="{'bg_color': 'rgba(217, 83, 79, 0.4):detail_color == 1'}"/>
+                <field name="po_ids" widget="many2many_tags" options="{'color_field': 'report_color'}"/>
+                <field name="po_date" widget="date"/>
+                <field name="purchased_qty"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="wizard_sales_flow_search_view" model="ir.ui.view">
+        <field name="name">wizard.sales.flow.search.view</field>
+        <field name="model">wizard.sale.flow.report.details</field>
+        <field name="arch" type="xml">
+            <search string="Buscar en Reporte">
+                <field name="sale_id" string="Orden de Venta"/>
+                <field name="product_id"/>
+                <field name="mo_id" string="Orden de Produccion"/>
+                <field name="comp_id"/>
+                <filter string="Accionar en VENTA" name="todo_sale" domain="[('state', '=', '01')]"/>
+                <filter string="Accionar en PRODUCCIÓN" name="todo_prod" domain="[('level_state', 'in', ['02', '07', '08'])]"/>
+                <filter string="Accionar en la COMPRA" name="todo_purch" domain="[('detail_state', 'in', ['03', '04'])]"/>
+                <group expand="0" string="Agrupar por...">
+                    <filter string="Estado" name="state" domain="[]" context="{'group_by': 'state'}"/>
+                    <filter string="Creado por" name="create_uid" domain="[]" context="{'group_by': 'sale_create_uid'}"/>
+                    <filter string="OV" name="sale_id" domain="[]" context="{'group_by': 'sale_id'}"/>
+                    <filter string="OV Ln" name="sale_line" domain="[]" context="{'group_by': 'sale_line'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="wizard_sales_flow_wizard_action">
+        <field name="name">Reporte Estado Ventas</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">wizard.sale.flow.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_stock_wizard_sale_report" parent="stock.menu_stock_inventory_control" action="wizard_sales_flow_wizard_action" sequence="102"/>
+    <menuitem id="menu_sale_wizard_sale_report" parent="sale.product_menu_catalog" action="wizard_sales_flow_wizard_action" sequence="102"/>
+    <menuitem id="menu_purchase_wizard_sale_report" parent="purchase.menu_purchase_products" action="wizard_sales_flow_wizard_action" sequence="102"/>
+    <menuitem id="menu_mrp_wizard_sale_report" parent="mrp.menu_mrp_bom" action="wizard_sales_flow_wizard_action" sequence="102"/>
+</odoo>

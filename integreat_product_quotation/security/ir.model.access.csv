@@ -1,0 +1,4 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_product_quotation_group_integreat","access.product.quotation.group.integreat","model_product_quotation_group_integreat","base.group_user",1,1,1,1
+"access_product_quotation_integreat","access.product.quotation.integreat","model_product_quotation_integreat","base.group_user",1,1,1,1
+"access_product_quotation_line_integreat","access.product.quotation.line.integreat","model_product_quotation_line_integreat","base.group_user",1,1,1,1

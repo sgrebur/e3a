@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo noupdate="1">
+    <!-- Just to have grouping as Many2one ... ??? -->
+    <record id="defined" model="wizard.lamina.selection.group">
+        <field name="name">Definida</field>
+    </record>
+    <record id="available" model="wizard.lamina.selection.group">
+        <field name="name">Sin disponibilidad</field>
+    </record>
+    <record id="other" model="wizard.lamina.selection.group">
+        <field name="name">Con disponibilidad</field>
+    </record>
+</odoo>

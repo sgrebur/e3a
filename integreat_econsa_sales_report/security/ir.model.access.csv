@@ -1,0 +1,5 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_wizard_sale_flow_wizard","access.wizard.sale.flow.wizard","model_wizard_sale_flow_wizard","base.group_user",1,1,1,1
+"access_wizard_sale_flow_report","access.wizard.sale.flow.report","model_wizard_sale_flow_report","base.group_user",1,1,1,1
+"access_wizard_sale_flow_report_level","access.wizard.sale.flow.report.level","model_wizard_sale_flow_report_level","base.group_user",1,1,1,1
+"access_wizard_sale_flow_report_details","access.wizard.sale.flow.report.details","model_wizard_sale_flow_report_details","base.group_user",1,1,1,1

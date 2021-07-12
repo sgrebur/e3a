@@ -1,0 +1,5 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_integreat_econsa_laminas","access.integreat.econsa.laminas","model_wizard_lamina_selection","base.group_user",1,1,1,1
+"access_integreat_econsa_laminas_line","access.integreat.econsa.laminas.line","model_wizard_lamina_selection_line","base.group_user",1,1,1,1
+"access_integreat_econsa_laminas_product","access.integreat.econsa.laminas.product","model_wizard_lamina_selection_product_select","base.group_user",1,1,1,1
+"access_integreat_econsa_laminas_group","access.integreat.econsa.laminas.group","model_wizard_lamina_selection_group","base.group_user",1,1,1,1

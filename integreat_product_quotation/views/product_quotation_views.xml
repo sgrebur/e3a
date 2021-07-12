@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_qutation_view_tree" model="ir.ui.view">
+        <field name="name">Product Quotations</field>
+        <field name="model">product.quotation.integreat</field>
+        <field name="arch" type="xml">
+            <tree create="false" edit="false">
+                <!--<field name="name"/>-->
+                <field name="partner_id"/>
+                <field name="validity_date"/>
+                <field name="product_id"/>
+                <field name="product_qty"/>
+                <field name="currency_id"/>
+                <field name="price_sale_qty"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    <record id="product_qutation_group_view_tree" model="ir.ui.view">
+        <field name="name">Product Quotations</field>
+        <field name="model">product.quotation.group.integreat</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="partner_id" string="Cliente"/>
+                <field name="validity_date" string="Expiración"/>
+                <field name="state" widget="badge" decoration-muted="state == 'draft'" decoration-info="state == 'checked'" decoration-warning="state == 'sent'" decoration-success="state == 'confirmed'" decoration-danger="state == 'rejected'"/>
+            </tree>
+        </field>
+    </record>
+    <record id="product_qutation_group_view_form" model="ir.ui.view">
+        <field name="name">Product Quotations</field>
+        <field name="model">product.quotation.group.integreat</field>
+        <field name="arch" type="xml">
+            <form string="Product Quotation">
+                <field name="company_id" invisible="1"/>
+                <field name="is_complete" invisible="1"/>
+                <header>
+                    <field name="state" widget="statusbar"/>
+                    <button name="action_quotation_print" string="Imprimir" type="object" class="btn-primary" attrs="{'invisible': ['|', ('state', '!=', 'draft'), ('is_complete', '=', False)]}"/>
+                    <button name="action_quotation_send" string="Enviar" type="object" class="btn-primary" states="checked"/>
+                    <button name="action_quotation_confirm" string="Confirmar" type="object" class="btn-primary" states="sent"/>
+                    <button name="action_quotation_reject" string="Rechazar" type="object" class="btn-danger" states="sent"/>
+                    <button name="action_quotation_send" string="Re-Enviar" type="object" class="btn-secondary" states="sent, confirmed"/>
+                    <button name="action_reset_to_draft" string="Establecer a Borrador" type="object" class="btn-secondary" states="checked, rejected"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group name="product_quotation_header">
+                        <group>
+                            <field name="partner_id" string="Cliente" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="validity_date" string="Expiración"/>
+                        </group>
+                        <group>
+
+                            <field name="pricelist_id" string="Tarifa" decoration-bf="1" widget="selection" required="1"/>
+                            <field name="currency_id" invisible="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="currency_rate" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Líneas de cotización">
+                            <button name="action_create_line" icon="fa-plus" string="Agregar producto" type="object" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                            <field name="quot_ids">
+                                <tree editable="bottom" create="0">
+                                    <field name="state" invisible="1"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="quot_line" string="Ln#" readonly="1"/>
+                                    <field name="product_id" widget="many2one" readonly="1"/>
+                                    <field name="quot_conf_id" widget="selection" readonly="1"/>
+                                    <field name="product_qty" attrs="{'readonly': [('state', '!=', 'draft')]}" decoration-bf="price_sale_unit &lt;= 0" decoration-danger="price_sale_unit &lt;= 0"/>
+                                    <field name="price_sale_unit" widget="monetary" options="{'currency_field': 'currency_id'}" decoration-bf="price_sale_unit &lt;= 0" decoration-danger="price_sale_unit &lt;= 0"/>
+                                    <field name="price_sale_qty" widget="monetary" options="{'currency_field': 'currency_id'}" decoration-bf="price_sale_unit &lt;= 0" decoration-danger="price_sale_unit &lt;= 0"/>
+                                    <button name="edit_quotation" type="object" icon="fa-edit" string="Editar" readonly="1" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Términos y condiciones">
+                            <group>
+                                <field name="note" nolabel="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="product_qutation_view_form" model="ir.ui.view">
+        <field name="name">Product Quotations</field>
+        <field name="model">product.quotation.integreat</field>
+        <field name="arch" type="xml">
+            <form string="Product Quotation" create="false">
+                <field name="company_id" invisible="1"/>
+                <header>
+                    <field name="state" widget="statusbar"/>
+                    <button name="button_save_and_return" string="Guardar y volver" type="object" class="oe_highlight"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="group_id"/><span>/</span><field name="quot_line" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group name="product_quotation_header">
+                        <group>
+                            <field name="partner_id" string="Cliente" readonly="1"/>
+                            <field name="quot_conf_id" required="1" widget="selection" attrs="{'readonly': [('product_id', '!=', False)]}"/>
+                            <field name="product_id" string="Producto" readonly="1" decoration-bf="1"/>
+                            <field name="product_qty" string="Ctd cotizado" decoration-bf="1"/>
+                            <field name="picking_type_id" widget="selection" attrs="{'readonly': [('product_id', '!=', False)]}"/>
+                        </group>
+                        <group>
+                            <field name="validity_date" readonly="1"/>
+                            <field name="pricelist_id" string="Tarifa" decoration-bf="1" widget="selection" readonly="1"/>
+                            <field name="currency_id" invisible="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="currency_rate" attrs="{'readonly': [('state', '!=', 'draft')]}" readonly="1"/>
+                            <label for="price_sale_unit"/>
+                            <div class="o_row oe_inline">
+                                <field name="price_sale_unit" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                <field name="margin_unit" decoration-info="1"/>
+                            </div>
+                            <label for="price_sale_qty"/>
+                            <div class="o_row oe_inline">
+                                <field name="price_sale_qty" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                <field name="margin_qty" decoration-info="1"/>
+                            </div>
+                        </group>
+                    </group>
+                    <field name="bom_id" invisible="1"/>
+                    <notebook>
+                        <page string="Especificaciones">
+                            <group attrs="{'invisible': [('product_id', '=', False)]}">
+                                <field name="customer_product_id" invisible="1"/>
+                                <group >
+                                    <field name="product_code"/>
+                                    <field name="drawing_ref"/>
+                                </group>
+                                <group>
+                                    <field name="product_name"/>
+                                </group>
+                            </group>
+                            <group col="12">
+                                <group colspan="4" string="Calibre" attrs="{'invisible': [('product_id', '=', False)]}">
+                                    <field name="calibre"/>
+                                    <field name="papel"/>
+                                    <field name="flauta"/>
+                                    <field name="recub"/>
+                                </group>
+                                <group colspan="4" string="Calibre" attrs="{'invisible': [('product_id', '!=', False)]}">
+                                    <field name="calibre_search" context="{'show_attribute': 0}"/>
+                                    <field name="papel_search" context="{'show_attribute': 0}"/>
+                                    <field name="flauta_search" context="{'show_attribute': 0}"/>
+                                    <field name="recub_search" context="{'show_attribute': 0}"/>
+                                </group>
+                                <group colspan="4" string="Medida" attrs="{'readonly': [('product_id', '!=', False)]}">
+                                    <field name="uom_input" string="UdM" attrs="{'readonly': [('product_id', '!=', False)]}"/>
+                                    <field name="largo_input" string="Largo" attrs="{'readonly': [('product_id', '!=', False)], 'invisible': [('uom_input', '=', 'mm')]}"/>
+                                    <field name="ancho_input" string="Ancho" attrs="{'readonly': [('product_id', '!=', False)], 'invisible': [('uom_input', '=', 'mm')]}"/>
+                                    <field name="alto_input" string="Alto" attrs="{'readonly': [('product_id', '!=', False)], 'invisible': [('uom_input', '=', 'mm')]}"/>
+                                    <field name="largo" attrs="{'readonly': [('product_id', '!=', False)], 'invisible': [('uom_input', '=', 'in')]}"/>
+                                    <field name="ancho" attrs="{'readonly': [('product_id', '!=', False)], 'invisible': [('uom_input', '=', 'in')]}"/>
+                                    <field name="alto" attrs="{'readonly': [('product_id', '!=', False)], 'invisible': [('uom_input', '=', 'in')]}"/>
+                                </group>
+                                <group colspan="4" string="Lamina">
+                                    <field name="origen" attrs="{'readonly': [('product_id', '!=', False)]}"/>
+                                    <label for="largo_lamina"/>
+                                    <div class="o_row oe_inline">
+                                        <field name="largo_lamina" attrs="{'readonly': [('product_id', '!=', False)]}"/>
+                                        <span>mm</span>
+                                    </div>
+                                    <label for="ancho_lamina"/>
+                                    <div class="o_row oe_inline">
+                                        <field name="ancho_lamina" attrs="{'readonly': [('product_id', '!=', False)]}"/>
+                                        <span>mm</span>
+                                    </div>
+                                </group>
+                            </group>
+                            <field name="show_button" invisible="1"/>
+                            <button name="generate_product_data" string="Buscar/Crear Producto" type="object" class="oe_highlight" attrs="{'invisible': [('show_button', '!=', 1)]}"/>
+                            <button name="create_quotation_bom" string="Generar Lista de materiales y Procesos" type="object" class="oe_highlight" attrs="{'invisible': [('show_button', '!=', 2)]}"/>
+                        </page>
+                        <page string="Proceso" attrs="{'invisible': [('bom_id', '=', False)]}">
+                            <group>
+                                <group>
+                                    <field name="bom_qty"/>
+                                    <field name="tooling_buyer" widget="radio" options="{'horizontal':true}"/>
+                                    <field name="cost_tooling" widget="monetary" options="{'currency_field': 'currency_id'}" attrs="{'invisible': [('tooling_buyer', '=', 'customer')]}"/>
+                                </group>
+                                <group>
+                                    <field name="suaje"/>
+                                    <field name="grabado"/>
+                                </group>
+                            </group>
+                            <group>
+                                <field name="tooling_notes" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            </group>
+                            <field name="operation_ids" context="{'default_bom_id': bom_id}">
+                                <tree editable="bottom" create="false" delete="false">
+                                    <field name="bom_id" invisible="1"/>
+                                    <field name="company_id" invisible="1"/>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="operation_template_id"/>
+                                    <field name="operation_group" invisible="1"/>
+                                    <field name="name" invisible="1"/>
+                                    <field name="workcenter_id"/>
+                                    <field name="quot_currency" invisible="1"/>
+                                    <field name="quot_unit_cost" widget="monetary" options="{'currency_field': 'quot_currency'}"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Laminas y componentes" attrs="{'invisible': [('bom_id', '=', False)]}">
+                            <button name="select_lamina" string="Utilice otra lámina" type="object" class="oe_highlight" attrs="{'invisible': ['|', ('show_button', '&lt;', 10), ('show_button', '&gt;=', 20)]}"/>
+                            <button name="select_lamina" string="Seleccione lámina" type="object" class="oe_highlight" attrs="{'invisible': [('show_button', '&lt;', 20)]}"/>
+
+                            <field name="bom_line_ids" context="{'default_bom_id': bom_id}">
+                                <tree editable="bottom">
+                                    <field name="bom_id" invisible="1"/>
+                                    <field name="company_id" invisible="1"/>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="product_id" widget="many2one"/>
+                                    <field name="product_qty" invisible="1"/>
+                                    <field name="lamina_factor" string="Cajas/Lamina" readonly="1"/>
+                                    <field name="quot_qty" decoration-bf="1"/>
+                                    <field string="m²" name="quot_surface"/>
+                                    <field name="quot_free" decoration-success="1"/>
+                                    <field name="route_id"/>
+                                    <field name="quot_currency" invisible="1"/>
+                                    <field name="quot_unit_cost" widget="monetary" options="{'currency_field': 'quot_currency'}"/>
+                                    <field name="quot_cost_component" widget="monetary" options="{'currency_field': 'quot_currency'}" decoration-bf="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Costos y Precios" attrs="{'invisible': [('bom_id', '=', False)]}">
+                            <group col="6" string="Costos">
+                                <group colspan="2">
+                                    <field name="cost_material" string="Materiales" widget="monetary" options="{'currency_field': 'currency_id'}" decoration-danger="1"/>
+                                </group>
+                                <group colspan="2">
+                                    <field name="cost_operation" string="Proceso" widget="monetary" options="{'currency_field': 'currency_id'}" decoration-danger="1"/>
+                                </group>
+                                <group colspan="2">
+                                    <field name="unit_cost" string="Total/pza" widget="monetary" options="{'currency_field': 'currency_id'}" decoration-bf="1" decoration-danger="1"/>
+                                </group>
+                            </group>
+                            <group string="Precios / MOQ">
+                                <field name="quotation_moq_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="quot_id" invisible="1"/>
+                                        <field name="currency_id" invisible="1"/>
+                                        <field name="moq"/>
+                                        <field name="surface"/>
+                                        <field name="unit_cost"/>
+                                        <field name="cost_additional" string="+/-" decoration-danger="cost_additional &gt; 0" decoration-success="cost_additional &lt; 0"/>
+                                        <field name="factor"/>
+                                        <field name="price_unit" decoration-bf="1"/>
+                                        <field name="price_moq"/>
+                                        <field name="moq_cost" decoration-danger="1"/>
+                                        <field name="margin_unit" decoration-success="1" decoration-bf="1"/>
+                                        <field name="margin_moq" decoration-success="1"/>
+                                        <field name="margin_iva" decoration-success="1"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="Documentos">
+                            <group>
+                                <field name="specification_docs" widget="many2many_binary" string="Archivos"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="product_quotation_integreat_search_view" model="ir.ui.view">
+        <field name="name">product.quotation.group.integreat.search</field>
+        <field name="model">product.quotation.group.integreat</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="product_quotation_integreat_group_action">
+        <field name="name">Cotizaciones</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.quotation.group.integreat</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record model="ir.actions.act_window" id="product_quotation_integreat_action">
+        <field name="name">Cotizaciones</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.quotation.integreat</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record model="ir.actions.act_window" id="product_quotation_integreat_create_action">
+        <field name="name">Cotización Producto</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.quotation.integreat</field>
+        <field name="view_mode">form</field>
+    </record>
+    <menuitem id="menu_sale_product_quotation_integreat" parent="sale.product_menu_catalog" action="product_quotation_integreat_group_action" sequence="103"/>
+</odoo>

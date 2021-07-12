@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_template_form_view_mx" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.cfdi</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="account.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='purchase']" position="inside">
+                <group name="CFDI Import" string="CFDI">
+                    <field name="l10n_mx_edi_clave_search_pattern"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="product_variant_easy_customer_code">
+        <field name="name">product.variant.easy.customer.code</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+        <field name="arch" type="xml">
+            <field name="default_code" position="after">
+                <field name="product_unspsc_code_id"/>
+            </field>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="product_normal_form_view_mx">
+        <field name="name">product.normal.form.econsa</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <field name="unspsc_code_id" position="replace">
+                <field name="unspsc_code_id" attrs="{'invisible': [('product_variant_count', '&gt;', 1)]}"/>
+                <field name="product_unspsc_code_id" attrs="{'invisible': [('product_variant_count', '=', 1)]}"/>
+            </field>
+        </field>
+    </record>
+</odoo>

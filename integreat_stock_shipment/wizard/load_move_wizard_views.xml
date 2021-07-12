@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="wizard_shipment_move_load_view" model="ir.ui.view">
+        <field name="name">shipment.move.load.wizard</field>
+        <field name="model">shipment.move.load.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="shipment_id" readonly="1"/>
+                    </group>
+                    <group>
+                        <field name="mixed" widget="toggle_button"/>
+                        <field name="pack_type" attrs="{'invisible': [('mixed', '=', False)]}"/>
+                    </group>
+                </group>
+                <notebook>
+                    <page string="Líneas">
+                        <field name="line_ids">
+                            <tree editable="bottom" create="0">
+                                <field name="move_id" invisible="1"/>
+                                <field name="select"/>
+                                <field name="product_id"/>
+                                <field name="loaded_qty" decoration-bf="1"/>
+                                <field name="unloaded_qty" decoration-danger="unloaded_qty > 0" readonly="1"/>
+                                <field name="qty_to_load" invisible="1"/>
+                                <field name="product_uom"/>
+                                <field name="pack_type" string="Tipo Emb" attrs="{'column_invisible': [('parent.mixed', '=', 'True')], 'required': [('parent.mixed', '=', 'True')]}"/>
+                                <field name="pack_qty" string="Cantidad" attrs="{'column_invisible': [('parent.mixed', '=', 'True')]}" decoration-bf="1"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+                <footer>
+                    <button name="button_load_all" type="object" string="Asignar todo" class="btn-primary" attrs="{'invisible': [('mixed', '=', True)]}"/>
+                    <button name="button_load_selected" type="object" string="Asignar seleccionado" class="btn-primary"/>
+                    <button string="Cancel" type="button" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

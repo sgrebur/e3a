@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="purchase_order_form_integreat_product_configurator" model="ir.ui.view">
+        <field name="name">purchase.order.form.integreat.product.configurator</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_rfq_send'][1]" position="replace">
+                <field name="order_checked" invisible="1"/>
+                <button name="action_rfq_send" string="Enviar OC" type="object" context="{'send_rfq':False}" class="oe_highlight" attrs="{'invisible': ['|', ('state', '!=', 'draft'), ('order_checked', '=', False)]}"/>
+            </xpath>
+            <xpath expr="//button[@name='action_rfq_send'][2]" position="attributes">
+                <attribute name="context">{'send_rfq':False}</attribute>
+                <attribute name="string">Re-Enviar OC</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_rfq_send'][3]" position="attributes">
+                <attribute name="string">Re-Enviar OC</attribute>
+            </xpath>
+            <xpath expr="//button[@name='print_quotation']" position="attributes">
+                <attribute name="string">Imprimir OC</attribute>
+            </xpath>
+            <xpath expr="//button[@name='button_confirm'][2]" position="replace"/>
+            <field name="currency_id" position="after">
+                <field name="picking_type_id" domain="[('code','=','incoming'), '|', ('warehouse_id', '=', False), ('warehouse_id.company_id', '=', company_id)]" options="{'no_create': True}"/>
+            </field>
+            <field name="price_unit" position="before">
+                <field name="manual_price" invisible="1"/>
+            </field>
+            <field name="price_unit" position="replace">
+                <field name="price_unit" attrs="{'readonly': [('invoice_lines', '!=', [])]}" decoration-danger="manual_price == True" decoration-bf="manual_price == True"/>
+            </field>
+        </field>
+    </record>
+</odoo>

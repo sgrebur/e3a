@@ -1,0 +1,10 @@
+<odoo>
+    <data>
+        <!-- JS assets -->
+        <template id="assets_backend" inherit_id="web.assets_backend" name="dr_many_tags_link assets">
+            <xpath expr="script[last()]" position="after">
+                <script type="text/javascript" src="/dr_many_tags_link/static/src/js/many_tags_link.js"></script>
+            </xpath>
+        </template>
+    </data>
+</odoo>

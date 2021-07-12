@@ -1,0 +1,79 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* integreat_sale_stock_delivery_status
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0-20200111\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-02-05 01:11+0000\n"
+"PO-Revision-Date: 2020-02-05 01:11+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: integreat_sale_stock_delivery_status
+#: model:ir.model.fields.selection,name:integreat_sale_stock_delivery_status.selection__sale_order__delivery_status__noavail
+#: model:ir.model.fields.selection,name:integreat_sale_stock_delivery_status.selection__sale_order_line__line_delivery_status__noavail
+msgid "Check Availability"
+msgstr "Consultar disponibilidad"
+
+#. module: integreat_sale_stock_delivery_status
+#: model_terms:ir.ui.view,arch_db:integreat_sale_stock_delivery_status.sale_order_form_integreat_delivery_status
+msgid "Deliver"
+msgstr "Entregar"
+
+#. module: integreat_sale_stock_delivery_status
+#: model:ir.model.fields.selection,name:integreat_sale_stock_delivery_status.selection__sale_order__delivery_status__done
+#: model:ir.model.fields.selection,name:integreat_sale_stock_delivery_status.selection__sale_order_line__line_delivery_status__done
+msgid "Delivered"
+msgstr "Entregado"
+
+#. module: integreat_sale_stock_delivery_status
+#: model:ir.model.fields,field_description:integreat_sale_stock_delivery_status.field_sale_order__delivery_status
+#: model:ir.model.fields,field_description:integreat_sale_stock_delivery_status.field_sale_order_line__line_delivery_status
+msgid "Delivery Status"
+msgstr "Estado de entrega"
+
+#. module: integreat_sale_stock_delivery_status
+#: model:ir.model.fields.selection,name:integreat_sale_stock_delivery_status.selection__sale_order__delivery_status__notrelevant
+#: model:ir.model.fields.selection,name:integreat_sale_stock_delivery_status.selection__sale_order_line__line_delivery_status__notrelevant
+msgid "Not relevant"
+msgstr "Irrelevante"
+
+#. module: integreat_sale_stock_delivery_status
+#: model:ir.model.fields.selection,name:integreat_sale_stock_delivery_status.selection__sale_order__delivery_status__open
+#: model:ir.model.fields.selection,name:integreat_sale_stock_delivery_status.selection__sale_order_line__line_delivery_status__open
+msgid "Open"
+msgstr "Abierto"
+
+#. module: integreat_sale_stock_delivery_status
+#: model:ir.model.fields.selection,name:integreat_sale_stock_delivery_status.selection__sale_order__delivery_status__partial
+#: model:ir.model.fields.selection,name:integreat_sale_stock_delivery_status.selection__sale_order_line__line_delivery_status__partial
+msgid "Partially Delivered"
+msgstr "Parcialmente entregado"
+
+#. module: integreat_sale_stock_delivery_status
+#: model:ir.model.fields.selection,name:integreat_sale_stock_delivery_status.selection__sale_order__delivery_status__ready
+#: model:ir.model.fields.selection,name:integreat_sale_stock_delivery_status.selection__sale_order_line__line_delivery_status__ready
+msgid "Ready to Deliver"
+msgstr "Listo para entregar"
+
+#. module: integreat_sale_stock_delivery_status
+#: model:ir.model,name:integreat_sale_stock_delivery_status.model_sale_order
+msgid "Sales Order"
+msgstr "Orden de venta"
+
+#. module: integreat_sale_stock_delivery_status
+#: model:ir.model,name:integreat_sale_stock_delivery_status.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Línea de orden de venta"
+
+#. module: integreat_sale_stock_delivery_status
+#: model:ir.model.fields.selection,name:integreat_sale_stock_delivery_status.selection__sale_order__delivery_status__waiting
+#: model:ir.model.fields.selection,name:integreat_sale_stock_delivery_status.selection__sale_order_line__line_delivery_status__waiting
+msgid "Waiting Picking"
+msgstr "Esperando Picking"

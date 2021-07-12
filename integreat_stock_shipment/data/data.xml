@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <data noupdate="1">
+        <record id="seq_sale_order" model="ir.sequence">
+            <field name="name">Shipment</field>
+            <field name="code">shipment</field>
+            <field name="prefix">T</field>
+            <field name="padding">5</field>
+            <field name="number_next_actual">70001</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="pallet" model="shipment.package.type">
+            <field name="name">PAL</field>
+            <field name="description">Tarima</field>
+        </record>
+        <record id="bulto" model="shipment.package.type">
+            <field name="name">Bulto</field>
+            <field name="description">Bulto</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mrp_bom_form_view_econsa" model="ir.ui.view">
+        <field name="name">mrp.bom.form.econsa</field>
+        <field name="model">mrp.bom</field>
+        <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='o_row']" position="after">
+                <field name="suaje"/>
+                <field name="grabado"/>
+            </xpath>
+            <xpath expr="//label[@for='product_qty']" position="replace">
+                <label for="product_qty" string="Pzs/Herr"/>
+            </xpath>
+            <field name="picking_type_id" position="after">
+                <field name="is_model" groups="base.group_system"/>
+            </field>
+            <field name="type" position="after">
+                <field name="picking_type_id" attrs="{'invisible': [('type','!=','normal')]}" string="Planta" groups="stock.group_adv_location"/>
+            </field>
+            <field name="operation_ids" position="replace">
+                <field name="operation_ids"
+                        attrs="{'invisible': [('type','not in',('normal','phantom'))]}"
+                        groups="mrp.group_mrp_routings"
+                        context="{'default_company_id': company_id, 'default_product_tmpl_ids': [product_tmpl_id]}">
+                    <tree string="Operaciones" editable="bottom">
+                        <field name="sequence" widget="handle"/>
+                        <field name="operation_template_id"/>
+                        <field name="operation_group"/>
+                        <field name="name"/>
+                        <field name="quality_point_count" invisible="1"/>
+                        <button name="action_mrp_workorder_show_steps" type="object" icon="fa-list-ul" context="{'default_operation_id': id}"/>
+                        <field name="company_id" invisible="1"/>
+                        <field name="available_workcenters_from_template" invisible="1"/>
+                        <field name="workcenter_id" domain="[('id', 'in', available_workcenters_from_template)]"/>
+                        <field name="time_cycle" widget="float_time" string="Duration (minutes)" sum="Total Duration" width="1.5"/>
+                    </tree>
+                </field>
+            </field>
+        </field>
+    </record>
+    <record id="mrp_bom_tree_view_econsa" model="ir.ui.view">
+        <field name="name">mrp.bom.tree.econsa</field>
+        <field name="model">mrp.bom</field>
+        <field name="inherit_id" ref="mrp.mrp_bom_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="attributes">
+                <attribute name="optional">show</attribute>
+            </field>
+            <field name="product_qty" position="attributes">
+                <attribute name="optional">show</attribute>
+            </field>
+            <field name="product_uom_id" position="attributes">
+                <attribute name="optional">show</attribute>
+            </field>
+            <field name="product_uom_id" position="after">
+                <field name="suaje"/>
+                <field name="grabado"/>
+            </field>
+        </field>
+    </record>
+    <record id="mrp_bom_form_view" model="ir.ui.view">
+        <field name="name">mrp.bom.form</field>
+        <field name="model">mrp.bom</field>
+        <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+        <field name="arch" type="xml">
+            <field name="bom_product_template_attribute_value_ids" position="before">
+                <field name="route_id"/>
+            </field>
+        </field>
+    </record>
+    <record id="mrp_bom_line_view_form" model="ir.ui.view">
+        <field name="name">mrp.bom.line.view.form</field>
+        <field name="model">mrp.bom.line</field>
+        <field name="inherit_id" ref="mrp.mrp_bom_line_view_form"/>
+        <field name="arch" type="xml">
+            <field name="bom_product_template_attribute_value_ids" position="before">
+                <field name="route_id"/>
+            </field>
+        </field>
+    </record>
+</odoo>

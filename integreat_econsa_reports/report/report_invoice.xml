@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_invoice_override" inherit_id="account.report_invoice">
+        <xpath expr="//t[@t-foreach='docs']" position="replace">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="lang" t-value="o.invoice_user_id.sudo().lang if o.move_type in ('in_invoice', 'in_refund') else o.partner_id.lang"/>
+                <t t-if="o._get_name_invoice_report() == 'account.report_invoice_document'"
+                    t-call="integreat_econsa_reports.report_invoice_document_mx_integreat" t-lang="lang"/>
+            </t>
+        </xpath>
+    </template>
+    <template id="report_invoice_with_payments_override" inherit_id="account.report_invoice_with_payments">
+        <xpath expr="//t[@t-foreach='docs']" position="replace">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="lang" t-value="o.invoice_user_id.sudo().lang if o.move_type in ('in_invoice', 'in_refund') else o.partner_id.lang"/>
+                <t t-set="print_with_payments" t-value="True"/>
+                <t t-if="o._get_name_invoice_report() == 'account.report_invoice_document'"
+                    t-call="integreat_econsa_reports.report_invoice_document_mx_integreat" t-lang="lang"/>
+            </t>
+        </xpath>
+    </template>
+    <template id="report_invoice_document_mx_integreat">
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="o.with_context(lang=lang)"/>
+            <!--<t t-set="address"><address t-field="o.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: True}"/><div t-if="o.partner_id.vat" class="mt16"><t t-if="o.company_id.country_id.vat_label" t-esc="o.company_id.country_id.vat_label" id="inv_tax_id_label"/><t t-else="">Tax ID</t>:
+                        <span t-field="o.partner_id.vat"/><span t-if="is_cfdi_signed and o.company_id.vat != o.l10n_mx_edi_cfdi_supplier_rfc"><span>XML VAT: </span><span t-esc="o.l10n_mx_edi_cfdi_supplier_rfc"/></span></div></t>-->
+            <div class="page" style="font-size:0.9rem;">
+                <!-- Global variables -->
+                <t t-set="cfdi_vals" t-value="o._l10n_mx_edi_decode_cfdi()"/>
+                <t t-set="is_cfdi_signed" t-value="bool(o._get_l10n_mx_edi_signed_edi_document())"/>
+                <t t-set="order_reference" t-value="o._get_sale_order_for_printout()"/>
+                <t t-if="o.l10n_mx_edi_cfdi_request in ('on_invoice', 'on_refund') and not is_cfdi_signed">
+                    <!-- due to HTML preview for device responsive -->
+                    <button t-attf-class="btn-danger #{'btn' if report_type != 'html' else ''}">
+                        <strong>A signature of this invoice is required, but it is not signed.</strong>
+                    </button>
+                </t>
+                <div class="row">
+                    <div class="col-6">
+                        <span t-if="o.move_type in ('out_invoice', 'out_refund')"><strong>Customer</strong></span>
+                        <span t-if="o.move_type in ('in_invoice', 'in_refund')"><strong>Supplier</strong></span>
+                        <br/>
+                        <span t-field="o.partner_id.name"/>
+                        <br/>
+                        <t t-set="address_custom">
+                            <address t-field="o.partner_id" t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}' />
+                        </t>
+                        <t t-raw="address_custom"/>
+                        <div t-if="o.partner_id.vat">
+                            <span>
+                                <t t-if="o.company_id.country_id.vat_label" t-esc="o.company_id.country_id.vat_label" id="inv_tax_id_label"/>
+                                <t t-else="">Tax ID</t>:
+                            </span>
+                            <span t-field="o.partner_id.vat"/>
+                            <span t-if="is_cfdi_signed and o.company_id.vat != o.l10n_mx_edi_cfdi_supplier_rfc">
+                                <span>XML VAT: </span>
+                                <span t-esc="o.l10n_mx_edi_cfdi_supplier_rfc"/></span>
+                        </div>
+                    </div>
+                    <div class="col-6 text-right">
+                        <h3>
+                            <strong>
+                                <span t-if="o.move_type == 'out_invoice' and o.state == 'posted'">Invoice</span>
+                                <span t-if="o.move_type == 'out_invoice' and o.state == 'draft'">Draft Invoice</span>
+                                <span t-if="o.move_type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice</span>
+                                <span t-if="o.move_type == 'out_refund'">Credit Note</span>
+                                <span t-if="o.move_type == 'in_refund'">Vendor Credit Note</span>
+                                <span t-if="o.move_type == 'in_invoice'">Vendor Bill</span>
+                            </strong><br/>
+                            <span t-if="o.name != '/'" t-field="o.name"/>
+                        </h3>
+                    </div>
+                </div>
+                <div id="informations">
+                    <div class="row mt32">
+                        <div class="col-3" t-if="o.invoice_date" name="invoice_date">
+                            <strong>Invoice Date:</strong>
+                            <p class="m-0" t-field="o.invoice_date"/>
+                        </div>
+                        <div class="col-3">
+                            <t t-if="o.invoice_date_due and o.move_type == 'out_invoice' and o.state == 'posted'" name="due_date">
+                                <strong>Due Date:</strong>
+                                <p class="m-0" t-field="o.invoice_date_due"/>
+                            </t>
+                        </div>
+                        <div class="col-6">
+                            <t t-if="order_reference == 'NONE' and o.ref and o.ref != o.name" name="reference">
+                                <strong>Reference:</strong>
+                                <p class="m-0" t-field="o.ref"/>
+                            </t>
+                            <t t-if="order_reference not in ('NONE', 'MULTI')" name="reference">
+                                <strong>Purchase Order:</strong>
+                                <p class="m-0" t-esc="order_reference"/>
+                            </t>
+                        </div>
+                    </div>
+                    <t t-if="is_cfdi_signed">
+                        <div class="row mt32">
+                            <div class="col-3">
+                                <strong>Payment Method:</strong>
+                                <p t-esc="cfdi_vals.get('payment_method')"/>
+                            </div>
+                            <div class="col-3">
+                                <t t-if="o.l10n_mx_edi_payment_method_id">
+                                    <strong>Payment Way:</strong>
+                                    <p t-esc="'%s - %s' % (o.l10n_mx_edi_payment_method_id.code, o.l10n_mx_edi_payment_method_id.name)"/>
+                                </t>
+                            </div>
+                            <div name="cfdi_vals['usage']" class="col-6">
+                                <t t-if="cfdi_vals.get('usage')">
+                                    <strong>Usage:</strong>
+                                    <p>
+                                        <span t-esc="cfdi_vals['usage']"/>
+                                        <span> - </span>
+                                        <span t-field="o.l10n_mx_edi_usage"/>
+                                    </p>
+                                </t>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+                <t t-set="display_discount" t-value="any(l.discount for l in o.invoice_line_ids)"/>
+                <table class="table table-sm o_main_table" name="invoice_line_table">
+                    <thead>
+                        <t t-if="o.move_type == 'out_refund' and o.l10n_mx_edi_usage == 'G02'">
+                            <tr>
+                                <th name="th_description" class="text-left">
+                                    <span>Description</span>
+                                </th>
+                                <th name="th_subtotal" class="text-right">
+                                    <span groups="account.group_show_line_subtotals_tax_excluded">Amount</span>
+                                    <span groups="account.group_show_line_subtotals_tax_included">Total Price</span>
+                                </th>
+                            </tr>
+                        </t>
+                        <t t-else="">
+                            <tr>
+                                <th t-if="is_cfdi_signed">
+                                    <span>Product code</span>
+                                </th>
+                                <th name="th_description" class="text-left">
+                                    <span>Description</span>
+                                </th>
+                                <th name="th_quantity" class="text-right">
+                                    <span>Quantity</span>
+                                </th>
+                                <th t-if="is_cfdi_signed" class="text-right">
+                                    <span>Unit code</span>
+                                </th>
+                                <th t-if="order_reference == 'MULTI'">
+                                    <span>OC</span>
+                                </th>
+                                <th name="th_priceunit" t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                                    <span>Unit Price</span>
+                                </th>
+                                <th name="th_price_unit" t-if="display_discount" t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                                    <span>Disc.%</span>
+                                </th>
+                                <th name="th_taxes" t-attf-class="text-left {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                                    <span>Taxes</span>
+                                </th>
+                                <th name="th_subtotal" class="text-right">
+                                    <span groups="account.group_show_line_subtotals_tax_excluded">Amount</span>
+                                    <span groups="account.group_show_line_subtotals_tax_included">Total Price</span>
+                                </th>
+                                <th t-if="is_cfdi_signed and o.l10n_mx_edi_external_trade">Tariff Fraction</th>
+                                <th t-if="is_cfdi_signed and o.l10n_mx_edi_external_trade">Customs Qty</th>
+                                <th t-if="is_cfdi_signed and o.l10n_mx_edi_external_trade">Customs Unit</th>
+                            </tr>
+                        </t>
+                    </thead>
+                    <tbody class="invoice_tbody">
+                        <t t-set="current_subtotal" t-value="0"/>
+                        <t t-set="lines" t-value="o.invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)"/>
+                        <t t-foreach="lines" t-as="line">
+                            <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
+                            <t t-set="current_subtotal" t-value="current_subtotal + line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
+                            <t t-if="order_reference == 'MULTI'">
+                                <t t-set="line_order_reference" t-value="line._get_line_sale_order_for_printout()"/>
+                            </t>
+                            <t t-set="description" t-value="line._get_description_for_printout()"/>
+                            <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
+                                <t t-if="not line.display_type">
+                                    <t t-if="o.move_type == 'out_refund' and o.l10n_mx_edi_usage == 'G02'">
+                                        <td name="account_invoice_line_name">
+                                            <span t-esc="description['name']"/>
+                                        </td>
+                                        <td class="text-right o_price_total">
+                                            <span class="text-nowrap" t-field="line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
+                                            <span class="text-nowrap" t-field="line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
+                                        </td>
+                                    </t>
+                                    <t t-else="">
+                                        <td t-if="is_cfdi_signed">
+                                            <span t-field="line.product_unspsc_code_id.code"/>
+                                            <t t-set="custom_numbers" t-value="line._l10n_mx_edi_get_custom_numbers()"/>
+                                            <t t-if="custom_numbers">
+                                                <br/>Customs:
+                                                <ul>
+                                                    <t t-foreach="custom_numbers" t-as="custom_number">
+                                                        <li>
+                                                            <span t-esc="custom_number"/>
+                                                        </li>
+                                                    </t>
+                                                </ul>
+                                            </t>
+                                        </td>
+                                        <td name="account_invoice_line_name">
+                                            <t t-if="description['code'] != 'NONE'">
+                                                [<span t-esc="description['code']"/>]
+                                            </t>
+                                            <span t-esc="description['name']"/>
+                                            <t t-if="description['int_ref'] != 'NONE'">
+                                                <br/><spant t-esc="description['int_ref']" style="font-style:italic; font-size:0.8em;"/>
+                                            </t>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="line.quantity"/>
+                                            <span t-field="line.product_uom_id" groups="uom.group_uom"/>
+                                        </td>
+                                        <td t-if="is_cfdi_signed" class="text-right">
+                                            <span t-field="line.product_uom_id.unspsc_code_id.code"/>
+                                        </td>
+                                        <td t-if="order_reference == 'MULTI'">
+                                            <span t-esc="line_order_reference"/>
+                                        </td>
+                                        <td t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                                            <span class="text-nowrap" t-field="line.price_unit"/>
+                                        </td>
+                                        <td t-if="display_discount" t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                                            <span class="text-nowrap" t-field="line.discount"/>
+                                        </td>
+                                        <td t-attf-class="text-left {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                                            <span t-esc="', '.join(map(lambda x: (x.description or x.name), line.tax_ids))" id="line_tax_ids"/>
+                                        </td>
+                                        <td class="text-right o_price_total">
+                                            <span class="text-nowrap" t-field="line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
+                                            <span class="text-nowrap" t-field="line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
+                                        </td>
+                                        <td t-if="is_cfdi_signed and o.l10n_mx_edi_external_trade" class="text-right">
+                                            <span t-field="line.product_id.l10n_mx_edi_tariff_fraction_id.code"/>
+                                        </td>
+                                        <td t-if="is_cfdi_signed and o.l10n_mx_edi_external_trade" class="text-right">
+                                            <span t-field="line.l10n_mx_edi_qty_umt"/>
+                                        </td>
+                                        <td t-if="is_cfdi_signed and o.l10n_mx_edi_external_trade">
+                                            <span t-field="line.l10n_mx_edi_umt_aduana_id.name"/>
+                                        </td>
+                                    </t>
+                                </t>
+                                <t t-if="line.display_type == 'line_section'">
+                                    <td colspan="99">
+                                        <span t-field="line.name" t-options="{'widget': 'text'}"/>
+                                    </td>
+                                    <t t-set="current_section" t-value="line"/>
+                                    <t t-set="current_subtotal" t-value="0"/></t>
+                                <t t-if="line.display_type == 'line_note'">
+                                    <td colspan="99">
+                                        <span t-field="line.name" t-options="{'widget': 'text'}"/>
+                                    </td>
+                                </t>
+                            </tr>
+                            <t t-if="current_section and (line_last or lines[line_index+1].display_type == 'line_section')">
+                                <tr class="is-subtotal text-right">
+                                    <td colspan="99">
+                                        <strong class="mr16">Subtotal</strong>
+                                        <span t-esc="current_subtotal" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+                    </tbody>
+                </table>
+                <div class="clearfix">
+                    <div id="total" class="row">
+                        <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ml-auto">
+                            <table class="table table-sm" style="page-break-inside: avoid;">
+                                <tr class="border-black o_subtotal" style="">
+                                    <td>
+                                        <strong>Subtotal</strong>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-field="o.amount_untaxed"/>
+                                    </td>
+                                </tr>
+                                <t t-foreach="o.amount_by_group" t-as="amount_by_group">
+                                    <tr style="">
+                                        <t t-if="len(o.line_ids.filtered(lambda line: line.tax_line_id)) in [0, 1] and o.amount_untaxed == amount_by_group[2]">
+                                            <td>
+                                                <span class="text-nowrap" t-esc="amount_by_group[0]"/>
+                                            </td>
+                                            <td class="text-right o_price_total">
+                                                <span class="text-nowrap" t-esc="amount_by_group[3]"/>
+                                            </td>
+                                        </t>
+                                        <t t-else="">
+                                            <td>
+                                                <span t-esc="amount_by_group[0]"/>
+                                                <span class="text-nowrap"> on
+                                                    <t t-esc="amount_by_group[4]"/>
+                                                </span>
+                                            </td>
+                                            <td class="text-right o_price_total">
+                                                <span class="text-nowrap" t-esc="amount_by_group[3]"/>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                </t>
+                                <tr class="border-black o_total">
+                                    <td>
+                                        <strong>Total</strong>
+                                    </td>
+                                    <td class="text-right">
+                                        <span class="text-nowrap" t-field="o.amount_total"/>
+                                    </td>
+                                </tr>
+                                <!-- PAYMENTS ON INVOICE NOT NEEDED NOT NEEDED, maybe when it's about ADVANCE
+                                <t t-if="print_with_payments">
+                                    <t t-if="o.payment_state != 'invoicing_legacy'">
+                                        <t t-set="payments_vals" t-value="o.sudo()._get_reconciled_info_JSON_values()"/>
+                                        <t t-foreach="payments_vals" t-as="payment_vals">
+                                            <tr>
+                                                <td>
+                                                    <i class="oe_form_field text-right oe_payment_label">Paid on
+                                                        <t t-esc="payment_vals['date']" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                                                    </i>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-esc="payment_vals['amount']" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="len(payments_vals) &gt; 0">
+                                            <tr class="border-black">
+                                                <td>
+                                                    <strong>Amount Due</strong>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-field="o.amount_residual"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                </t>-->
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-right" t-if="is_cfdi_signed">
+                    <t t-esc="o._l10n_mx_edi_cfdi_amount_to_text()"/>
+                </p>
+                <p t-if="o.move_type in ('out_invoice', 'in_refund') and o.payment_reference and o.payment_reference != o.name" name="payment_communication">
+                        Please use the following communication for your payment :
+                    <b>
+                        <span t-field="o.payment_reference"/>
+                    </b>
+                </p>
+                <p t-if="o.invoice_payment_term_id" name="payment_term">
+                    <span t-field="o.invoice_payment_term_id.note"/>
+                </p>
+                <div t-if="is_cfdi_signed and o.l10n_mx_edi_external_trade">
+                    <div class="row">
+                        <div class="col-12">
+                            <div align="center">
+                                <span>
+                                    <strong>External Trade</strong>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table table-sm text-center mt4 mb4" align="center">
+                                <thead>
+                                    <tr style="background-color:grey; color:white;">
+                                        <th class="text-center">Operation Type</th>
+                                        <th class="text-center">Certificate Key</th>
+                                        <th class="text-center">Certificate Source</th>
+                                        <th class="text-center" t-if="cfdi_vals['ext_trade_nb_certificate_origin'] == 1">Number Certificate Source</th>
+                                        <th class="text-center">Subdivision</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <span t-esc="cfdi_vals['ext_trade_operation_type']"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="cfdi_vals['ext_trade_certificate_key']"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="cfdi_vals['ext_trade_certificate_source']"/>
+                                        </td>
+                                        <td t-if="cfdi_vals['ext_trade_nb_certificate_origin'] == 1">
+                                            <span t-esc="cfdi_vals['ext_trade_certificate_origin']"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="cfdi_vals['ext_trade_subdivision']"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-sm text-center mt4 mb4" align="center">
+                                <thead>
+                                    <tr style="background-color:grey; color:white;">
+                                        <th class="text-center" t-if="cfdi_vals['ext_trade_nb_reliable_exporter']">Number of Reliable Exporter</th>
+                                        <th class="text-center">Incoterm</th>
+                                        <th class="text-center">Rate USD</th>
+                                        <th class="text-center">Total USD</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td t-if="cfdi_vals['ext_trade_nb_reliable_exporter']">
+                                            <span t-esc="cfdi_vals['ext_trade_nb_reliable_exporter']"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="cfdi_vals['ext_trade_incoterm']"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="cfdi_vals['ext_trade_rate_usd']"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="cfdi_vals['ext_trade_total_usd']"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <p t-if="o.narration" name="comment" style="font-size: 0.9em;">
+                    <span t-field="o.narration"/>
+                </p>
+                <div t-if="o.l10n_mx_edi_leyenda">
+                    <div class="row">
+                        <div class="col-12">
+                            <span>
+                                <strong>Disposiciones Fiscales</strong>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <p>
+                                <span t-esc="o.l10n_mx_edi_leyenda_texto"/>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <p t-if="o.fiscal_position_id.note" name="note">
+                    <span t-field="o.fiscal_position_id.note"/>
+                </p>
+                <t t-if="is_cfdi_signed">
+                    <div class="row" id="complement">
+                        <div t-if="cfdi_vals.get('sello')" class="barcode col-3">
+                            <img alt="Barcode" t-att-src="'/report/barcode/?type=QR&amp;value=%s&amp;width=180&amp;height=180' % quote_plus(                                 'https://verificacfdi.facturaelectronica.sat.gob.mx/default.aspx?' + keep_query(                                     re=o.l10n_mx_edi_cfdi_supplier_rfc, rr=o.l10n_mx_edi_cfdi_customer_rfc,                                     tt='%.*f' % (o.currency_id.decimal_places, o.l10n_mx_edi_cfdi_amount), id=o.l10n_mx_edi_cfdi_uuid)                                     + '&amp;fe=%s' % quote_plus(                                         cfdi_vals['sello'][-8:], 'utf-8', 'strict', '=/').replace('%2B', '+'))"/>
+                        </div>
+                        <div class="col-9" style="font-size:0.75em;">
+                            <div class="digital-stamp">
+                                <span>Digital stamp of the emitter</span>
+                            </div>
+                            <div class="digital-stamp-content">
+                                <span t-esc="cfdi_vals.get('sello')"/>
+                            </div>
+                            <div class="digital-stamp">
+                                <span>Digital stamp SAT</span>
+                            </div>
+                            <div class="digital-stamp-content">
+                                <span t-esc="cfdi_vals.get('sello_sat')"/>
+                            </div>
+                            <div class="digital-stamp">
+                                <span>Original chain complement of digital certification SAT</span>
+                            </div>
+                            <div class="digital-stamp-content">
+                                <span class="nowrap" t-esc="cfdi_vals.get('cadena')"/>
+                            </div>
+                            <div class="digital-stamp">
+                                <span>Extra Info</span>
+                            </div>
+                            <div class="digital-stamp-content">
+                                <span>Emitter certificate:</span>
+                                <span t-esc="cfdi_vals.get('certificate_number')"/>
+                                <span> | SAT Certificate:</span>
+                                <span t-esc="cfdi_vals.get('certificate_sat_number')"/>
+                                <span> | Expedition place:</span>
+                                <span t-esc="cfdi_vals.get('expedition')"/>
+                                <span> | Fiscal Regime:</span>
+                                <span t-esc="cfdi_vals.get('fiscal_regime')"/>
+                                <span> | Emission Date:</span>
+                                <span t-esc="cfdi_vals.get('emission_date_str')"/>
+                                <span> | Certification Date:</span>
+                                <span t-esc="cfdi_vals.get('stamp_date')"/>
+                                <span> | Fiscal Folio:</span>
+                                <span t-esc="cfdi_vals.get('uuid')"/>
+                            </div>
+                            <div class="digital-stamp-content text-center">
+                                <strong>This document is a printed representation of a CFDI</strong>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+                <p t-if="o.invoice_incoterm_id" name="incoterm">
+                    <strong>Incoterm: </strong>
+                    <span t-field="o.invoice_incoterm_id.code"/> -
+                    <span t-field="o.invoice_incoterm_id.name"/>
+                </p>
+                <div id="qrcode" t-if="o.display_qr_code">
+                    <p t-if="qr_code_urls.get(o.id)">
+                        <strong class="text-center">Scan me with your banking app.</strong>
+                        <br/>
+                        <br/>
+                        <img class="border border-dark rounded" t-att-src="qr_code_urls[o.id]"/>
+                    </p>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

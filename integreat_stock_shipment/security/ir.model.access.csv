@@ -1,0 +1,7 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_stock_move_shipment","access.stock.move.shipment","model_stock_move_shipment","stock.group_stock_user",1,1,1,1
+"access_shipment","access.shipment","model_shipment","stock.group_stock_user",1,1,1,1
+"access_shipment_line","access.shipment.line","model_shipment_line","stock.group_stock_user",1,1,1,1
+"access_shipment_package_type","access.shipment.package.type","model_shipment_package_type","stock.group_stock_user",1,1,1,1
+"access_shipment_move_load_wizard","access.shipment.move.load.wizard","model_shipment_move_load_wizard","stock.group_stock_user",1,1,1,1
+"access_shipment_move_load_wizard_line","access.shipment.move.load.wizard.line","model_shipment_move_load_wizard_line","stock.group_stock_user",1,1,1,1

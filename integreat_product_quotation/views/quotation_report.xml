@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_productquotation_document">
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
+            <div class="page">
+                <div class="oe_structure"/>
+                <div class="row">
+                    <div class="col-8">
+                        <strong>Cliente</strong><br/>
+                        <span t-field="o.partner_id.name"/><br/>
+                        <div t-field="o.partner_id" t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}' />
+                        <!--<t t-esc="o.company_id.country_id.vat_label or 'Tax ID'"/>: <span t-field="o.partner_id.vat"/>-->
+                        <br/><br/>
+                    </div>
+                    <div class="col-4 text-right">
+                        <h4>
+                            <strong><span>Cotización</span></strong><br/><span t-if="o.name != '/'" t-field="o.name"/>
+                        </h4>
+                    </div>
+                </div>
+
+                <div id="informations" class="row mt32 mb32">
+                    <div class="col-6 bm-2">
+                        <strong>Contact:</strong>
+                        <p class="m-0"><span t-field="o.create_uid"/>, <span t-field="o.create_uid.login"/></p><br/>
+                    </div>
+                    <div class="col-3 bm-2">
+                        <strong>Moneda:</strong>
+                        <p t-field="o.currency_id" class="m-0"/>
+                    </div>
+                    <div class="col-3 bm-2">
+                        <strong>Fecha de expiración:</strong>
+                        <p t-field="o.validity_date" class="m-0" t-options="{'widget': 'date'}"/>
+                    </div>
+                </div>
+
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th><strong>Item</strong></th>
+                            <th><strong>Descripción</strong></th>
+                            <th><strong>Ref/Drawing</strong></th>
+                            <th><strong>MOQ</strong></th>
+                            <th><strong>Unit Price</strong></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <t t-foreach="o.quot_ids" t-as="quot">
+                            <t t-foreach="quot.quotation_moq_ids" t-as="line">
+                                <t t-if="line_first">
+                                    <tr class="border-top" style="border-top: 1px solid #495057!important;">
+                                        <td>
+                                            <t t-if="quot.product_code">
+                                                <span t-field="quot.product_code"/>
+                                            </t>
+                                            <t t-else="">
+                                                <span t-field="quot.product_id.default_code"/>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <t t-if="quot.product_name">
+                                                <span t-field="quot.product_name"/>
+                                            </t>
+                                            <t t-else="">
+                                                <span t-field="quot.product_id.name"/>
+                                            </t>
+                                        </td>
+                                        <td><span t-field="quot.drawing_ref"/></td>
+                                        <td class="text-right"><span t-field="line.moq"/></td>
+                                        <td class="text-right"><span t-field="line.price_unit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                                    </tr>
+                                </t>
+                                <t t-else="">
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="border-top text-right" style="border-top: 1px solid #495057!important;"><span t-field="line.moq"/></td>
+                                        <td class="border-top text-right" style="border-top: 1px solid #495057!important;"><span t-field="line.price_unit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                                    </tr>
+                                </t>
+                            </t>
+                            <t t-if="quot.quotation_moq_ids">
+                                <t t-if="quot.tooling_notes">
+                                    <tr>
+                                        <td class="border-top" style="border-top: 1px solid #495057!important;" colspan="99">*** <em t-field="quot.tooling_notes"/></td>
+                                    </tr>
+                                </t>
+                            </t>
+                            <t t-else="">
+                                <tr>
+                                    <td class="border-top" style="border-top: 1px solid #495057!important; color: red;" colspan="99">
+                                        La línea #<span t-field="quot.quot_line"/> no tiene detalles de precios. ¡Este documento aún no es válido!
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+                    </tbody>
+                </table>
+                <br/>
+                <p><strong>Términos y condiciones</strong></p>
+                <p t-field="o.note"/>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_productquotation">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="integreat_product_quotation.report_productquotation_document" t-lang="o.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_productquotation" model="ir.actions.report">
+        <field name="name">Cotización</field>
+        <field name="model">product.quotation.group.integreat</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">integreat_product_quotation.report_productquotation</field>
+        <field name="report_file">integreat_product_quotation.report_productquotation</field>
+        <field name="print_report_name">'Quotation - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_product_quotation_group_integreat"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

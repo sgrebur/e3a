@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+    <record id="product_model_visibility_rule" model="ir.rule">
+       <field name="name">No model products for normal user</field>
+       <field name="model_id" ref="model_product_product"/>
+       <field name="groups" eval="[(4, ref('fleet_group_user'))]"/>
+       <field name="perm_read" eval="True"/>
+       <field name="perm_write" eval="True"/>
+       <field name="perm_create" eval="False"/>
+       <field name="perm_unlink" eval="False"/>
+       <field name="domain_force">[('driver_id','=',user.partner_id.id)]</field>
+    </record>
+</odoo>

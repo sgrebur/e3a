@@ -1,0 +1,796 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* integreat_econsa_reports
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-06-18 11:09+0000\n"
+"PO-Revision-Date: 2021-06-18 14:17+0300\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0\n"
+"Last-Translator: \n"
+"Language: en_US\n"
+
+#. module: integreat_econsa_reports
+#: model:ir.actions.report,print_report_name:integreat_econsa_reports.action_report_shipment
+msgid "'Delivery Note - %s' % object.name"
+msgstr "'Delivery Note - %s' % object.name"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.shipment_delivery_note_print
+msgid ""
+"<br/>\n"
+"                        <strong>Acknowledgement of Receipt (Signature, Date):"
+"</strong>"
+msgstr ""
+"<br/>\n"
+"                        <strong>Acknowledgement of Receipt (Signature, Date):"
+"</strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.shipment_delivery_note_print
+msgid ""
+"<br/>\n"
+"                        <strong>Driver:</strong><br/>"
+msgstr ""
+"<br/>\n"
+"                        <strong>Driver:</strong><br/>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.shipment_delivery_note_print
+msgid ""
+"<br/>\n"
+"                        <strong>Plate No:</strong><br/>"
+msgstr ""
+"<br/>\n"
+"                        <strong>Plate No:</strong><br/>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+msgid "<br/><strong>Precio/m²: </strong>"
+msgstr "<br/><strong>Price/m²: </strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+msgid "<br/><strong>Su referencia:</strong><br/>"
+msgstr "<br/><strong>Your reference:</strong><br/>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "<br/>Customs:"
+msgstr "<br/>Customs:"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid ""
+"<span groups=\"account.group_show_line_subtotals_tax_excluded\">Amount</"
+"span>\n"
+"                                    <span groups=\"account."
+"group_show_line_subtotals_tax_included\">Total Price</span>"
+msgstr ""
+"<span groups=\"account.group_show_line_subtotals_tax_excluded\">Amount</"
+"span>\n"
+"                                    <span groups=\"account."
+"group_show_line_subtotals_tax_included\">Total Price</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid ""
+"<span>\n"
+"                                    <strong>External Trade</strong>\n"
+"                                </span>"
+msgstr ""
+"<span>\n"
+"                                    <strong>External Trade</strong>\n"
+"                                </span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid ""
+"<span>\n"
+"                                <strong>Disposiciones Fiscales</strong>\n"
+"                            </span>"
+msgstr ""
+"<span>\n"
+"                                <strong>Disposiciones Fiscales</strong>\n"
+"                            </span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+msgid ""
+"<span> mm X </span>\n"
+"                                            <strong>Largo: </strong>"
+msgstr ""
+"<span> mm X </span>\n"
+"                                            <strong>Length: </strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+msgid "<span> mm</span>"
+msgstr "<span> mm</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "<span> | Certification Date:</span>"
+msgstr "<span> | Certification Date:</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "<span> | Emission Date:</span>"
+msgstr "<span> | Emission Date:</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "<span> | Expedition place:</span>"
+msgstr "<span> | Expedition place:</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "<span> | Fiscal Folio:</span>"
+msgstr "<span> | Fiscal Folio:</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "<span> | Fiscal Regime:</span>"
+msgstr "<span> | Fiscal Regime:</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "<span> | SAT Certificate:</span>"
+msgstr "<span> | SAT Certificate:</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+msgid ""
+"<span>    ●    </span>\n"
+"                                            <strong>Ancho: </strong>"
+msgstr ""
+"<span>    ●    </span>\n"
+"                                            <strong>Width: </strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+msgid ""
+"<span>    ●    </span>\n"
+"                                            <strong>Flauta: </strong>"
+msgstr ""
+"<span>    ●    </span>\n"
+"                                            <strong>Flauta: </strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+msgid ""
+"<span>    ●    </span>\n"
+"                                            <strong>Liner: </strong>"
+msgstr ""
+"<span>    ●    </span>\n"
+"                                            <strong>Liner: </strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+msgid "<span>    ●    </span><strong>m² total: </strong>"
+msgstr "<span>    ●    </span><strong>m² total: </strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.shipment_delivery_note_print
+msgid "<span>(DAP) Entregado a la dirección de entrega</span>"
+msgstr "<span>(DAP) Delivered at Place</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.shipment_delivery_note_print
+msgid "<span>(FCA) Recogido de la dirección de envío</span>"
+msgstr "<span>(FCA) Free Carrier</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "<span>Amount Paid</span>"
+msgstr "<span>Amount Paid</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "<span>Balance</span>"
+msgstr "<span>Balance</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "<span>Description</span>"
+msgstr "<span>Description</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "<span>Descuentos y<br/>Pagos Anteriores</span>"
+msgstr "<span>Discounts and<br/>Previous Payments</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "<span>Digital stamp SAT</span>"
+msgstr "<span>Digital stamp SAT</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "<span>Digital stamp of the emitter</span>"
+msgstr "<span>Digital stamp of the emitter</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "<span>Disc.%</span>"
+msgstr "<span>Disc.%</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "<span>Emitter Acc. Ben.</span>"
+msgstr "<span>Emitter Acc. Ben.</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "<span>Emitter Acc. Ord.</span>"
+msgstr "<span>Emitter Acc. Ord.</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "<span>Emitter certificate:</span>"
+msgstr "<span>Emitter certificate:</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "<span>Extra Info</span>"
+msgstr "<span>Extra Info</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "<span>Invoice Date</span>"
+msgstr "<span>Invoice Date</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "<span>OC</span>"
+msgstr "<span>PO</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "<span>Original Amount</span>"
+msgstr "<span>Original Amount</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "<span>Original chain complement of digital certification SAT</span>"
+msgstr "<span>Original chain complement of digital certification SAT</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "<span>Product code</span>"
+msgstr "<span>Product code</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "<span>Quantity</span>"
+msgstr "<span>Quantity</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "<span>Reference</span>"
+msgstr "<span>Reference</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.shipment_delivery_note_print
+msgid "<span>Shipping Note</span>"
+msgstr "<span>Shipping Note</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "<span>Taxes</span>"
+msgstr "<span>Taxes</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "<span>Unit Price</span>"
+msgstr "<span>Unit Price</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "<span>Unit code</span>"
+msgstr "<span>Unit code</span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "<span>XML VAT: </span>"
+msgstr "<span>XML VAT: </span>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+msgid "<strong class=\"mr16\">Subtotal</strong>"
+msgstr "<strong class=\"mr16\">Subtotal</strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid ""
+"<strong class=\"text-center\">Scan me with your banking app.</strong>\n"
+"                        <br/>\n"
+"                        <br/>"
+msgstr ""
+"<strong class=\"text-center\">Scan me with your banking app.</strong>\n"
+"                        <br/>\n"
+"                        <br/>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.shipment_delivery_note_print
+msgid "<strong class=\"text-right\">Quantity</strong>"
+msgstr "<strong class=\"text-right\">Quantity</strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid ""
+"<strong>A signature of this invoice is required, but it is not signed.</"
+"strong>"
+msgstr ""
+"<strong>A signature of this invoice is required, but it is not signed.</"
+"strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+msgid "<strong>Calibre: </strong>"
+msgstr "<strong>Calibre: </strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+msgid "<strong>Ctd</strong>"
+msgstr "<strong>Qty</strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "<strong>Customer: </strong>"
+msgstr "<strong>Customer: </strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "<strong>Customer</strong>"
+msgstr "<strong>Customer</strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.shipment_delivery_note_print
+msgid "<strong>Delivery address</strong><br/>"
+msgstr "<strong>Delivery address</strong><br/>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+msgid "<strong>Descripcion</strong>"
+msgstr "<strong>Description</strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+msgid "<strong>Dirección de entrega:</strong><br/>"
+msgstr "<strong>Delivery address:</strong><br/>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "<strong>Due Date:</strong>"
+msgstr "<strong>Due Date:</strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+msgid "<strong>Fecha de orden:</strong>"
+msgstr "<strong>Date of order:</strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+msgid "<strong>Fecha req.</strong>"
+msgstr "<strong>Requested date</strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "<strong>Incoterm: </strong>"
+msgstr "<strong>Incoterm: </strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.shipment_delivery_note_print
+msgid "<strong>Incoterms: </strong>"
+msgstr "<strong>Incoterms: </strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "<strong>Invoice Date:</strong>"
+msgstr "<strong>Invoice Date:</strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.shipment_delivery_note_print
+msgid "<strong>Loading address</strong><br/>"
+msgstr "<strong>Loading address</strong><br/>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+msgid "<strong>Marca 1: </strong>"
+msgstr "<strong>Marca 1: </strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+msgid "<strong>Marca 2: </strong>"
+msgstr "<strong>Marca 2: </strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+msgid "<strong>Marca 3: </strong>"
+msgstr "<strong>Marca 3: </strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.shipment_delivery_note_print
+msgid "<strong>Material/Description</strong>"
+msgstr "<strong>Material/Description</strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "<strong>Memo: </strong>"
+msgstr "<strong>Memo: </strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "<strong>Moneda: </strong>"
+msgstr "<strong>Moneda: </strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+msgid "<strong>Moneda:</strong>"
+msgstr "<strong>Moneda:</strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+msgid "<strong>Monto</strong>"
+msgstr "<strong>Amount</strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.shipment_delivery_note_print
+msgid "<strong>PO#</strong>"
+msgstr "<strong>PO#</strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.shipment_delivery_note_print
+msgid "<strong>Packaging</strong>"
+msgstr "<strong>Packaging</strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "<strong>Payment Amount: </strong>"
+msgstr "<strong>Payment Amount: </strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "<strong>Payment Date: </strong>"
+msgstr "<strong>Payment Date: </strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "<strong>Payment Method:</strong>"
+msgstr "<strong>Payment Method:</strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "<strong>Payment Receipt</strong><br/>"
+msgstr "<strong>Payment Receipt</strong><br/>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "<strong>Payment Way CFDI:</strong>"
+msgstr "<strong>Payment Way CFDI:</strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "<strong>Payment Way:</strong>"
+msgstr "<strong>Payment Way:</strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+msgid "<strong>Plazo de pago: </strong>"
+msgstr "<strong>Payment terms: </strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+msgid "<strong>Precio U</strong>"
+msgstr "<strong>Unit Price</strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+msgid "<strong>Proveedor</strong><br/>"
+msgstr "<strong>Vendor</strong><br/>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.shipment_delivery_note_print
+msgid "<strong>Purchase Order:</strong>"
+msgstr "<strong>Purchase Order:</strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "<strong>Reference:</strong>"
+msgstr "<strong>Reference:</strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.shipment_delivery_note_print
+msgid "<strong>Shipping date: </strong>"
+msgstr "<strong>Shipping date: </strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+msgid "<strong>Solicitante:</strong>"
+msgstr "<strong>Solicitante:</strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+msgid "<strong>Subtotal</strong>"
+msgstr "<strong>Subtotal</strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "<strong>Supplier</strong>"
+msgstr "<strong>Supplier</strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "<strong>This document is a printed representation of a CFDI</strong>"
+msgstr "<strong>This document is a printed representation of a CFDI</strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+msgid "<strong>Total</strong>"
+msgstr "<strong>Total</strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "<strong>Usage:</strong>"
+msgstr "<strong>Usage:</strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "<strong>Vendor: </strong>"
+msgstr "<strong>Vendor: </strong>"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "A signature of this payment is required, but it is not signed."
+msgstr "A signature of this payment is required, but it is not signed."
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "Account Ben."
+msgstr "Account Ben."
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "Account Ord."
+msgstr "Account Ord."
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "Amount Paid"
+msgstr "Amount Paid"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "Balance"
+msgstr "Balance"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "Bank Name Acc. Ord."
+msgstr "Bank Name Acc. Ord."
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "Barcode"
+msgstr "Barcode"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "Cancelled Invoice"
+msgstr "Cancelled Invoice"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "Certificate Key"
+msgstr "Certificate Key"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "Certificate Source"
+msgstr "Certificate Source"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "Credit Note"
+msgstr "Credit Note"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "Customs Qty"
+msgstr "Customs Qty"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "Customs Unit"
+msgstr "Customs Unit"
+
+#. module: integreat_econsa_reports
+#: model:ir.actions.report,name:integreat_econsa_reports.action_report_shipment
+msgid "Delivery Note"
+msgstr "Delivery Note"
+
+#. module: integreat_econsa_reports
+#: model:ir.model.fields,field_description:integreat_econsa_reports.field_purchase_order__display_name
+#: model:ir.model.fields,field_description:integreat_econsa_reports.field_purchase_order_line__display_name
+msgid "Display Name"
+msgstr "Display Name"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "Draft Invoice"
+msgstr "Draft Invoice"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.purchase_order_form_integreat_product_configurator
+msgid "Enviar OC"
+msgstr "Send PO"
+
+#. module: integreat_econsa_reports
+#: model:ir.model.fields,field_description:integreat_econsa_reports.field_purchase_order__id
+#: model:ir.model.fields,field_description:integreat_econsa_reports.field_purchase_order_line__id
+msgid "ID"
+msgstr "ID"
+
+#. module: integreat_econsa_reports
+#: model:ir.model.fields,field_description:integreat_econsa_reports.field_purchase_order__order_checked
+msgid "Imprimado/Controlado"
+msgstr "Printed/Controlled"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.purchase_order_form_integreat_product_configurator
+msgid "Imprimir OC"
+msgstr "Print PO"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "Incoterm"
+msgstr "Incoterm"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "Invoice"
+msgstr "Invoice"
+
+#. module: integreat_econsa_reports
+#: model:ir.model.fields,field_description:integreat_econsa_reports.field_purchase_order____last_update
+#: model:ir.model.fields,field_description:integreat_econsa_reports.field_purchase_order_line____last_update
+msgid "Last Modified on"
+msgstr "Last Modified on"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+msgid "Ln"
+msgstr "Ln"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "Number Certificate Source"
+msgstr "Number Certificate Source"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "Number of Reliable Exporter"
+msgstr "Number of Reliable Exporter"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "Operation Type"
+msgstr "Operation Type"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+msgid "Orden de compra"
+msgstr "Purchase Order"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+msgid "Orden de compra cancelada"
+msgstr "Cacelled Purchase Order"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "Partiality"
+msgstr "Partiality"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "Please use the following communication for your payment :"
+msgstr "Please use the following communication for your payment :"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "Previous balance"
+msgstr "Previous balance"
+
+#. module: integreat_econsa_reports
+#: model:ir.model,name:integreat_econsa_reports.model_purchase_order
+msgid "Purchase Order"
+msgstr "Purchase Order"
+
+#. module: integreat_econsa_reports
+#: model:ir.model,name:integreat_econsa_reports.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr "Purchase Order Line"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "Rate USD"
+msgstr "Rate USD"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.purchase_order_form_integreat_product_configurator
+msgid "Re-Enviar OC"
+msgstr "Re-Send PO"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "Subdivision"
+msgstr "Subdivision"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "Tariff Fraction"
+msgstr "Tariff Fraction"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "Tax ID"
+msgstr "Tax ID"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_purchaseorder_document_econsa
+msgid "Taxes"
+msgstr "Taxes"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "Total USD"
+msgstr "Total USD"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_payment_receipt_document_override
+msgid "UUID"
+msgstr "UUID"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "Vendor Bill"
+msgstr "Vendor Bill"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "Vendor Credit Note"
+msgstr "Vendor Credit Note"
+
+#. module: integreat_econsa_reports
+#: model_terms:ir.ui.view,arch_db:integreat_econsa_reports.report_invoice_document_mx_integreat
+msgid "on"
+msgstr "on"

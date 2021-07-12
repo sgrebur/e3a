@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo noupdate="1">
+    <!-- To have possibility to directly refer to product templates -->
+    <record id="caja_troquelada" model="product.category">
+        <field name="name">Caja Troquelada</field>
+    </record>
+    <record id="lamina" model="product.category">
+        <field name="name">Lamina</field>
+    </record>
+    <record id="tinta" model="product.category">
+        <field name="name">Tinta</field>
+    </record>
+    <record id="attribute_color" model="product.attribute">
+        <field name="name">Color</field>
+    </record>
+</odoo>

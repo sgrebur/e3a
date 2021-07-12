@@ -1,0 +1,936 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* integreat_mx_edi_extended
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-19 08:41+0000\n"
+"PO-Revision-Date: 2021-04-19 11:58+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: es_MX\n"
+"X-Generator: Poedit 2.4.2\n"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_payment__balanced_credit_note_count
+#, fuzzy
+msgid "# Balanced Credit Notes"
+msgstr "# Notas de crédito equilibradas"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_payment__reconciled_credit_note_count
+#, fuzzy
+msgid "# Reconciled Credit Notes"
+msgstr "# Notas de crédito reconciliadas"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+msgid "<br/>Customs:"
+msgstr "<br/>Aduana:"
+
+#. module: integreat_mx_edi_extended
+#: code:addons/integreat_mx_edi_extended/models/account_move.py:0
+#, fuzzy, python-format
+msgid "<div>Other invoices have been created from the original message:<ul></ul></div>"
+msgstr "<div>Se han creado otras facturas a partir del mensaje original:<ul></ul></div>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid ""
+"<span groups=\"account.group_show_line_subtotals_tax_excluded\">Amount</span>\n"
+"                                <span groups=\"account.group_show_line_subtotals_tax_included\">Total Price</span>"
+msgstr ""
+"<span groups=\"account.group_show_line_subtotals_tax_excluded\">Importe</span>\n"
+"                                <span groups=\"account.group_show_line_subtotals_tax_included\">Precio total</"
+"span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid ""
+"<span>\n"
+"                                    <strong>External Trade</strong>\n"
+"                                </span>"
+msgstr "<span><strong>Comercio Exterior</strong></span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid ""
+"<span>\n"
+"                                <strong>Disposiciones Fiscales</strong>\n"
+"                            </span>"
+msgstr "<span><strong>Disposiciones Fiscales</strong></span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "<span> | Certification Date:</span>"
+msgstr "<span> | Fecha de certificación:</span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "<span> | Emission Date:</span>"
+msgstr "<span> | Fecha de emisión:</span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "<span> | Expedition place:</span>"
+msgstr "<span> | Lugar de expedición:</span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "<span> | Fiscal Folio:</span>"
+msgstr "<span> | Folio fiscal:</span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "<span> | Fiscal Regime:</span>"
+msgstr "<span> | Régimen fiscal:</span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "<span> | SAT Certificate:</span>"
+msgstr "<span> | Certificado SAT:</span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "<span>Amount Paid</span>"
+msgstr "<span>Importe pagado</span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.view_account_payment_form_integreat
+msgid "<span>Balance</span>"
+msgstr "<span>Saldo</span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+msgid "<span>Description</span>"
+msgstr "<span>Descripción</span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.view_account_payment_form_integreat
+#, fuzzy
+msgid "<span>Descuento</span>"
+msgstr "<span>Descuento</span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "<span>Descuentos y<br/>Pagos Anteriores</span>"
+msgstr "<span>Descuentos y<br/>Pagos Anteriores</span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "<span>Digital stamp SAT</span>"
+msgstr "<span>Sello digital SAT</span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "<span>Digital stamp of the emitter</span>"
+msgstr "<span>Sello digital del emisor</span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+msgid "<span>Disc.%</span>"
+msgstr "<span>Desc.%</span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "<span>Emitter Acc. Ben.</span>"
+msgstr "<span>Emisor Acc. Ben.</span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "<span>Emitter Acc. Ord.</span>"
+msgstr "<span>Emisor Acc. Ord.</span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "<span>Emitter certificate:</span>"
+msgstr "<span>Certificado emisor:</span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "<span>Extra Info</span>"
+msgstr "<span>Información adicional</span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "<span>Invoice Date</span>"
+msgstr "<span>Fecha de la factura</span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+msgid "<span>OC</span>"
+msgstr "<span>OC</span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "<span>Original Amount</span>"
+msgstr "<span>Importe original</span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "<span>Original chain complement of digital certification SAT</span>"
+msgstr "<span>Complemento original de la cadena de certificación digital SAT</span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid "<span>Product code</span>"
+msgstr "<span>Clave del producto</span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid "<span>Quantity</span>"
+msgstr "<span>Cantidad</span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+msgid "<span>Reference</span>"
+msgstr "<span>Referencia</span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+msgid "<span>Taxes</span>"
+msgstr "<span>Impuestos</span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid "<span>Unit Price</span>"
+msgstr "<span>Precio unitario</span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid "<span>Unit code</span>"
+msgstr "<span>Código de unidad</span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "<span>XML VAT: </span>"
+msgstr "<span>IVA XML: </span>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid "<strong class=\"mr16\">Subtotal</strong>"
+msgstr "<strong class=\"mr16\">Subtotal</strong>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid ""
+"<strong class=\"text-center\">Scan me with your banking app.</strong>\n"
+"                        <br/>\n"
+"                        <br/>"
+msgstr ""
+"<strong class=\"text-center\">Escanee con su aplicación bancaria.</strong>\n"
+"                        <br/>\n"
+"                        <br/>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid "<strong>A signature of this invoice is required, but it is not signed.</strong>"
+msgstr "<strong>Se requiere una firma de esta factura, pero no está firmada.</strong>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "<strong>Customer: </strong>"
+msgstr "<strong>cliente: </strong>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+msgid "<strong>Customer</strong>"
+msgstr "<strong>Cliente</strong>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid "<strong>Due Date:</strong>"
+msgstr "<strong>Fecha de vencimiento:</strong>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid "<strong>Incoterm: </strong>"
+msgstr "<strong>Incoterm: </strong>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid "<strong>Invoice Date:</strong>"
+msgstr "<strong>Fecha de la factura:</strong>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+msgid "<strong>Memo: </strong>"
+msgstr "<strong>Nota: </strong>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "<strong>Payment Amount: </strong>"
+msgstr "<strong>Importe del pago: </strong>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "<strong>Payment Date: </strong>"
+msgstr "<strong>Fecha de pago: </strong>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid "<strong>Payment Method:</strong>"
+msgstr "<strong>Método de pago:</strong>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "<strong>Payment Receipt</strong><br/>"
+msgstr "<strong>Recibo de pago</strong><br/>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "<strong>Payment Way CFDI:</strong>"
+msgstr "<strong>Forma de pago CFDI:</strong>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid "<strong>Payment Way:</strong>"
+msgstr "<strong>Forma de pago:</strong>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid "<strong>Purchase Order:</strong>"
+msgstr "<strong>Pedido de compra:</strong>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid "<strong>Reference:</strong>"
+msgstr "<strong>Referencia:</strong>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid "<strong>Subtotal</strong>"
+msgstr "<strong>Subtotal</strong>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+msgid "<strong>Supplier</strong>"
+msgstr "<strong>Proveedor</strong>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "<strong>This document is a printed representation of a CFDI</strong>"
+msgstr "<strong>Este documento es una representación impresa de una CFDI</strong>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+msgid "<strong>Total</strong>"
+msgstr "<strong>Total</strong>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid "<strong>Usage:</strong>"
+msgstr "<strong>Uso:</strong>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "<strong>Vendor: </strong>"
+msgstr "<strong>vendedor: </strong>"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "A signature of this payment is required, but it is not signed."
+msgstr "Se requiere una firma de este pago, pero no está firmado."
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "Account Ben."
+msgstr "Cuenta Ben."
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "Account Ord."
+msgstr "Ord de cuenta."
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.l10n_mx_edi_inh_res_partner_form_complementos
+#, fuzzy
+msgid "Addenda y Complementos"
+msgstr "Addenda y Complementos"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+msgid "Amount Paid"
+msgstr "Cantidad pagada"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model,name:integreat_mx_edi_extended.model_ir_attachment
+msgid "Attachment"
+msgstr "Adjunto"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields,help:integreat_mx_edi_extended.field_ir_attachment__edi_import_status
+#: model:ir.model.fields,help:integreat_mx_edi_extended.field_mrp_document__edi_import_status
+#, fuzzy
+msgid "Attachment EDI import processing status. If not relevant, than False"
+msgstr "Estado de procesamiento de importación EDI adjunto. Si no es relevante, que false"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+msgid "Balance"
+msgstr "Saldo"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_payment__balanced_credit_note_ids
+#, fuzzy
+msgid "Balanced Credit Notes"
+msgstr "Notas de crédito equilibradas"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+msgid "Bank Name Acc. Ord."
+msgstr "Nombre del banco"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+msgid "Barcode"
+msgstr "Codigo de barras"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.product_template_form_view_mx
+#, fuzzy
+msgid "CFDI"
+msgstr "CFDI"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.view_account_payment_form_integreat
+#, fuzzy
+msgid "Calcular descuento"
+msgstr "Calcular descuento"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.view_account_payment_form_integreat
+#, fuzzy
+msgid "Cancelado"
+msgstr "Cancelado"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid "Cancelled Invoice"
+msgstr "Factura cancelada"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid "Certificate Key"
+msgstr "Clave de certificado"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid "Certificate Source"
+msgstr "Fuente del certificado"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_product_product__l10n_mx_edi_clave_search_pattern
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_product_template__l10n_mx_edi_clave_search_pattern
+#, fuzzy
+msgid "ClaveProdServ Import XML"
+msgstr "ClaveProdServ Importar XML"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.view_account_payment_form_integreat
+#, fuzzy
+msgid "Conciliado"
+msgstr "Conciliado"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.view_account_payment_form_integreat
+#, fuzzy
+msgid "Conciliar"
+msgstr "Conciliares"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.view_account_payment_form_integreat
+msgid "Confirm"
+msgstr "Confirmar"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.view_account_payment_form_integreat
+#, fuzzy
+msgid "Confirmar y conciliar"
+msgstr "Confirmar y conciliar"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model,name:integreat_mx_edi_extended.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+msgid "Credit Note"
+msgstr "Nota de crédito"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields,help:integreat_mx_edi_extended.field_account_payment__balanced_credit_note_ids
+#: model:ir.model.fields,help:integreat_mx_edi_extended.field_account_payment__reconciled_credit_note_ids
+#, fuzzy
+msgid "Credit Notes whose journal items have been reconciled with the invoices assigned to this payment."
+msgstr "Notas de crédito cuyos artículos de diario se han conciliado con las facturas asignadas a este pago."
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid "Customs Qty"
+msgstr "Aduanas Qty"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid "Customs Unit"
+msgstr "Unidad aduanera"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_payment__invoice_discount
+msgid "Discount (%)"
+msgstr "Descuento (%)"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_edi_format__display_name
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_move__display_name
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_payment__display_name
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_ir_attachment__display_name
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_product_product__display_name
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_product_template__display_name
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_res_partner__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_bank_statement_line__l10n_mx_edi_leyenda_disposicion
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_move__l10n_mx_edi_leyenda_disposicion
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_payment__l10n_mx_edi_leyenda_disposicion
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_res_partner__l10n_mx_edi_leyenda_disposicion
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_res_users__l10n_mx_edi_leyenda_disposicion
+#, fuzzy
+msgid "Disposicion"
+msgstr "Disposiciones"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid "Draft Invoice"
+msgstr "Borrador de factura"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_ir_attachment__edi_import_status
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_mrp_document__edi_import_status
+#, fuzzy
+msgid "EDI Import Status"
+msgstr "Estado de importación EDI"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model,name:integreat_mx_edi_extended.model_account_edi_format
+msgid "EDI format"
+msgstr "Formato EDI"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.view_account_payment_form_integreat
+#, fuzzy
+msgid "Facturas a pagar"
+msgstr "Facturas a pagar"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_payment__in_payment_invoice_ids
+#, fuzzy
+msgid "Facturas asignadas"
+msgstr "Facturas asignadas"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields,help:integreat_mx_edi_extended.field_product_product__l10n_mx_edi_clave_search_pattern
+#: model:ir.model.fields,help:integreat_mx_edi_extended.field_product_template__l10n_mx_edi_clave_search_pattern
+msgid "Full code or begins with. Can be a list separated by comma"
+msgstr "Código completo o comienza con. Puede ser una lista separada por comas"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_edi_format__id
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_move__id
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_move_line__id
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_payment__id
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_ir_attachment__id
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_product_product__id
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_product_template__id
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_res_partner__id
+msgid "ID"
+msgstr ""
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields.selection,name:integreat_mx_edi_extended.selection__ir_attachment__edi_import_status__done
+msgid "Imported"
+msgstr "Importado"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_bank_statement_line__in_payment_id
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_move__in_payment_id
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_payment__in_payment_id
+msgid "In Payment"
+msgstr "En Pago"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid "Incoterm"
+msgstr "Incoterm"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model,name:integreat_mx_edi_extended.model_account_move
+msgid "Journal Entry"
+msgstr "Asiento contable"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model,name:integreat_mx_edi_extended.model_account_move_line
+msgid "Journal Item"
+msgstr "Apunte contable"
+
+#. module: integreat_mx_edi_extended
+#: code:addons/integreat_mx_edi_extended/models/account_move.py:0
+#, fuzzy, python-format
+msgid "La factura se ha importado de un archivo xml: %s."
+msgstr "La factura se ha importado de un archivo xml: %s."
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_edi_format____last_update
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_move____last_update
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_move_line____last_update
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_payment____last_update
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_ir_attachment____last_update
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_product_product____last_update
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_product_template____last_update
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_res_partner____last_update
+msgid "Last Modified on"
+msgstr "Última modificación el"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_bank_statement_line__l10n_mx_edi_leyenda
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_move__l10n_mx_edi_leyenda
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_payment__l10n_mx_edi_leyenda
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_res_partner__l10n_mx_edi_leyenda
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_res_users__l10n_mx_edi_leyenda
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.view_l10n_mx_edi_invoice_form_leyenda
+#, fuzzy
+msgid "Leyenda Fiscal"
+msgstr "Leyenda Fiscal"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_bank_statement_line__in_payment_discount_amount
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_move__in_payment_discount_amount
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_payment__in_payment_discount_amount
+#, fuzzy
+msgid "Monto Descuento"
+msgstr "Monto Descuento"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_bank_statement_line__in_payment_amount
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_move__in_payment_amount
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_payment__in_payment_amount
+#, fuzzy
+msgid "Monto Pagado"
+msgstr "Monto Pagado"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_payment__amount_unassigned
+#, fuzzy
+msgid "Monto disponible"
+msgstr "Monto disponible"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_bank_statement_line__l10n_mx_edi_leyenda_norma
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_move__l10n_mx_edi_leyenda_norma
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_payment__l10n_mx_edi_leyenda_norma
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_res_partner__l10n_mx_edi_leyenda_norma
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_res_users__l10n_mx_edi_leyenda_norma
+#, fuzzy
+msgid "Norma"
+msgstr "Norma"
+
+#. module: integreat_mx_edi_extended
+#: code:addons/integreat_mx_edi_extended/models/account_payment.py:0
+#, fuzzy, python-format
+msgid "Notas de credito"
+msgstr "Notas de crédito"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid "Number Certificate Source"
+msgstr "Origen del certificado de número"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid "Number of Reliable Exporter"
+msgstr "Número de exportadores fiables"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid "Operation Type"
+msgstr "Tipo de operación"
+
+#. module: integreat_mx_edi_extended
+#: code:addons/integreat_mx_edi_extended/models/account_payment.py:0
+#, fuzzy, python-format
+msgid "Pagos Rectificativos"
+msgstr "Pagos Rectificativos"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "Partiality"
+msgstr "Parcialidad"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model,name:integreat_mx_edi_extended.model_account_payment
+msgid "Payments"
+msgstr "Pagos"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+msgid "Please use the following communication for your payment :"
+msgstr "Por favor utilice la siguiente referencia al realizar su pago:"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "Previous balance"
+msgstr "Saldo previo"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.view_l10n_mx_edi_invoice_form_leyenda
+#, fuzzy
+msgid "Procesar adjuntos XML"
+msgstr "Procesar adjuntos XML"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields.selection,name:integreat_mx_edi_extended.selection__ir_attachment__edi_import_status__error
+#, fuzzy
+msgid "Processed with error"
+msgstr "Procesado con error"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model,name:integreat_mx_edi_extended.model_product_product
+msgid "Product"
+msgstr "Producto"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model,name:integreat_mx_edi_extended.model_product_template
+msgid "Product Template"
+msgstr "Plantilla del producto"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid "Rate USD"
+msgstr "Tarifa USD"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_payment__reconciled_credit_note_ids
+#, fuzzy
+msgid "Reconciled Credit Notes"
+msgstr "Notas de crédito conciliadas"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields,help:integreat_mx_edi_extended.field_account_bank_statement_line__l10n_mx_edi_sat_status
+#: model:ir.model.fields,help:integreat_mx_edi_extended.field_account_move__l10n_mx_edi_sat_status
+#: model:ir.model.fields,help:integreat_mx_edi_extended.field_account_payment__l10n_mx_edi_sat_status
+#, fuzzy
+msgid "Refers to the status of the journal entry inside the SAT system."
+msgstr "Se refiere al estado de la entrada de diario dentro del sistema SAT."
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_bank_statement_line__l10n_mx_edi_sat_status
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_move__l10n_mx_edi_sat_status
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_payment__l10n_mx_edi_sat_status
+msgid "SAT status"
+msgstr "Estado en el SAT"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_bank_statement_line__in_payment_amount_residual
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_move__in_payment_amount_residual
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_payment__in_payment_amount_residual
+#, fuzzy
+msgid "Saldo Pendiente"
+msgstr "Saldo Pendiente"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_bank_statement_line__payment_partial_select
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_move__payment_partial_select
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_payment__payment_partial_select
+msgid "Selected"
+msgstr "Seleccionado"
+
+#. module: integreat_mx_edi_extended
+#: model:product.product,name:integreat_mx_edi_extended.serv_fact
+#: model:product.template,name:integreat_mx_edi_extended.serv_fact_product_template
+#, fuzzy
+msgid "Servicios de facturación"
+msgstr "Servicios de facturación"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+msgid "Subdivision"
+msgstr "Subdivisión"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid "Tariff Fraction"
+msgstr "Fracción arancelaria"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid "Tax ID"
+msgstr "Identificación fiscal"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields.selection,name:integreat_mx_edi_extended.selection__account_move__l10n_mx_edi_sat_status__test
+msgid "Test"
+msgstr "Prueba"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_bank_statement_line__l10n_mx_edi_leyenda_texto
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_move__l10n_mx_edi_leyenda_texto
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_payment__l10n_mx_edi_leyenda_texto
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_res_partner__l10n_mx_edi_leyenda_texto
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_res_users__l10n_mx_edi_leyenda_texto
+#, fuzzy
+msgid "Texto"
+msgstr "Texto"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields,help:integreat_mx_edi_extended.field_account_move_line__product_unspsc_code_id
+#: model:ir.model.fields,help:integreat_mx_edi_extended.field_product_product__product_unspsc_code_id
+#, fuzzy
+msgid "The UNSPSC code related to this product VARIANT.  Used for edi in Colombia, Peru and Mexico"
+msgstr "El código UNSPSC relacionado con este producto VARIANT.  Se utiliza para edi en Colombia, Perú y México"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields.selection,name:integreat_mx_edi_extended.selection__ir_attachment__edi_import_status__todo
+msgid "To be processed"
+msgstr "Para ser procesado"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid "Total USD"
+msgstr "Total USD"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_move_line__product_unspsc_code_id
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_product_product__product_unspsc_code_id
+#, fuzzy
+msgid "UNSPSC Clave Producto"
+msgstr "UNSPSC Clave Producto"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_payment_receipt_document_override
+#, fuzzy
+msgid "UUID"
+msgstr "Uuid"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+msgid "Vendor Bill"
+msgstr "Factura de proveedor"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+#, fuzzy
+msgid "Vendor Credit Note"
+msgstr "Nota de crédito del proveedor"
+
+#. module: integreat_mx_edi_extended
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_bank_statement_line__edi_xml_to_import
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_move__edi_xml_to_import
+#: model:ir.model.fields,field_description:integreat_mx_edi_extended.field_account_payment__edi_xml_to_import
+#, fuzzy
+msgid "XML to be imported"
+msgstr "XML que se importará"
+
+#. module: integreat_mx_edi_extended
+#: model:product.product,uom_name:integreat_mx_edi_extended.serv_fact
+#: model:product.template,uom_name:integreat_mx_edi_extended.serv_fact_product_template
+msgid "act"
+msgstr "act"
+
+#. module: integreat_mx_edi_extended
+#: model_terms:ir.ui.view,arch_db:integreat_mx_edi_extended.report_invoice_document_mx_integreat
+msgid "on"
+msgstr "on"

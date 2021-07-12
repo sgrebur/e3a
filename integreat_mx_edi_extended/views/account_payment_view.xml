@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_payment_form_integreat" model="ir.ui.view">
+        <field name="name">account.payment.form.integreat</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_form"/>
+        <field name="arch" type="xml">
+            <button name="action_post" position="replace">
+                <button name="action_post" string="Confirm" type="object" attrs="{'invisible': ['|', '|', ('state', '!=', 'draft'), ('amount', '=', 0.0), ('amount_unassigned', '=', 0.0)]}"/>
+                <button name="action_payment_reconcile_partial" string="Confirmar y conciliar" type="object" class="oe_highlight" attrs="{'invisible': ['|', '|', ('state', '!=', 'draft'), ('amount', '=', 0.0), ('amount_unassigned', '!=', 0.0)]}"/>
+                <button name="action_payment_reconcile_partial" string="Conciliar" type="object" class="oe_highlight" attrs="{'invisible': ['|', '|', ('state', '!=', 'posted'), ('amount', '=', 0.0), ('amount_unassigned', '!=', 0.0)]}"/>
+            </button>
+            <xpath expr="//form/sheet/div[@name='button_box']" position="after">
+                <widget name="web_ribbon" title="Conciliado" attrs="{'invisible': ['|', ('is_reconciled', '=', False), ('state', '!=', 'posted')]}"/>
+                <widget name="web_ribbon" title="Cancelado" bg_color="bg-muted" attrs="{'invisible': [('state', '!=', 'cancel')]}"/>
+            </xpath>
+            <button name="button_open_invoices" position="before">
+                <!-- Invoice stat button -->
+                <button name="button_open_balanced_payments" type="object" class="oe_stat_button" icon="fa-sign-in" attrs="{'invisible': [('balanced_credit_note_count','=', 0)]}">
+                    <field name="balanced_credit_note_count"/><span>Balance</span>
+                </button>
+                <button name="button_open_credit_notes" type="object" class="oe_stat_button" icon="fa-gift" attrs="{'invisible': [('reconciled_credit_note_count','=', 0)]}">
+                    <field name="reconciled_credit_note_count"/><span>Descuento</span>
+                </button>
+            </button>
+            <sheet position="inside">
+                <notebook attrs="{'invisible': [('is_reconciled', '=', True)]}">
+                    <page name="in_payment_invoices" string="Facturas a pagar">
+                        <group>
+                            <group>
+                                <field name="amount_unassigned" decoration-bf="1" decoration-danger="amount_unassigned &lt; 0"/>
+                            </group>
+                            <group col="3">
+                                <field name="invoice_discount"/>
+                                <button name="action_payment_calculate_discount" string="Calcular descuento" type="object" attrs="{'invisible': [('invoice_discount', '&lt;', 0.0)]}"/>
+                            </group>
+                        </group>
+                        <field name="in_payment_invoice_ids" widget="many2many" domain="['&amp;', '&amp;', '&amp;', ('partner_id', '=', partner_id), ('currency_id', '=', currency_id), ('payment_state', 'not in', ('paid', 'in_payment')), '|', '&amp;', ('journal_id.code', '=', 'MIGR'), ('state', '=', 'draft'), '&amp;', '&amp;', ('move_type', '!=', 'entry'), ('state', '=', 'posted'), ('l10n_mx_edi_sat_status', 'in', ('valid', 'test'))]">
+                            <tree editable="bottom" decoration-danger="move_type in ('in_refund', 'out_refund')">
+                                <field name="move_type" invisible="1"/>
+                                <field name="payment_state" invisible="1"/>
+                                <field name="name" readonly="1"/>
+                                <field name="amount_residual"/>
+                                <field name="in_payment_amount"/>
+                                <field name="in_payment_discount_amount" attrs="{'readonly': [('move_type', 'in', ('in_refund', 'out_refund'))]}"/>
+                                <field name="in_payment_amount_residual"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+                <field name="narration" nolabel="1" readonly="1"/>
+            </sheet>
+        </field>
+    </record>
+</odoo>

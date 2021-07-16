@@ -6,20 +6,9 @@
         <field name="inherit_id" ref="product.product_template_form_view"/>
         <field name="arch" type="xml">
             <button name="%(product.product_attribute_value_action)d" position="replace">
-                <button string="Configure Variants" type="action"
-                        name="%(product.product_attribute_value_action)d"
-                        attrs="{'invisible': ['|', '&amp;', ('attribute_line_ids', '&lt;=', 0), ('is_product_variant', '=', True), ('categ_id', 'in', [%(integreat_sale_product_configurator.caja_troquelada)d, %(integreat_sale_product_configurator.lamina)d])]}"
-                        groups="product.group_product_variant"/>
-                <button string="Configurar CAJA" type="action"
+                <button string="Actualizar Producto" type="action"
                         name="%(product_configurator_action)d"
-                        attrs="{'invisible': ['|', '|', ('attribute_line_ids', '&lt;=', 0), ('is_product_variant', '=', True), ('categ_id', '!=', %(integreat_sale_product_configurator.caja_troquelada)d)]}"
-                        context="{'configure_product': 'caja', 'default_product_template_id': id}"
-                        groups="product.group_product_variant"/>
-                <button string="Configurar LÁMINA" type="action"
-                        name="%(product_configurator_action)d"
-                        attrs="{'invisible': ['|', '|', ('attribute_line_ids', '&lt;=', 0), ('is_product_variant', '=', True), ('categ_id', '!=',  %(integreat_sale_product_configurator.lamina)d)]}"
-                        context="{'configure_product': 'lamina', 'default_product_template_id': id}"
-                        groups="product.group_product_variant"/>
+                        context="{'default_product_id': product_variant_id}"/>
             </button>
         </field>
     </record>
@@ -30,18 +19,7 @@
         <field name="arch" type="xml">
             <header position="inside">
                 <field name="product_tmpl_id" invisible="1"/>
-                <button string="Actualizar CAJA" type="action"
-                        name="%(product_configurator_action)d"
-                        attrs="{'invisible': ['|', ('is_product_variant', '=', False), ('categ_id', '!=', %(integreat_sale_product_configurator.caja_troquelada)d)]}"
-                        context="{'configure_product': 'caja', 'default_product_template_id': product_tmpl_id,
-                            'default_pattr1': product_template_attribute_value_ids[0],
-                            'default_pattr2': product_template_attribute_value_ids[1],
-                            'default_pattr3': product_template_attribute_value_ids[2],
-                            'default_pattr4': product_template_attribute_value_ids[3],
-                            'default_pcattr1': product_template_attribute_value_ids[4],
-                            'default_pcattr2': product_template_attribute_value_ids[5],
-                            'default_product_id': id}"
-                        groups="product.group_product_variant"/>
+                <button string="Actualizar CAJA" type="action" name="%(product_configurator_action)d" context="{'default_product_id': id}"/>
             </header>
         </field>
     </record>
@@ -54,19 +32,16 @@
                 <field name="product_tmpl_id" invisible="1"/>
                 <field name="is_product_variant" invisible="1"/>
                 <field name="categ_id" invisible="1"/>
-                <button string="Actualizar CAJA" type="action"
-                        name="%(product_configurator_action)d"
-                        attrs="{'invisible': ['|', ('is_product_variant', '=', False), ('categ_id', '!=', %(integreat_sale_product_configurator.caja_troquelada)d)]}"
-                        context="{'configure_product': 'caja', 'default_product_template_id': product_tmpl_id,
-                            'default_pattr1': product_template_attribute_value_ids[0],
-                            'default_pattr2': product_template_attribute_value_ids[1],
-                            'default_pattr3': product_template_attribute_value_ids[2],
-                            'default_pattr4': product_template_attribute_value_ids[3],
-                            'default_pcattr1': product_template_attribute_value_ids[4],
-                            'default_pcattr2': product_template_attribute_value_ids[5],
-                            'default_product_id': id}"
-                        groups="product.group_product_variant"/>
+                <button string="Actualizar CAJA" type="action" name="%(product_configurator_action)d" context="{'default_product_id': id}"/>
             </header>
         </field>
     </record>
+    <record model="ir.actions.act_window" id="product_model_integreat_view">
+        <field name="name">Productos Modelo</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('is_model', '=', True)]</field>
+    </record>
+    <menuitem id="menu_sale_product_model_integreat" parent="sale.menu_sale_config" action="product_model_integreat_view" sequence="104"/>
 </odoo>

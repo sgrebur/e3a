@@ -1,3 +1,2 @@
 "id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
 "access_integreat_product_configurator","access.integreat.product.configurator","model_product_configurator_integreat","base.group_user",1,1,1,1
-"access_product_attribute_update_wizard_integreat","access.product.attribute.update.wizard.integreat","model_product_attribute_update_wizard_integreat","product.group_product_variant",1,1,1,1

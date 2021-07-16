@@ -42,41 +42,75 @@
         <field name="model">product.configurator.integreat</field>
         <field name="arch" type="xml">
             <form js_class="integreat_configurator_button">
-                <group>
-                    <field name="product_model" widget="selection" required="1" attrs="{'readonly': [('product_id', '!=', False)]}"/>
-                    <field name="model_code" invisible="1"/>
-                    <field name="product_style" attrs="{'required': [('model_code', '=', 'P')], 'invisible': [('model_code', '!=', 'P')], 'readonly': [('product_id', '!=', False)]}"/>
-                    <field name="company_id" invisible="1"/>
-                </group>
-                <div attrs="{'invisible': [('product_model', '=', False)]}">
+                <div class="oe_title">
                     <group>
-                        <field name="lamina_tmpl_id" invisible="1"/>
-                        <field name="new_combination_lamina" invisible="1"/>
-                        <field name="product_id" attrs="{'invisible': [('product_id', '=', False)]}" decoration-bf="1"/>
-                        <field name="product_tmpl_id" invisible="1"/>
+                        <field name="product_model" widget="selection" required="1" attrs="{'readonly': [('product_id', '!=', False)]}"/>
+                        <field name="model_code" invisible="1"/>
+                        <field name="company_id" invisible="1"/>
+                        <field name="parent_wiz_id" invisible="1"/>
+                        <field name="origin" invisible="1"/>
                     </group>
-                    <group attrs="{'invisible': [('product_id', '!=', False)]}">
-                            <field name="prd_name"/>
-                            <field name="prd_unspsc"/>
-                            <field name="partner_id" attrs="{'required': [('model_code', 'in', ['P', 'E', 'Q', 'M'])], 'invisible': [('model_code', 'not in', ['P', 'E', 'Q', 'M'])], 'readonly': [('product_id', '!=', False)]}"/>
-                    </group>
-                    <field name="customer_product_id" invisible="1"/>
-                    <group attrs="{'invisible': ['|', ('model_code', 'not in', ['P', 'E', 'Q', 'M']), ('customer_product_id', '!=', False)]}">
-                        <group >
-                            <field name="product_code" attrs="{'required': [('model_code', 'in', ['P', 'E', 'Q', 'M']), ('customer_product_id', '=', False)]}"/>
-                        </group>
+                </div>
+                <div attrs="{'invisible': [('product_model', '=', False)]}">
+                    <field name="image_1920" widget="image" class="oe_avatar" attrs="{'invisible': [('product_id', '!=', False)]}"/>
+                    <field name="product_id_image_1920" widget="image" class="oe_avatar" attrs="{'invisible': [('product_id', '=', False)]}"/>
+                    <div class="oe_title">
                         <group>
-                            <field name="product_name" attrs="{'required': [('model_code', 'in', ['P', 'E', 'Q', 'M']), ('customer_product_id', '=', False)]}"/>
+                            <field name="lamina_tmpl_id" invisible="1"/>
+                            <field name="new_combination_lamina" invisible="1"/>
+                            <field name="product_id" attrs="{'invisible': [('product_id', '=', False)]}" decoration-bf="1"/>
+                            <field name="product_tmpl_id" invisible="1"/>
                         </group>
-                    </group>
-                    <group attrs="{'invisible': ['|', ('model_code', 'not in', ['P', 'E', 'Q', 'M']), ('customer_product_id', '=', False)]}">
-                        <group >
-                            <field name="customer_product_code"/>
+                        <div attrs="{'invisible': [('product_id', '!=', False)]}">
+                            <group>
+                                <field name="prd_name"/>
+                                <field name="prd_unspsc"/>
+                                <field name="partner_id" attrs="{'required': [('product_code', '!=', False)], 'invisible': [('sale_ok', '=', False)], 'readonly': [('product_id', '!=', False)]}"/>
+                            </group>
+                            <group >
+                                <group>
+                                    <field name="sale_ok"/>
+                                </group>
+                                <group>
+                                    <field name="purchase_ok"/>
+                                </group>
+                            </group>
+                        </div>
+                        <div attrs="{'invisible': [('product_id', '=', False)]}">
+                            <group>
+                                <field name="product_id_name"/>
+                                <field name="product_id_unpsc"/>
+                                <field name="partner_id" attrs="{'required': [('product_code', '!=', False)], 'invisible': [('sale_ok', '=', False)], 'readonly': [('product_id', '!=', False)]}"/>
+                            </group>
+                            <group>
+                                <group>
+                                    <field name="product_id_sale_ok"/>
+                                </group>
+                                <group>
+                                    <field name="product_id_purchase_ok"/>
+                                </group>
+                            </group>
+                        </div>
+                    </div>
+                    <div id="customer_product">
+                        <field name="customer_product_id" invisible="1"/>
+                        <group attrs="{'invisible': ['|', ('sale_ok', '=', False), ('customer_product_id', '!=', False)]}">
+                            <group >
+                                <field name="product_code" attrs="{'required': [('model_code', 'in', ['P', 'E', 'Q', 'M']), ('sale_ok', '=', True), ('customer_product_id', '=', False)]}"/>
+                            </group>
+                            <group>
+                                <field name="product_name" attrs="{'required': [('model_code', 'in', ['P', 'E', 'Q', 'M']), ('sale_ok', '=', True), ('customer_product_id', '=', False)]}"/>
+                            </group>
                         </group>
-                        <group>
-                            <field name="customer_product_name"/>
+                        <group attrs="{'invisible': ['|', ('product_id_sale_ok', '=', False), ('customer_product_id', '=', False)]}">
+                            <group >
+                                <field name="customer_product_code"/>
+                            </group>
+                            <group>
+                                <field name="customer_product_name"/>
+                            </group>
                         </group>
-                    </group>
+                    </div>
                     <div id="product_spec">
                         <separator string="Especificaciones"/><hr/>
                         <group>
@@ -87,26 +121,27 @@
                     <div attrs="{'invisible': [('model_code', 'not in', ('P', 'Q', 'L'))]}">
                         <group>
                             <group>
-                                <field name="calibre_search" context="{'show_attribute': 0}" attrs="{'readonly': [('product_id', '!=', False)]}"/>
-                                <field name="papel_search" context="{'show_attribute': 0}" attrs="{'readonly': [('product_id', '!=', False)]}"/>
-                                <field name="flauta_search" context="{'show_attribute': 0}" attrs="{'readonly': [('product_id', '!=', False)]}"/>
-                                <field name="recub_search" context="{'show_attribute': 0}" attrs="{'readonly': [('product_id', '!=', False)]}"/>
-                                <field name="origen" attrs="{'readonly': [('product_id', '!=', False)]}"/>
+                                <field name="calibre_search" context="{'show_attribute': 0}" attrs="{'readonly': [('product_id', '!=', False)], 'required': [('model_code', 'in', ['P', 'Q', 'L'])]}"/>
+                                <field name="papel_search" context="{'show_attribute': 0}" attrs="{'readonly': [('product_id', '!=', False)], 'required': [('model_code', 'in', ['P', 'Q', 'L'])]}"/>
+                                <field name="flauta_search" context="{'show_attribute': 0}" attrs="{'readonly': [('product_id', '!=', False)], 'required': [('model_code', 'in', ['P', 'Q', 'L'])]}"/>
+                                <field name="recub_search" context="{'show_attribute': 0}" attrs="{'readonly': [('product_id', '!=', False)], 'required': [('model_code', 'in', ['P', 'Q', 'L'])]}"/>
+                                <field name="origen" attrs="{'readonly': [('product_id', '!=', False)], 'required': [('model_code', 'in', ['P', 'Q', 'L'])]}"/>
                             </group>
                             <group attrs="{'invisible': [('model_code', '=', 'L')]}">
-                                <field name="uom_input" string="UdM"/>
+                                <field name="uom_input" string="UdM" attrs="{'readonly': [('product_id', '!=', False)]}"/>
                                 <field name="largo_input" string="Largo" attrs="{'invisible': [('uom_input', '=', 'mm')], 'readonly': [('product_id', '!=', False)]}"/>
                                 <field name="ancho_input" string="Ancho" attrs="{'invisible': [('uom_input', '=', 'mm')], 'readonly': [('product_id', '!=', False)]}"/>
                                 <field name="alto_input" string="Alto" attrs="{'invisible': [('uom_input', '=', 'mm')], 'readonly': [('product_id', '!=', False)]}"/>
                                 <field name="largo" attrs="{'invisible': [('uom_input', '=', 'in')], 'readonly': [('product_id', '!=', False)]}"/>
                                 <field name="ancho" attrs="{'invisible': [('uom_input', '=', 'in')], 'readonly': [('product_id', '!=', False)]}"/>
                                 <field name="alto" attrs="{'invisible': [('uom_input', '=', 'in')], 'readonly': [('product_id', '!=', False)]}"/>
+                                <field name="product_style" attrs="{'invisible': [('model_code', '!=', 'P')], 'readonly': [('product_id', '!=', False)]}"/>
                             </group>
                         </group>
                         <group>
                             <group >
-                                <field name="ancho_lamina" attrs="{'readonly': [('product_id', '!=', False)]}"/>
-                                <field name="largo_lamina" attrs="{'readonly': [('product_id', '!=', False)]}"/>
+                                <field name="ancho_lamina" attrs="{'readonly': [('product_id', '!=', False)], 'required': [('model_code', 'in', ['P', 'Q', 'L'])]}"/>
+                                <field name="largo_lamina" attrs="{'readonly': [('product_id', '!=', False)], 'required': [('model_code', 'in', ['P', 'Q', 'L'])]}"/>
                             </group>
                             <group>
                                 <field name="marca1"/>
@@ -119,16 +154,12 @@
                     <div id="product_bom" attrs="{'invisible': [('model_code', 'not in', ['P', 'E', 'Q'])]}">
                         <separator string="Datos de producción"/><hr/>
                         <group attrs="{'invisible': [('bom_id', '!=', False)]}">
-                            <field name="picking_type_id"/>
+                            <field name="picking_type_id" attrs="{'required': [('model_code', 'in', ['P', 'Q', 'E'])]}"/>
                         </group>
                         <div attrs="{'invisible': [('bom_id', '=', False)]}">
+                            <field name="bom_id" invisible="1"/>
                             <group>
-                                <group attrs="{'invisible': [('bom_id', '=', False)]}">
-                                    <field name="lamina_id" string="Lámina básico" decoration-bf="1" readonly="1" attrs="{'invisible': [('lamina_id', '=', False)]}"/>
-                                </group>
-                                <group>
-                                    <field name="bom_id" readonly="1"/>
-                                </group>
+                                <field name="lamina_id" string="Lámina básico" decoration-bf="1" readonly="1" attrs="{'invisible': [('lamina_id', '=', False)]}"/>
                             </group>
                             <notebook>
                                 <page name="components" string="Componentes">
@@ -137,7 +168,7 @@
                                             <button name="button_add_component_line" type="object" string=" Crear componente" icon="fa-plus" class="btn-primary"/>
                                         </group>
                                         <group>
-                                            <field name="bom_qty"/>
+                                            <field name="bom_qty" string="Pzs/Herr"/>
                                         </group>
                                     </group>
                                     <field name="bom_line_ids" widget="one2many">
@@ -146,6 +177,7 @@
                                             <field name="company_id" invisible="1"/>
                                             <field name="product_id"/>
                                             <field name="product_qty"/>
+                                            <field name="product_uom_id" string="UdM" readonly="1"/>
                                             <field name="route_id"/>
                                         </tree>
                                     </field>
@@ -153,8 +185,8 @@
                                 <page name="operations" string="Operaciones">
                                     <group>
                                         <group>
-                                            <field name="bom_qty"/>
-                                            <field name="picking_type_id"/>
+                                            <field name="bom_qty" string="Pzs/Herr"/>
+                                            <field name="bom_picking_type_id" string="Planta"/>
                                         </group>
                                         <group>
                                             <field name="suaje"/>
@@ -166,7 +198,7 @@
                                             <field name="bom_id" invisible="1"/>
                                             <field name="company_id" invisible="1"/>
                                             <field name="sequence" widget="handle"/>
-                                            <field name="operation_template_id"/>
+                                            <field name="operation_template_id" string="Operación"/>
                                             <field name="operation_group" invisible="1"/>
                                             <field name="name" invisible="1"/>
                                             <field name="workcenter_id"/>
@@ -176,11 +208,12 @@
                             </notebook>
                         </div>
                     </div>
-                    <div id="sales_data" attrs="{'invisible': [('model_code', 'not in', ['P', 'E', 'Q', 'M'])]}">
+                    <div id="sales_data" attrs="{'invisible': ['|', '&amp;', ('product_id', '=', False), ('sale_ok', '=', False), '&amp;', ('product_id', '!=', False), ('product_id_sale_ok', '=', False)]}">
                         <separator string="Datos de venta"/><hr/>
                         <notebook>
+                            <field name="partner_pricelist_id" invisible="1"/>
                             <page name="customer_codes" string="Tarifas">
-                                <field name="pricelist_items_model" widget="one2many" context="{'default_applied_on': '0_product_variant', 'default_product_id': product_model, 'default_compute_price': 'fixed'}" attrs="{'invisible': [('product_id', '!=', False)]}">
+                                <field name="pricelist_items_model" widget="one2many" context="{'default_applied_on': '0_product_variant', 'default_product_id': product_model, 'default_compute_price': 'fixed', 'default_pricelist_id': partner_pricelist_id}" attrs="{'invisible': [('product_id', '!=', False)]}">
                                     <tree editable="bottom">
                                         <field name="applied_on" invisible="1"/>
                                         <field name="product_id" invisible="1"/>
@@ -209,7 +242,7 @@
                             </page>
                         </notebook>
                     </div>
-                    <div id="purchase_data" attrs="{'invisible': [('model_code', '=', 'L')]}">
+                    <div id="purchase_data" attrs="{'invisible': ['|', '&amp;', ('product_id', '=', False), ('purchase_ok', '=', False), '&amp;', ('product_id', '!=', False), ('product_id_purchase_ok', '=', False)]}">
                         <separator string="Datos de compra"/><hr/>
                         <notebook>
                             <page name="supplierinfos" string="Proveedores y Tarifas">
@@ -251,8 +284,9 @@
                     </div>
                 </div>
                 <footer>
-                    <button name="button_create_product" type="object" string="Crear Producto" class="btn-primary" />
-                    <button name="button_update_and_add" type="button" string="Actualizar producto y agregar a orden" class="btn-primary" attrs="{'invisible': [('product_id', '=', False)]}"/>
+                    <button name="button_create_product" type="object" string="Crear Producto" class="btn-primary" attrs="{'invisible': ['|', ('parent_wiz_id', '!=', False), ('product_id', '!=', False)]}"/>
+                    <button name="button_create_product" type="object" string="Crear y devolver" class="btn-primary" attrs="{'invisible': ['|', ('parent_wiz_id', '=', False), ('product_id', '!=', False)]}"/>
+                    <button name="button_update_and_add" type="button" string="Actualizar y agregar a orden" class="btn-primary" attrs="{'invisible': [('product_id', '=', False), ('origin', '!=', 'sale_order')]}"/>
                     <button string="Cancelar" type="button" class="btn-secondary" special="cancel"/>
                 </footer>
             </form>

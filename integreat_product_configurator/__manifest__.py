@@ -19,7 +19,6 @@
         'web'
     ],
     'data': [
-        'wizard/attribute_product_update.xml',
         'wizard/product_configurator_views.xml',
         'views/assets.xml',
         'views/product_view.xml',
@@ -31,4 +30,5 @@
         'static/src/xml/template.xml',
     ],
     'installable': True,
+    'pre_init_hook': 'pre_init_hook_py',
 }

@@ -20,7 +20,8 @@ SectionAndNoteListRenderer.include({
         if (record.context.configure_product && !record.data.product_id) {
             this.do_action('integreat_product_configurator.product_configurator_action', {
                 additional_context: {
-                    configure_product: record.context.configure_product,
+                    origin: 'order',
+                    default_partner_id: record.context.default_partner_id || false,
                 },
                 on_close: function (res) {
                     if (res && res.return_default) { self.trigger_up('field_changed', {

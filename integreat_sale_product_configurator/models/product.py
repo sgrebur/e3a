@@ -78,6 +78,7 @@ class ProductTemplateAttributeValue(models.Model):
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
+    product_model_id = fields.Many2one('product.product', string='Modelo', domain="[('is_model', '=', True)]")
     is_model = fields.Boolean('Is model?')
     tmpl_calibre = fields.Char('Calibre ECT (L)')
     tmpl_papel = fields.Char('Liner (L)')

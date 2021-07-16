@@ -44,8 +44,7 @@ class ProductCustomerCode(models.Model):
         default=lambda self: self.env.user.company_id)
 
     _sql_constraints = [
-        ('unique_code', 'unique(product_id, company_id, partner_id)',
-         'Product Code of customer must be unique'),
+        ('unique_code', 'unique(product_code, company_id, partner_id)', 'Product Code of customer must be unique'),
     ]
 
     @api.model_create_multi

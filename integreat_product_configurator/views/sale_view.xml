@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <create name="add_product_control" position="after">
-                <create name="configure_product_control" string="Configurar producto nuevo" context="{'configure_product': 'caja'}"/>
+                <create name="configure_product_control" string="Configurar producto nuevo" context="{'configure_product': 'order', 'default_partner_id': parent.partner_id}"/>
             </create>
         </field>
     </record>

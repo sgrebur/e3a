@@ -38,8 +38,8 @@ class SaleProductConfiguratorIntegreat(models.TransientModel):
     tipo_tinta_search = fields.Many2one('product.attribute.value', 'Tipo tinta ', domain="[('attribute_id.name', '=', 'Tipo Tinta')]")
     color_search = fields.Many2one('product.attribute.value', 'Color ', domain="[('attribute_id.name', '=', 'Color')]")
     origen = fields.Selection([('NAL', 'NAL'), ('IND', 'IND'), ('HAZ', 'HAZ')], string='Origen', default='NAL')
-    ancho_lamina = fields.Integer('Ancho Lamina', compute='_compute_dimensions', store=True, readonly=False)
-    largo_lamina = fields.Integer('Largo Lamina', compute='_compute_dimensions', store=True, readonly=False)
+    ancho_lamina = fields.Integer('Ancho Lamina')
+    largo_lamina = fields.Integer('Largo Lamina')
     ancho = fields.Integer('Ancho', compute='_convert_uom', store=True, readonly=False)
     largo = fields.Integer('Largo', compute='_convert_uom', store=True, readonly=False)
     alto = fields.Integer('Alto', compute='_convert_uom', store=True, readonly=False)
@@ -192,7 +192,7 @@ class SaleProductConfiguratorIntegreat(models.TransientModel):
                 elif all([rec.ancho > 0, rec.largo > 0]):
                     rec.ancho_lamina = rec.ancho
                     rec.largo_lamina = rec.largo
-            else:
+            elif rec.product_id:
                 rec.ancho_lamina = rec.product_id.spec_ancho_lamina
                 rec.largo_lamina = rec.product_id.spec_largo_lamina
 

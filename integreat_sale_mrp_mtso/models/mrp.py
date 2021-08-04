@@ -2,6 +2,7 @@
 # greburs by InteGreat
 
 from odoo import api, fields, models, SUPERUSER_ID, _
+from odoo.tools import float_round
 
 
 class MrpProduction(models.Model):
@@ -11,6 +12,27 @@ class MrpProduction(models.Model):
     sale_line_id = fields.Many2one('sale.order.line', string="OV Ln", index=True)
     sale_partner_name = fields.Char(string='Cliente', compute='_compute_partner_name')
     is_printed = fields.Boolean(string='Printed')
+
+    # when mo done: update deliveries
+    def button_mark_done(self):
+        res = super().button_mark_done()
+        for mo in self:
+            if mo.sale_order_id:
+                for pick in mo.sale_order_id.picking_ids.filtered(
+                        lambda p: p.state not in ('done', 'cancel')):
+                    pick.action_assign()
+            if mo.product_id.free_qty > 0:
+                outgoing, incoming = mo.sale_line_id._get_outgoing_incoming_moves()
+                out_qty = sum(outgoing.mapped('product_uom_qty'))
+                in_qty = sum(incoming.mapped('product_uom_qty'))
+                add_qty = float_round(mo.sale_line_id.product_uom_qty * 110/100, precision_digits=1) - out_qty + in_qty
+                if add_qty > mo.product_id.free_qty:
+                    add_qty = mo.product_id.free_qty
+                for move in outgoing.filtered(lambda x: x.state != 'done'):
+                    move.product_uom_qty += add_qty
+                    move._action_confirm()._action_assign()
+                    break
+        return res
 
     @api.depends('sale_line_id')
     def _compute_partner_name(self):

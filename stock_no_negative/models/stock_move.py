@@ -17,7 +17,7 @@ class StockLocation(models.Model):
                     auto_adj_vals = quant._get_inventory_move_values(-quant.quantity,
                             quant.product_id.with_company(quant.company_id).property_stock_inventory, quant.location_id)
                     auto_adj_vals['name'] = 'Ajuste Automatico > Stock Negativo'
-                    auto_adj_vals['origin'] =  + move.reference + ' > ' + (move.origin or '')
+                    auto_adj_vals['origin'] = move.reference
                     auto_adj_move = self.env['stock.move'].with_context(inventory_mode=False).create(auto_adj_vals)
                     auto_adj_move._action_done()
         return res

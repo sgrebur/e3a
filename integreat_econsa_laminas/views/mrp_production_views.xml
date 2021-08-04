@@ -10,6 +10,9 @@
                 <field name="lamina_open_qty" invisible="1"/>
                 <button name="action_select_lamina" string="Select Lamina" type="object" class="btn-danger" attrs="{'invisible': ['|',('is_lamina_required', '=', False),('lamina_open_qty', '=', 0)]}"/>
             </button>
+            <button name="button_unbuild" position="after">
+                <button name="button_purreq_wizard" string="Solicitar material" type="object" class="btn-secondary" attrs="{'invisible': ['|', ('state', 'in', ['draft', 'done', 'cancel']), ('move_raw_ids', '=', [])]}"/>
+            </button>
             <xpath expr="//sheet" position="before">
                 <div class="alert alert-danger" role="alert" style="margin-bottom:0px;" attrs="{'invisible': [('lamina_open_qty', '&gt;=', 0)]}">
                     La cantidad de la orden de producción es menor que la cantidad posible de las láminas asignadas con <bold><field name="lamina_open_qty"></field></bold> pzs.<br/>

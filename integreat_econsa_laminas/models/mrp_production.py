@@ -48,6 +48,21 @@ class MrpProduction(models.Model):
             'view_mode': 'tree,form',
         }
 
+    def button_purreq_wizard(self):
+        self.action_assign()
+        wiz_lines = []
+        for move in self.move_raw_ids:
+            wiz_lines.append((0, 0, {'move_id': move.id}))
+        wiz = self.env['mrp.purchase.request.wizard'].create({'production_id': self.id, 'line_ids': wiz_lines})
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Solicitar compra additional por Orden %s' % self.name,
+            'view_mode': 'form',
+            'target': 'new',
+            'res_model': 'mrp.purchase.request.wizard',
+            'res_id': wiz.id
+        }
+
     @api.model
     def create(self, values):
         if values.get('product_id', False):
@@ -201,13 +216,18 @@ class MrpProduction(models.Model):
                 prod.action_assign()
                 # do it for all components automatically
                 for raw in prod.move_raw_ids:
+                    required = 0
+                    # when component pickings
                     if raw.move_orig_ids and raw.product_id.type == 'product' and not raw.route_ids and not raw.move_orig_ids.production_id:
                         required = sum(raw.move_orig_ids.mapped('product_uom_qty')) \
                                    - sum(raw.move_orig_ids.mapped('quantity_done')) \
                                    - sum(raw.move_orig_ids.mapped('reserved_availability'))
-                        if prod.purchase_request_ids:
-                            required -= sum(prod.purchase_request_ids.line_ids.
-                                            filtered(lambda l: l.product_id == raw.product_id).mapped('product_qty'))
+                    # when 1-step production
+                    elif not raw.move_orig_ids and raw.product_id.type == 'product' and not raw.route_ids:
+                        required = raw.product_uom_qty - raw.quantity_done - raw.reserved_availability
+                    if required > 0 and prod.purchase_request_ids:
+                        required -= sum(prod.purchase_request_ids.line_ids.
+                                        filtered(lambda l: l.product_id == raw.product_id).mapped('product_qty'))
                         free = raw.product_id.with_context(warehouse=prod.location_src_id.get_warehouse().id).free_qty
                         if required > free:
                             qty = required - free

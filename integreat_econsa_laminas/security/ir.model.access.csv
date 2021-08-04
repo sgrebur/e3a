@@ -3,3 +3,5 @@
 "access_integreat_econsa_laminas_line","access.integreat.econsa.laminas.line","model_wizard_lamina_selection_line","base.group_user",1,1,1,1
 "access_integreat_econsa_laminas_product","access.integreat.econsa.laminas.product","model_wizard_lamina_selection_product_select","base.group_user",1,1,1,1
 "access_integreat_econsa_laminas_group","access.integreat.econsa.laminas.group","model_wizard_lamina_selection_group","base.group_user",1,1,1,1
+"access_mrp_purchase_request_wizard","access.mrp.purchase.request.wizard","model_mrp_purchase_request_wizard","base.group_user",1,1,1,1
+"access_mrp_purchase_request_wizard_line","access.mrp.purchase.request.wizard_line","model_mrp_purchase_request_wizard_line","base.group_user",1,1,1,1

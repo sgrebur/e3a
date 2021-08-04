@@ -3,3 +3,4 @@
 
 from . import mrp_wokorder_record_qty
 from . import mrp_equipment_transfer_wizard
+from . import mrp_plan_check_availability

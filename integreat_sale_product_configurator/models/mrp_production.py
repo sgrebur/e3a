@@ -20,6 +20,40 @@ class MrpProduction(models.Model):
     citpa_a = fields.One2many('mrp.workorder', 'production_citpa_a_id', string='A')
     tinta_name = fields.Char('Tinta', compute='_compute_tinta', store=True)
     tinta_color = fields.Char('#', compute='_compute_tinta', store=True)
+    product_qty_conf = product_qty = fields.Float('Cantidad original', digits='Product Unit of Measure', readonly=True)
+
+    # from whatever reason move_finished_ids are sometimes missing (deleted by users???)
+    def button_mark_done(self):
+        for mo in self:
+            mo._onchange_move_finished()
+            mo._set_qty_producing()
+            mo.action_assign()
+            move_lines_zero = mo.move_raw_ids.move_line_ids.filtered(lambda x: x.location_id.usage == 'view')
+            # when manuf 1 step & negative stock allowed & pbm_loc a view location, we set it to the pbm
+            if move_lines_zero:
+                move_lines_zero.location_id = mo.picking_type_id.warehouse_id.pbm_loc_id
+        return super().button_mark_done()
+
+    def button_plan(self):
+        self.action_assign()
+        if not self._context.get('with_no_stock', False):
+            no_reservation = self.filtered(lambda x: x.reservation_state != 'assigned')
+            if no_reservation:
+                wizard = self.env['mrp.production.plan.wizard'].create({
+                    'productions': [(6, 0, self.ids)]
+                })
+                return {
+                    'name': 'Confirmar lanzamiento de producción',
+                    'type': 'ir.actions.act_window',
+                    'view_mode': 'form',
+                    'target': 'new',
+                    'res_model': 'mrp.production.plan.wizard',
+                    'res_id': wizard.id
+                }
+        res = super().button_plan()
+        for mo in self:
+            mo.workorder_ids._action_confirm()
+        return res
 
     @api.depends('move_raw_ids')
     def _compute_tinta(self):
@@ -130,6 +164,8 @@ class MrpProduction(models.Model):
                 p.workorder_ids.filtered(lambda w: w.state != 'done').write({'state': 'done'})
             if not p.date_deadline and p.date_planned_finished:
                 p.date_deadline = p.date_planned_finished
+            if vals.get('state', False) and vals.get('state') == 'confirmed':
+                p.product_qty_conf = p.product_qty
         return res
 
     def button_transfer_suaje(self):

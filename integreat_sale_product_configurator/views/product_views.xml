@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record id="product_template_common_form_view_integreat" model="ir.ui.view">
+        <field name="name">product.template.common.form.view.integreat</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <field name="type" position="after">
+                <field name="product_model_id" string="Producto modelo" required="1"/>
+                <field name="model_code" invisible="1"/>
+            </field>
+        </field>
+    </record>
     <record model="ir.ui.view" id="product_normal_form_view_econsa">
         <field name="name">product.normal.form.econsa</field>
         <field name="model">product.product</field>
@@ -7,27 +18,32 @@
         <field name="arch" type="xml">
             <notebook position="inside">
                 <page string="Datos adicionales" name="additional_data">
-                    <field name="categ_id" invisible="1"/>
-                    <group attrs="{'invisible': [('categ_id', 'not in', [%(integreat_sale_product_configurator.caja_troquelada)d, %(integreat_sale_product_configurator.lamina)d])]}">
-                        <group string="Resistencia">
+                    <field name="model_code" invisible="1"/>
+                    <group>
+                        <group string="Resistencia" attrs="{'invisible': [('model_code', 'not in', ['P', 'Q', 'L'])]}">
                             <field name="spec_calibre"/>
                             <field name="spec_papel"/>
                             <field name="spec_flauta"/>
                             <field name="spec_recub"/>
-                            <field name="spec_origen" attrs="{'invisible': [('categ_id', '!=', %(integreat_sale_product_configurator.lamina)d)]}"/>
+                            <field name="spec_origen"/>
                         </group>
-                        <group string="Medida (mm)">
-                            <field name="spec_ancho" string="Ancho"/>
-                            <field name="spec_largo" string="Largo"/>
+                        <group string="Medidas internas" attrs="{'invisible': [('model_code', 'not in', ['A', 'E', 'P', 'Q', 'M'])]}">
+                            <field name="uom_size" string="UdM"/>
+                            <field name="largo_uom" string="Largo" attrs="{'invisible': [('uom_size', '=', 'mm')]}"/>
+                            <field name="ancho_uom" string="Ancho" attrs="{'invisible': [('uom_size', '=', 'mm')]}"/>
+                            <field name="alto_uom" string="Alto" attrs="{'invisible': [('uom_size', '=', 'mm')]}"/>
+                            <field name="spec_largo" attrs="{'invisible': [('uom_size', '=', 'in')]}"/>
+                            <field name="spec_ancho" attrs="{'invisible': [('uom_size', '=', 'in')]}"/>
+                            <field name="spec_alto" attrs="{'invisible': [('uom_size', '=', 'in')]}"/>
                         </group>
                     </group>
-                    <group>
-                        <group string="Marcas" attrs="{'invisible': [('categ_id', '!=', %(integreat_sale_product_configurator.lamina)d)]}">
+                    <group attrs="{'invisible': [('model_code', 'not in', ['P', 'L'])]}">
+                        <group string="Marcas">
                             <field name="spec_marca1"/>
                             <field name="spec_marca2"/>
                             <field name="spec_marca3"/>
                         </group>
-                        <group string="Medida lámina básico" attrs="{'invisible': [('categ_id', '!=', %(integreat_sale_product_configurator.caja_troquelada)d)]}">
+                        <group string="Medidas de lámina (mm)">
                             <field name="spec_ancho_lamina"/>
                             <field name="spec_largo_lamina"/>
                         </group>
@@ -42,29 +58,36 @@
         <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
         <field name="arch" type="xml">
             <xpath expr="//group[1]" position="after" >
+                <field name="model_code" invisible="1"/>
                 <group>
-                    <group string="Resistencia">
+                    <group string="Resistencia" attrs="{'invisible': [('model_code', 'not in', ['P', 'Q', 'L'])]}">
                         <field name="spec_calibre"/>
                         <field name="spec_papel"/>
                         <field name="spec_flauta"/>
+                        <field name="spec_recub"/>
+                        <field name="spec_origen"/>
                     </group>
-                    <group string="Medida (mm)">
-                        <field name="spec_ancho" string="Ancho"/>
-                        <field name="spec_largo" string="Largo"/>
+                    <group string="Medidas internas" attrs="{'invisible': [('model_code', 'not in', ['A', 'E', 'P', 'Q', 'M'])]}">
+                        <field name="uom_size" string="UdM"/>
+                        <field name="largo_uom" string="Largo" attrs="{'invisible': [('uom_size', '=', 'mm')]}"/>
+                        <field name="ancho_uom" string="Ancho" attrs="{'invisible': [('uom_size', '=', 'mm')]}"/>
+                        <field name="alto_uom" string="Alto" attrs="{'invisible': [('uom_size', '=', 'mm')]}"/>
+                        <field name="spec_largo" attrs="{'invisible': [('uom_size', '=', 'in')]}"/>
+                        <field name="spec_ancho" attrs="{'invisible': [('uom_size', '=', 'in')]}"/>
+                        <field name="spec_alto" attrs="{'invisible': [('uom_size', '=', 'in')]}"/>
                     </group>
                 </group>
-                    <group>
-                        <field name="categ_id" invisible="1"/>
-                        <group string="Marcas" attrs="{'invisible': [('categ_id', '=', '%(integreat_sale_product_configurator.lamina)d')]}">
-                            <field name="spec_marca1"/>
-                            <field name="spec_marca2"/>
-                            <field name="spec_marca3"/>
-                        </group>
-                        <group string="Medida lámina básico" attrs="{'invisible': [('categ_id', '!=', '%(integreat_sale_product_configurator.caja_troquelada)d')]}">
-                            <field name="spec_ancho_lamina"/>
-                            <field name="spec_largo_lamina"/>
-                        </group>
+                <group attrs="{'invisible': [('model_code', 'not in', ['P', 'L'])]}">
+                    <group string="Marcas">
+                        <field name="spec_marca1"/>
+                        <field name="spec_marca2"/>
+                        <field name="spec_marca3"/>
                     </group>
+                    <group string="Medidas de lámina (mm)">
+                        <field name="spec_ancho_lamina"/>
+                        <field name="spec_largo_lamina"/>
+                    </group>
+                </group>
             </xpath>
         </field>
     </record>

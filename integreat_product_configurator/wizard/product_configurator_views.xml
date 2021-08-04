@@ -65,7 +65,7 @@
                             <group>
                                 <field name="prd_name"/>
                                 <field name="prd_unspsc"/>
-                                <field name="partner_id" attrs="{'required': [('product_code', '!=', False)], 'invisible': [('sale_ok', '=', False)], 'readonly': [('product_id', '!=', False)]}"/>
+                                <field name="partner_id" attrs="{'required': [('product_code', '!=', False)], 'invisible': [('sale_ok', '=', False)]}"/>
                             </group>
                             <group >
                                 <group>
@@ -80,7 +80,7 @@
                             <group>
                                 <field name="product_id_name"/>
                                 <field name="product_id_unpsc"/>
-                                <field name="partner_id" attrs="{'required': [('product_code', '!=', False)], 'invisible': [('sale_ok', '=', False)], 'readonly': [('product_id', '!=', False)]}"/>
+                                <field name="partner_id" attrs="{'required': [('product_code', '!=', False)], 'invisible': [('sale_ok', '=', False)]}"/>
                             </group>
                             <group>
                                 <group>
@@ -121,7 +121,7 @@
                     <div attrs="{'invisible': [('model_code', 'not in', ('P', 'Q', 'L'))]}">
                         <group>
                             <group>
-                                <field name="calibre_search" context="{'show_attribute': 0}" attrs="{'readonly': [('product_id', '!=', False)], 'required': [('model_code', 'in', ['P', 'Q', 'L'])]}"/>
+                                <field name="calibre_search" context="{'show_attribute': 0}" attrs="{'required': [('model_code', 'in', ['P', 'Q', 'L'])]}"/>
                                 <field name="papel_search" context="{'show_attribute': 0}" attrs="{'readonly': [('product_id', '!=', False)], 'required': [('model_code', 'in', ['P', 'Q', 'L'])]}"/>
                                 <field name="flauta_search" context="{'show_attribute': 0}" attrs="{'readonly': [('product_id', '!=', False)], 'required': [('model_code', 'in', ['P', 'Q', 'L'])]}"/>
                                 <field name="recub_search" context="{'show_attribute': 0}" attrs="{'readonly': [('product_id', '!=', False)], 'required': [('model_code', 'in', ['P', 'Q', 'L'])]}"/>
@@ -286,8 +286,9 @@
                 <footer>
                     <button name="button_create_product" type="object" string="Crear Producto" class="btn-primary" attrs="{'invisible': ['|', ('parent_wiz_id', '!=', False), ('product_id', '!=', False)]}"/>
                     <button name="button_create_product" type="object" string="Crear y devolver" class="btn-primary" attrs="{'invisible': ['|', ('parent_wiz_id', '=', False), ('product_id', '!=', False)]}"/>
-                    <button name="button_update_and_add" type="button" string="Actualizar y agregar a orden" class="btn-primary" attrs="{'invisible': [('product_id', '=', False), ('origin', '!=', 'sale_order')]}"/>
-                    <button string="Cancelar" type="button" class="btn-secondary" special="cancel"/>
+                    <button name="button_update_and_add" type="button" string="Actualizar y agregar a orden" class="btn-primary" attrs="{'invisible': ['|', ('product_id', '=', False), ('origin', '!=', 'order')]}"/>
+                    <button name="button_update_and_add" type="button" string="Actualizar y agregar a orden" class="btn-primary" attrs="{'invisible': ['|', ('product_id', '=', False), ('origin', '=', 'order')]}"/>
+                    <!--<button string="Cancelar" type="button" class="btn-secondary" special="cancel"/>-->
                 </footer>
             </form>
         </field>

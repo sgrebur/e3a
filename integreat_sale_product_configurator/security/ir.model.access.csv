@@ -4,3 +4,4 @@
 "access_mrp_equipment_transfer_wizard","access.mrp.equipment.transfer.wizard","model_mrp_equipment_transfer_wizard","base.group_user",1,1,1,1
 "access_mrp_workorder_record_qty_wizard","access.mrp.workorder.record.qty.wizard","model_mrp_workorder_record_qty_wizard","base.group_user",1,1,1,1
 "access_product_configuration_integreat","access.product.configuration.integreat","model_product_configuration_integreat","base.group_user",1,1,1,1
+"access_mrp_production_plan_wizard","access.mrp.production.plan.wizard.","model_mrp_production_plan_wizard","base.group_user",1,1,1,1

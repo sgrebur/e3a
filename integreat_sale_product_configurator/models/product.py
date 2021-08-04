@@ -79,6 +79,7 @@ class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
     product_model_id = fields.Many2one('product.product', string='Modelo', domain="[('is_model', '=', True)]")
+    model_code = fields.Char(related='product_model_id.default_code')
     is_model = fields.Boolean('Is model?')
     tmpl_calibre = fields.Char('Calibre ECT (L)')
     tmpl_papel = fields.Char('Liner (L)')
@@ -131,9 +132,9 @@ class ProductProduct(models.Model):
     spec_ancho_lamina = fields.Integer('Ancho Lamina', default=0)
     spec_largo_lamina = fields.Integer('Largo Lamina', default=0)
     uom_size = fields.Selection([('mm', 'mm'), ('in', 'in')], default='mm')
-    ancho_uom = fields.Integer('Ancho Interno', default=0)
-    largo_uom = fields.Integer('Largo Interno', default=0)
-    alto_uom = fields.Integer('Alto Interno', default=0)
+    ancho_uom = fields.Float('Ancho Interno', default=0, digits=(12, 2))
+    largo_uom = fields.Float('Largo Interno', default=0, digits=(12, 2))
+    alto_uom = fields.Float('Alto Interno', default=0, digits=(12, 2))
 
     _sql_constraints = [
         ('default_code_uniq', 'UNIQUE (default_code)', '¡La referencia interna del producto debe ser unico !')

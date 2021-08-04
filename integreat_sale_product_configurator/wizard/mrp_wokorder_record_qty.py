@@ -33,14 +33,15 @@ class MrpWorkordorRecordQtyWizard(models.TransientModel):
         mo = self.mo_id
         if self.qty == 0:
             return
-        if self.qty > wo.qty_possible:
-            self.qty = wo.qty_possible
-            raise UserError('No es posible producir una cantidad mayor que la cantidad de producción\n'
-                            'o la cantidad ya producida en la orden de trabajo anterior.')
+        # if self.qty > wo.qty_possible:
+        #     self.qty = wo.qty_possible
+        #     raise UserError('No es posible producir una cantidad mayor que la cantidad de producción\n'
+        #                     'o la cantidad ya producida en la orden de trabajo anterior.')
         if not self.wo_id.next_work_order_id:
             wo.qty_produced += self.qty
-            mo.qty_producing = self.qty
-            mo._set_qty_producing()
+            if mo.qty_producing < wo.qty_produced:
+                mo.qty_producing = wo.qty_produced
+            # from whatever reason move_finished_ids are sometimes missing (deleted by users???)
             if self.to_backorder:
                 self.unlink()
                 mo.with_context(skip_consumption=True, skip_backorder=True, mo_ids_to_backorder=mo.ids, skip_wizard=True).button_mark_done()
@@ -52,6 +53,10 @@ class MrpWorkordorRecordQtyWizard(models.TransientModel):
             return True
         else:
             wo.qty_produced += self.qty
+            if mo.qty_producing < wo.qty_produced:
+                mo.qty_producing = wo.qty_produced
+                mo._set_qty_producing()
+                mo.action_assign()
             self.unlink()
             if wo.qty_production > wo.qty_produced:
                 if wo.next_work_order_id.state == 'pending':

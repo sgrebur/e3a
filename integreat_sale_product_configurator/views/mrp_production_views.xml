@@ -10,6 +10,12 @@
                 <field name="product_qty" position="attributes">
                     <attribute name="decoration-bf">1</attribute>
                 </field>
+                <field name="reservation_state" position="attributes">
+                    <attribute name="decoration-bf">1</attribute>
+                    <attribute name="decoration-danger">reservation_state == 'confirmed'</attribute>
+                    <attribute name="decoration-warning">reservation_state == 'waiting'</attribute>
+                    <attribute name="decoration-success">reservation_state == 'assigned'</attribute>
+                </field>
                 <field name="product_uom_id" position="after">
                     <field name="citpa_c" widget="many2many_tags" options="{'color_field': 'state_color'}"/>
                     <field name="citpa_i" widget="many2many_tags" options="{'color_field': 'state_color'}"/>
@@ -43,6 +49,13 @@
                     <button name="button_mark_done" attrs="{'invisible': ['|', ('state', 'not in', ('confirmed', 'progress', 'to_close')), ('is_planned', '=', False)]}" string="Marcar como hecho" type="object" class="oe_highlight"/>
                 </xpath>
                 <xpath expr="//button[@name='button_mark_done'][2]" position="replace"/>
+                <field name="bom_id" position="before">
+                    <label for="product_qty_conf" attrs="{'invisible': ['|', ('product_qty_conf', '=', 'product_qty'), ('product_qty_conf', '=', 0)]}"/>
+                    <div class="o_row no-gutters d-flex" attrs="{'invisible': ['|', ('product_qty_conf', '=', 'product_qty'), ('product_qty_conf', '=', 0)]}" decoration-info="1">
+                        <field name="product_qty_conf"/>
+                        <!--<field name="product_uom_id" options="{'no_open': True, 'no_create': True}" readonly="1" class="oe_inline"/>-->
+                    </div>
+                </field>
                 <field name="user_id" position="after">
                     <field name="suaje"/>
                     <field name="grabado"/>

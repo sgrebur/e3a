@@ -13,3 +13,4 @@ class StockLocation(models.Model):
         help="Allow negative stock levels for the stockable products "
         "attached to this location.",
     )
+    auto_adjust = fields.Boolean(string="Auto adjust negative stock to 0")

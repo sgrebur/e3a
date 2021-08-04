@@ -214,21 +214,20 @@ class MrpProduction(models.Model):
                             prod._run_lamina_procurement(raw.product_id, qty, [raw])
         return True
 
-    def button_plan(self):
-        component_picking_types = self.env['stock.warehouse'].search([]).pbm_type_id.mapped('id')
-        for mo in self:
-            picking_ids = self.env['stock.picking'].search([
-                ('group_id', '=', mo.procurement_group_id.id), ('group_id', '!=', False),
-                ('picking_type_id', 'in', component_picking_types)
-            ])
-            if picking_ids:
-                raw_picking_done = any(p.state == 'done' for p in picking_ids)
-                if raw_picking_done is False:
-                    raise UserError('Antes de programar y lanzar la producción,\n'
-                                    'la transferencia de los componentes debe ser procesada.')
-            res = super(MrpProduction, self).button_plan()
-            mo.workorder_ids._action_confirm()
-            return res
+    # # Componets PICKING must be processed before production launch
+    # def button_plan(self):
+    #
+    #     component_picking_types = self.env['stock.warehouse'].search([]).pbm_type_id.mapped('id')
+    #     for mo in self:
+    #         picking_ids = self.env['stock.picking'].search([
+    #             ('group_id', '=', mo.procurement_group_id.id), ('group_id', '!=', False),
+    #             ('picking_type_id', 'in', component_picking_types)
+    #         ])
+    #         if picking_ids:
+    #             raw_picking_done = any(p.state == 'done' for p in picking_ids)
+    #             if raw_picking_done is False:
+    #                 raise UserError('Antes de programar y lanzar la producción,\n'
+    #                                 'la transferencia de los componentes debe ser procesada.')
     
     def _run_lamina_procurement(self, product, qty, request_move_ids):
         procurements = []
@@ -320,12 +319,13 @@ class MrpProduction(models.Model):
             (moves_finished + moves_raw).write({'workorder_id': wo.id})
         return {}
 
-    def _set_qty_producing(self):
-        super(MrpProduction, self)._set_qty_producing()
-        for move in self.move_raw_ids:
-            if move.quantity_done > move.product_qty:
-                move.move_line_ids.filtered(lambda ml: ml.state not in ('done', 'cancel')).qty_done = 0
-                move.move_line_ids = move._set_quantity_done_prepare_vals(move.product_qty)
+    # OVERRIDE when producing qty > mo qty: components consumed won't be increased
+    # def _set_qty_producing(self):
+    #     super(MrpProduction, self)._set_qty_producing()
+    #     for move in self.move_raw_ids:
+    #         if move.quantity_done > move.product_qty:
+    #             move.move_line_ids.filtered(lambda ml: ml.state not in ('done', 'cancel')).qty_done = 0
+    #             move.move_line_ids = move._set_quantity_done_prepare_vals(move.product_qty)
 
 
 class StockMove(models.Model):

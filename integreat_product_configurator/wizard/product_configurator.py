@@ -84,6 +84,7 @@ class SaleProductConfiguratorIntegreat(models.TransientModel):
     specification_docs = fields.Many2many('ir.attachment', relation='m2m_ir_attachment_product_configurator_rel',
         column1='m2m_id', column2='attachment_id', string='Archivos ')
     origin = fields.Char('Origin', help='Technical field')
+    change_possible = fields.Boolean('Change Possible')
 
     @api.onchange('parent_wiz_id')
     def _onchange_parent_wiz(self):
@@ -121,11 +122,16 @@ class SaleProductConfiguratorIntegreat(models.TransientModel):
             rec.pricelist_items = [(5, 0)]
             if rec.product_id:
                 rec.product_model = rec.product_id.product_model_id
-                rec.calibre = rec.product_id.spec_calibre or False
-                rec.papel = rec.product_id.spec_papel or False
-                rec.flauta = rec.product_id.spec_flauta or False
-                rec.recub = rec.product_id.spec_recub or False
-                rec.origen = rec.product_id.spec_origen or False
+                if not rec.calibre_search:
+                    rec.calibre_search = rec.product_id.spec_calibre
+                if not rec.papel_search:
+                    rec.papel_search = rec.product_id.spec_papel
+                if not rec.flauta_search:
+                    rec.flauta_search = rec.product_id.spec_flauta
+                if not rec.recub_search:
+                    rec.recub_search = rec.product_id.spec_recub
+                if not rec.origen:
+                    rec.origen = rec.product_id.spec_origen or False
                 rec.uom_input = rec.product_id.uom_size
                 rec.ancho_input = rec.product_id.ancho_uom or 0
                 rec.largo_input = rec.product_id.largo_uom or 0
@@ -155,7 +161,7 @@ class SaleProductConfiguratorIntegreat(models.TransientModel):
                 if bom:
                     rec.bom_id = bom
                     rec.bom_qty = bom.product_qty
-                if rec.product_model == 'P':
+                if rec.model_code == 'P':
                     rec.compute_lattr()
                     rec.check_lamina_combination()
             if rec.calibre_search:
@@ -231,8 +237,8 @@ class SaleProductConfiguratorIntegreat(models.TransientModel):
     @api.onchange('lamina_tmpl_id', 'ancho_lamina', 'largo_lamina')
     def check_lamina_combination(self):
         for rec in self:
-            if rec.lamina_id:
-                raise ValidationError('Change lamina???')
+            # if rec.lamina_id:
+            #     raise ValidationError('Change lamina???')
             rec.lamina_id = False
             rec.new_combination_lamina = True
             if rec.lamina_tmpl_id and all([rec.ancho_lamina, rec.largo_lamina]):
@@ -332,6 +338,8 @@ class SaleProductConfiguratorIntegreat(models.TransientModel):
                 lamina_combination = self.env['product.template.attribute.value'].browse(lamina_combination)
                 lamina = rec.lamina_tmpl_id.sudo()._create_product_variant(lamina_combination)
                 valsl = {
+                    'spec_ancho_lamina': rec.ancho_lamina,
+                    'spec_largo_lamina': rec.largo_lamina,
                     'spec_marca1': rec.marca1,
                     'spec_marca2': rec.marca2,
                     'spec_marca3': rec.marca3,
@@ -339,39 +347,41 @@ class SaleProductConfiguratorIntegreat(models.TransientModel):
                 lamina.sudo().write(valsl)
                 if rec.model_code == 'L':
                     product = lamina
+            valsp = {
+                'spec_calibre': rec.calibre,
+                'spec_papel': rec.papel,
+                'spec_flauta': rec.flauta,
+                'spec_recub': rec.recub,
+                'uom_size': rec.uom_input,
+                'ancho_uom': rec.ancho_input,
+                'largo_uom': rec.largo_input,
+                'alto_uom': rec.alto_input,
+                'spec_ancho': rec.ancho,
+                'spec_largo': rec.largo,
+                'spec_alto': rec.alto,
+                'spec_ancho_lamina': rec.ancho_lamina,
+                'spec_largo_lamina': rec.largo_lamina,
+                'spec_marca1': rec.marca1,
+                'spec_marca2': rec.marca2,
+                'spec_marca3': rec.marca3,
+                'unspsc_code_id': rec.prd_unspsc.id,
+                'sale_ok': rec.sale_ok,
+                'purchase_ok': rec.purchase_ok,
+                'image_1920': rec.image_1920,
+            }
             #product
             if not product:
                 product = rec.product_model.sudo().copy(default={
                     'name': rec.prd_name if rec.prd_name else rec.product_model.name,
                     'is_model': False,
-                    'product_model_id': rec.product_model.id,
+                    'product_model_id': rec.product_model.id
                 })
-                valsp = {}
-                if rec.model_code in ('P', 'Q'):
-                    valsp.update({
-                        'spec_calibre': rec.calibre,
-                        'spec_papel': rec.papel,
-                        'spec_flauta': rec.flauta,
-                        'spec_recub': rec.recub,
-                        'uom_size': rec.uom_input,
-                        'ancho_uom': rec.ancho_input,
-                        'largo_uom': rec.largo_input,
-                        'alto_uom': rec.alto_input,
-                        'spec_ancho_lamina': rec.ancho_lamina,
-                        'spec_largo_lamina': rec.largo_lamina,
-                        'spec_marca1': rec.marca1,
-                        'spec_marca2': rec.marca2,
-                        'spec_marca3': rec.marca3,
-                    })
-                if rec.prd_unspsc:
-                    valsp['unspsc_code_id'] = rec.prd_unspsc.id
-                valsp.update({
-                    'sale_ok': rec.sale_ok,
-                    'purchase_ok': rec.purchase_ok,
-                    'image_1920': rec.image_1920,
-                    'default_code': rec.product_model.default_code + '-' + str(product.id).zfill(6)
-                })
+                valsp.update({'default_code': rec.product_model.default_code + '-' + str(product.id).zfill(6)})
                 product.sudo().write(valsp)
+                rec.specification_docs.sudo().write({
+                    'res_model': 'product.product',
+                    'res_id': product.id
+                })
                 if rec.bom_id:
                     code = product.default_code or 'NUEVO'
                     bom_data = {
@@ -391,6 +401,8 @@ class SaleProductConfiguratorIntegreat(models.TransientModel):
                         })]
                         quot.write({'bom_id': rec.bom_id.id})
                     rec.bom_id.sudo().write(bom_data)
+                else:
+                    rec.product_id.write(valsp)
             # customer product data
             if rec.product_code:
                 self.env['product.customer.code'].create({
@@ -419,14 +431,21 @@ class SaleProductConfiguratorIntegreat(models.TransientModel):
                         'product_qty': 1,
                     }
                     self.env['mrp.bom.line'].create(bom_line)
-            self.specification_docs.sudo().write({
-                'res_model': 'product.product',
-                'res_id': product.id
-            })
             rec.product_id = product
             rec.lamina_id = lamina
         if len(self.ids) > 1:
             self.unlink()
+        elif self.origin == 'create':
+            view_id = self.env.ref('product.product_normal_form_view').id
+            return {
+                'name': 'Producto',
+                'type': 'ir.actions.act_window',
+                'view_mode': 'form',
+                'res_model': 'product.product',
+                'res_id': self.product_id.id,
+                'view_id': view_id,
+                'target': 'current',
+            }
         else:
             return self.wizard_reload()
 

@@ -24,6 +24,7 @@
         'views/product_views.xml',
         'wizard/mrp_workorder_record_qty.xml',
         'wizard/mrp_equipment_transfer_wizard.xml',
+        'wizard/mrp_plan_check_availability.xml',
         'security/ir.model.access.csv',
     ],
     'installable': True,

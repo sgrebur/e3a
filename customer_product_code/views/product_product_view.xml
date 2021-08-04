@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="product.product_normal_form_view"/>
         <field name="arch" type="xml">
             <xpath expr="//group[@name='sale']" position="before">
-                <group name="customer_code" string="Customer Code">
+                <group name="customer_code" string="Código del cliente" attrs="{'invisible': [('product_variant_count', '=', 1)]}">
                      <field name="product_customer_code_ids" nolabel="1" colspan="4">
                         <tree string="Product Customer Code" editable="bottom" nocreate="False">
                             <field name="sequence" widget="handle"/>
@@ -30,7 +30,7 @@
         <field name="inherit_id" ref="product.product_template_form_view"/>
         <field name="arch" type="xml">
             <xpath expr="//group[@name='sale']" position="before">
-                <group name="customer_code" string="Customer Code" attrs="{'invisible': [('product_variant_count', '!=', 1)]}">
+                <group name="customer_code" string="Código del cliente" attrs="{'invisible': [('product_variant_count', '!=', 1)]}">
                      <field name="product_customer_code_ids" nolabel="1" colspan="4">
                         <tree string="Product Customer Code" editable="bottom" nocreate="False">
                             <field name="sequence" widget="handle"/>
@@ -54,7 +54,7 @@
         <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
         <field name="arch" type="xml">
             <xpath expr="//group[1]" position="after" >
-                <group name="customer_code" string="Customer Code">
+                <group name="customer_code" string="Código del cliente">
                      <field name="product_customer_code_ids" nolabel="1" colspan="4">
                         <tree string="Product Customer Code" editable="bottom" nocreate="False">
                             <field name="sequence" widget="handle"/>

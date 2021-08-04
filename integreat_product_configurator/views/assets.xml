@@ -4,7 +4,7 @@
         <xpath expr="script[last()]" position="after">
             <script type="text/javascript" src="/integreat_product_configurator/static/src/js/section_and_note_fields_extension.js"></script>
             <script type="text/javascript" src="/integreat_product_configurator/static/src/js/product_configurator_button.js"></script>
-            <script type="text/javascript" src="/integreat_product_configurator/static/src/js/list_controller_buttons.js"></script>
+            <script type="text/javascript" src="/integreat_product_configurator/static/src/js/controller_buttons.js"></script>
         </xpath>
     </template>
 </odoo>

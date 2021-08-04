@@ -9,7 +9,7 @@
     'category': 'Hidden',
     'depends': [
         'integreat_econsa_laminas',
-        'integreat_stock_shipment',
+        #'integreat_stock_shipment',
         'integreat_mx_edi_extended',
         'integreat_sale_mrp_mtso'
     ],
@@ -19,7 +19,7 @@
         'report/purchase_order_templates.xml',
         'report/report_invoice.xml',
         'report/report_templates.xml',
-        'report/shipment_templates.xml',
+        #'report/shipment_templates.xml',
         'views/purchase_view.xml'
     ]
 }

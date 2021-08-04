@@ -40,16 +40,16 @@ class MrpPurchaseRequestLine(models.TransientModel):
     product_uom = fields.Many2one(related='move_id.product_uom')
     reserved_availability = fields.Float(related='move_id.reserved_availability')
     free_qty = fields.Float(related='product_id.free_qty')
-    purchased = fields.Float('Ctd comprado', digits='Product Unit of Measure', compute='_compute_qty', store=True)
+    pur_req_qty = fields.Float('Ctd comprado', digits='Product Unit of Measure', compute='_compute_qty', store=True)
     req_qty = fields.Float('Ctd solicitada', digits='Product Unit of Measure', compute='_compute_qty', store=True, readonly=False)
     selected = fields.Boolean('Sel.', default=True)
 
     @api.depends('move_id.reserved_availability', 'move_id.product_id.free_qty', 'wiz_id.production_id.procurement_group_id')
     def _compute_qty(self):
         for line in self:
-            pur_req_qty = sum(line.wiz_id.production_id.purchase_request_ids.line_ids.
+            line.pur_req_qty = sum(line.wiz_id.production_id.purchase_request_ids.line_ids.
                                 filtered(lambda l: l.product_id == line.product_id).mapped('product_qty'))
-            req_qty = line.product_uom_qty - line.reserved_availability - line.free_qty - pur_req_qty
+            req_qty = line.product_uom_qty - line.reserved_availability - line.free_qty - line.pur_req_qty
             if req_qty > 0.0:
                 line.req_qty = req_qty
             else:

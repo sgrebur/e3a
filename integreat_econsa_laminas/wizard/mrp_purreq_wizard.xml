@@ -18,6 +18,7 @@
                         <field name="product_uom"/>
                         <field name="reserved_availability"/>
                         <field name="free_qty"/>
+                        <field name="pur_req_qty"/>
                         <field name="selected" widget="boolean_toggle"/>
                         <field name="req_qty" decoration-bf="1"/>
                     </tree>

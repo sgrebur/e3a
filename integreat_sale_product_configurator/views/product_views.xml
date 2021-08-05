@@ -8,7 +8,6 @@
             <field name="type" position="after">
                 <field name="product_model_id" string="Producto modelo" required="1"/>
                 <field name="model_code" invisible="1"/>
-                <button string="Configure Variants" type="action" name="%(product.product_attribute_value_action)d" attrs="{'invisible': ['|', ('attribute_line_ids', '&lt;=', 0), ('is_product_variant', '=', True)]}" groups="product.group_product_variant"/>
             </field>
         </field>
     </record>

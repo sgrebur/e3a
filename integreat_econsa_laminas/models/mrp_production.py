@@ -228,10 +228,10 @@ class MrpProduction(models.Model):
                     if required > 0 and prod.purchase_request_ids:
                         required -= sum(prod.purchase_request_ids.line_ids.
                                         filtered(lambda l: l.product_id == raw.product_id).mapped('product_qty'))
-                        free = raw.product_id.with_context(warehouse=prod.location_src_id.get_warehouse().id).free_qty
-                        if required > free:
-                            qty = required - free
-                            prod._run_lamina_procurement(raw.product_id, qty, [raw])
+                    free = raw.product_id.with_context(warehouse=prod.location_src_id.get_warehouse().id).free_qty
+                    if required > free:
+                        qty = required - free
+                        prod._run_lamina_procurement(raw.product_id, qty, [raw])
         return True
 
     # # Componets PICKING must be processed before production launch

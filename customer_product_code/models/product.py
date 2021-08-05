@@ -187,7 +187,6 @@ class ProductProduct(models.Model):
                 id_prod_code = product_customer_code_obj.search([
                     ('product_code', 'ilike', name)
                 ] + cust_args, limit=limit)
-            limit = (limit - len(ids)) if limit and len(ids) < limit else False
             # search additionally partner description
             if partner_id:
                 id_prod_code += product_customer_code_obj.search([
@@ -202,7 +201,8 @@ class ProductProduct(models.Model):
                     ids.append(ppu.product_id.id)
             if ids:
                 res = self._search([('id', 'in', ids)], limit=limit)
-        limit = (limit - len(ids)) if limit and len(ids) < limit else False
+            if limit > len(res):
+                limit -= len(res)
         args = list(filter(lambda x: x[0] != 'product_customer_code_ids.partner_id', args))
         if res:
             res = list(res)

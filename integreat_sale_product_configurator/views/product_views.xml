@@ -115,31 +115,26 @@
                 </field>
             </field>
     </record>
-    <record id="product_pricelist_view_econsa" model="ir.ui.view">
-        <field name="name">product.pricelist.form</field>
-        <field name="model">product.pricelist</field>
-        <field name="inherit_id" ref="product.product_pricelist_view"/>
+    <record id="product_pricelist_item_view_integreat" model="ir.ui.view">
+        <field name="name">product.pricelist.item.tree.integreat</field>
+        <field name="model">product.pricelist.item</field>
         <field name="arch" type="xml">
-            <field name="item_ids" position="replace">
-                <field name="item_ids" nolabel="1" context="{'default_base':'list_price'}">
-                    <tree string="Pricelist Items" editable="bottom">
-                        <field name="product_id"/>
-                        <field name="min_quantity" string="MOQ"/>
-                        <field name="fixed_price" string="Price"/>
-                        <field name="currency_id" invisible="1"/>
-                        <field name="pricelist_id" invisible="1"/>
-                        <!-- Pricelist ID is here only for related fields to be correctly computed -->
-                        <field name="date_start"/>
-                        <field name="date_end"/>
-                        <field name="base" invisible="1"/>
-                        <field name="applied_on" invisible="1"/>
-                        <field name="company_id" invisible="1"/>
-                    </tree>
-                </field>
-            </field>
+            <tree string="Pricelist Items" editable="bottom">
+                <field name="product_id" required="1"/>
+                <field name="min_quantity" string="MOQ"/>
+                <field name="fixed_price" string="Price"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="pricelist_id"/>
+                <!-- Pricelist ID is here only for related fields to be correctly computed -->
+                <field name="date_start" widget="date"/>
+                <field name="date_end" widget="date"/>
+                <field name="base" invisible="1"/>
+                <field name="applied_on" invisible="1"/>
+                <field name="company_id" invisible="1"/>
+            </tree>
         </field>
     </record>
-        <record id="product_qutation_configuration_view_tree" model="ir.ui.view">
+    <record id="product_qutation_configuration_view_tree" model="ir.ui.view">
         <field name="name">Quotations Configuration</field>
         <field name="model">product.configuration.integreat</field>
         <field name="arch" type="xml">
@@ -198,5 +193,13 @@
         <field name="res_model">product.configuration.integreat</field>
         <field name="view_mode">tree,form</field>
     </record>
+    <record id="product_pricelist_item_integreat_action" model="ir.actions.act_window">
+        <field name="name">Tarifas</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.pricelist.item</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="integreat_sale_product_configurator.product_pricelist_item_view_integreat"/>
+    </record>
     <menuitem id="menu_sale_product_quotation_configuration_integreat" parent="sale.menu_sale_config" action="product_quotation_configuration_integreat_action" sequence="103"/>
+    <menuitem id="menu_sale_product_pricelist_item_integreat" parent="sale.product_menu_catalog" action="product_pricelist_item_integreat_action" sequence="3"/>
 </odoo>

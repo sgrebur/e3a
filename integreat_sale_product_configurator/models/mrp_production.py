@@ -97,16 +97,20 @@ class MrpProduction(models.Model):
             mo.write_previous_next_order()
             for wo in mo.workorder_ids:
                 if wo.workcenter_id.warehouse_id and wo.workcenter_id.warehouse_id != mo.picking_type_id.warehouse_id:
+                    if wo.workcenter_id.warehouse_id.manufacture_steps == 'pbm':
+                        loc_id = wo.workcenter_id.warehouse_id.pbm_loc_id
+                    else:
+                        loc_id = wo.workcenter_id.warehouse_id.lot_stock_id
                     if not wo.previous_work_order_id:
-                        mo.location_src_id = wo.workcenter_id.warehouse_id.pbm_loc_id
+                        mo.location_src_id = loc_id
                         for move in mo.move_raw_ids:
                             if not move.operation_id or move.operation_id == wo.operation_id:
-                                move.location_id = wo.workcenter_id.warehouse_id.pbm_loc_id
+                                move.location_id = loc_id
                                 move.warehouse_id = wo.workcenter_id.warehouse_id
                     else:
                         for move in mo.move_raw_ids:
                             if move.operation_id == wo.operation_id:
-                                move.location_id = wo.workcenter_id.warehouse_id.pbm_loc_id
+                                move.location_id = loc_id
                                 move.warehouse_id = wo.workcenter_id.warehouse_id
 
     # called at confirm (than wo's must be blocked for editing!)

@@ -2,7 +2,7 @@
 <templates id="template" xml:space="preserve">
     <t t-extend="ListView.buttons">
         <t t-jquery="button.o_list_button_add" t-operation="replace">
-            <t t-if="widget.modelName == 'product.template' or widget.modelName == 'product.product'">
+            <t t-if="widget.modelName and widget.modelName == 'product.template' or widget.modelName == 'product.product'">
                 <button type="button" name="button_action_open_product_configurator" icon="fa-cog" class="btn btn-primary oe_product_configurator_button" accesskey="c">
                     Configurar Producto
                 </button>
@@ -28,7 +28,7 @@
     </t>
     <t t-name="KanbanView.buttons">
         <div>
-            <t t-if="widget.modelName == 'product.template' or widget.modelName == 'product.product'">
+            <t t-if="widget.modelName and widget.modelName == 'product.template' or widget.modelName == 'product.product'">
                 <button type="button" name="button_action_open_product_configurator" icon="fa-cog" class="btn btn-primary oe_product_configurator_button" accesskey="c">
                     Configurar Producto
                 </button>

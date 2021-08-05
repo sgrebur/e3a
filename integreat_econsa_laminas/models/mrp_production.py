@@ -232,9 +232,8 @@ class MrpProduction(models.Model):
                     if required > free:
                         qty = required - free
                         prod._run_lamina_procurement(raw.product_id, qty, [raw])
-        reserved_prod = self.filtered(lambda x: x.reservation_state != 'assigned')
-        if reserved_prod:
-            reserved_prod.button_plan()
+                if prod.reservation_state == 'assigned':
+                    prod.button_plan()
         return True
 
     # # Componets PICKING must be processed before production launch

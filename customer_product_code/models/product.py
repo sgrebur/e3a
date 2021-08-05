@@ -201,7 +201,7 @@ class ProductProduct(models.Model):
                     ids.append(ppu.product_id.id)
             if ids:
                 res = self._search([('id', 'in', ids)], limit=limit)
-            if limit > len(res):
+            if limit and limit > len(res):
                 limit -= len(res)
         args = list(filter(lambda x: x[0] != 'product_customer_code_ids.partner_id', args))
         if res:

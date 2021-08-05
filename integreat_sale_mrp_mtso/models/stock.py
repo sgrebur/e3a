@@ -138,6 +138,9 @@ class Picking(models.Model):
     production_orig_ids = fields.One2many(comodel_name='mrp.production', compute='_compute_orig_dest_picking_ids')
     picking_orig_ids = fields.One2many(comodel_name='stock.picking', compute='_compute_orig_dest_picking_ids')
     picking_dest_ids = fields.One2many(comodel_name='stock.picking', compute='_compute_orig_dest_picking_ids')
+    incoterm = fields.Many2one(related='group_id.sale_id.incoterm', store=True)
+    delivery_truck = fields.Char('Detalles transporte')
+    delivery_packaging = fields.Char('# Tarimas o Paquetes')
 
     @api.depends('move_lines.move_orig_ids', 'move_lines.move_dest_ids')
     def _compute_orig_dest_picking_ids(self):

@@ -20,6 +20,7 @@
         'report/report_invoice.xml',
         'report/report_templates.xml',
         #'report/shipment_templates.xml',
+        'report/delivery_templates.xml',
         'views/purchase_view.xml'
     ]
 }

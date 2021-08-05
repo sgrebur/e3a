@@ -41,6 +41,7 @@ class MrpWorkordorRecordQtyWizard(models.TransientModel):
             wo.qty_produced += self.qty
             if mo.qty_producing < wo.qty_produced:
                 mo.qty_producing = wo.qty_produced
+                mo._set_qty_producing()
             # from whatever reason move_finished_ids are sometimes missing (deleted by users???)
             if self.to_backorder:
                 self.unlink()

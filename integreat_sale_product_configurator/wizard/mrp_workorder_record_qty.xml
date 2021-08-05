@@ -24,7 +24,7 @@
                         </group>
                     </group>
                     <group>
-                        <field name="qty"/>
+                        <field name="qty" decoration-bf="1"/>
                     </group>
                 </div>
                 <footer>

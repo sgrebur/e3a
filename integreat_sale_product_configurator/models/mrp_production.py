@@ -23,10 +23,30 @@ class MrpProduction(models.Model):
     product_qty_conf = product_qty = fields.Float('Cantidad original', digits='Product Unit of Measure', readonly=True)
 
     # from whatever reason move_finished_ids are sometimes missing (deleted by users???)
+    def button_custom_mark_done(self):
+        for mo in self:
+            wo_last = mo.workorder_ids.filtered(lambda x: not x.next_work_order_id)
+            if mo.qty_producing > 0:
+                qty = mo.qty_producing
+            else:
+                qty = mo.product_uom_qty
+            view_id = self.env.ref('integreat_sale_product_configurator.mrp_workorder_record_qty_wizard_form').id
+            return {
+                'name': 'Registrar cantidad producida',
+                'type': 'ir.actions.act_window',
+                'view_mode': 'form',
+                'res_model': 'mrp.workorder.record.qty.wizard',
+                'view_id': view_id,
+                'target': 'new',
+                'context': {'default_wo_id': wo_last.id, 'default_qty': qty}
+            }
+
+    # from whatever reason move_finished_ids are sometimes missing (deleted by users???)
     def button_mark_done(self):
         for mo in self:
-            mo._onchange_move_finished()
-            mo._set_qty_producing()
+            if not mo.move_finished_ids:
+                mo._onchange_move_finished()
+                mo._set_qty_producing()
             mo.action_assign()
             move_lines_zero = mo.move_raw_ids.move_line_ids.filtered(lambda x: x.location_id.usage == 'view')
             # when manuf 1 step & negative stock allowed & pbm_loc a view location, we set it to the pbm

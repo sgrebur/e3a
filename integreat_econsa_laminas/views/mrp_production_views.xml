@@ -5,7 +5,7 @@
         <field name="model">mrp.production</field>
         <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
         <field name="arch" type="xml">
-            <button name="button_mark_done" position="before">
+            <button name="action_confirm" position="before">
                 <field name="is_lamina_required" invisible="1"/>
                 <field name="lamina_open_qty" invisible="1"/>
                 <button name="action_select_lamina" string="Select Lamina" type="object" class="btn-danger" attrs="{'invisible': ['|',('is_lamina_required', '=', False),('lamina_open_qty', '=', 0)]}"/>

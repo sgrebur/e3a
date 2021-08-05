@@ -36,10 +36,15 @@
                     <span>Destino</span>
                 </button>
             </div>
+            <field name="partner_id" position="after">
+                <field name="incoterm" attrs="{'invisible': [('picking_type_code', '!=', 'outgoing')]}"/>
+            </field>
             <field name="origin" position="replace">
                 <field name="picking_type_group" invisible="1"/>
                 <field name="sale_order_ids" widget="many2many_tags"/>
                 <field name="production_ids" widget="many2many_tags"/>
+                <field name="delivery_truck" attrs="{'invisible': [('picking_type_code', '!=', 'outgoing')]}"/>
+                <field name="delivery_packaging" attrs="{'invisible': [('picking_type_code', '!=', 'outgoing')]}"/>
             </field>
         </field>
     </record>

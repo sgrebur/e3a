@@ -46,9 +46,9 @@
             <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
             <field name="arch" type="xml">
                 <xpath expr="//button[@name='button_mark_done'][1]" position="replace">
-                    <button name="button_mark_done" attrs="{'invisible': ['|', ('state', 'not in', ('confirmed', 'progress', 'to_close')), ('is_planned', '=', False)]}" string="Marcar como hecho" type="object" class="oe_highlight"/>
+                    <button name="button_custom_mark_done" attrs="{'invisible': ['|', ('state', 'not in', ('confirmed', 'progress', 'to_close')), ('is_planned', '=', False)]}" string="Marcar como hecho" type="object" class="oe_highlight"/>
                 </xpath>
-                <xpath expr="//button[@name='button_mark_done'][2]" position="replace"/>
+                <xpath expr="//button[@name='button_mark_done']" position="replace"/><!-- it's already replaced => it's again the first button not [2]-->
                 <field name="bom_id" position="before">
                     <label for="product_qty_conf" attrs="{'invisible': ['|', ('product_qty_conf', '=', 'product_qty'), ('product_qty_conf', '=', 0)]}"/>
                     <div class="o_row no-gutters d-flex" attrs="{'invisible': ['|', ('product_qty_conf', '=', 'product_qty'), ('product_qty_conf', '=', 0)]}" decoration-info="1">

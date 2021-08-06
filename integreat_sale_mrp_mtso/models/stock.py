@@ -82,10 +82,10 @@ class StockRule(models.Model):
                 orderpoint = production.orderpoint_id
                 if production.workorder_ids:
                     if production.workorder_ids[0].workcenter_id.warehouse_id.manufacture_steps == 'pbm':
-                        loc_id = production.workorder_ids[0].workcenter_id.warehouse_id.pbm_loc_id
-                    else:
-                        loc_id = production.workorder_ids[0].workcenter_id.warehouse_id.lot_stock_id
-                    production.location_src_id = loc_id
+                        production.location_src_id = production.workorder_ids[0].workcenter_id.warehouse_id.pbm_loc_id
+                    # else:
+                    #    loc_id = production.workorder_ids[0].workcenter_id.warehouse_id.lot_stock_id
+                    # production.location_src_id = loc_id
                 if sale_order:
                     production.message_post_with_view('mail.message_origin_link',
                                                       values={'self': production, 'origin': sale_order},

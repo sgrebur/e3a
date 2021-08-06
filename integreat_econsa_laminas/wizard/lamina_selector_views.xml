@@ -39,7 +39,8 @@
                         <field name="update" invisible="1"/>
                         <field name="qty" attrs="{'readonly': [('production_id', '!=', False)]}"/>
                         <field name="total_qty" decoration-bf="1" readonly="1"/>
-                        <field name="warehouse_id" string="Planta" readonly="0" attrs="{'invisible': [('production_id', '!=', False)]}"/>
+                        <field name="warehouse_id" string="Planta" readonly="0" invisible="1"/>
+                        <field name="location_id" string="Planta" readonly="0" attrs="{'invisible': [('production_id', '!=', False)]}"/>
                         <button name="action_reload" type="object" class="btn-danger"><i class="fa fa-refresh"/> Recargar</button>
                     </group>
                     <group string="Costos" colspan="2">
@@ -70,7 +71,8 @@
                         <field name="marca3"/>
                         <field name="qty_cajas" readonly="1"/>
                         <field name="qty_required" readonly="1"/>
-                        <field name="warehouse_id" string="Planta" readonly="1" widget="badge" decoration-danger="warehouse_id != parent.warehouse_id" decoration-success="warehouse_id == parent.warehouse_id"/>
+                        <field name="warehouse_id" string="Planta" invisible="1" readonly="1" widget="badge" decoration-danger="warehouse_id != parent.warehouse_id" decoration-success="warehouse_id == parent.warehouse_id"/>
+                        <field name="location" string="Planta" readonly="1" widget="badge" decoration-danger="location != parent.location_id" decoration-success="location == parent.location_id"/>
                         <field name="free_qty" string="Libre" decoration-success="free_qty &gt; 0" decoration-danger="free_qty &lt;= 0" decoration-bf="1"/>
                         <field name="sob_ancho" widget="badge" decoration-danger="1" readonly="1"/>
                         <field name="sob_largo" widget="badge" decoration-danger="1" readonly="1"/>

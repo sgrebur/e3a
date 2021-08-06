@@ -14,3 +14,11 @@ class StockLocation(models.Model):
         "attached to this location.",
     )
     auto_adjust = fields.Boolean(string="Auto adjust negative stock to 0")
+
+    def _get_parent_view(self):
+        if self.location_id and self.location_id.usage == 'view':
+            return self.location_id
+        elif self.location_id:
+            return self.location_id._get_parent_view()
+        else:
+            return self.env["res.partner"]

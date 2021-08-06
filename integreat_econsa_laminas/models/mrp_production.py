@@ -262,7 +262,7 @@ class MrpProduction(models.Model):
     
     def _run_lamina_procurement(self, product, qty, request_move_ids):
         procurements = []
-        location_dest_id = self.picking_type_id.warehouse_id.wh_input_stock_loc_id
+        location_dest_id = self.picking_type_id.default_location_src_id
         values = {
             'group_id': self.procurement_group_id,
             'date_planned': self.date_planned_start,
@@ -355,9 +355,8 @@ class MrpProduction(models.Model):
         super(MrpProduction, self)._set_qty_producing()
         for move in self.move_raw_ids:
             if move.quantity_done > move.product_uom_qty:
-                # move.move_line_ids.filtered(lambda ml: ml.state not in ('done', 'cancel')).qty_done = 0
-                move.move_line_ids.unlink()
                 move.product_uom_qty = move.quantity_done
+                move._do_unreserve()
                 move._action_assign()
 
 

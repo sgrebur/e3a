@@ -34,7 +34,7 @@ class LaminaSelection(models.TransientModel):
     line_ids = fields.One2many('wizard.lamina.selection.line', 'wizard_id')
     product_id = fields.Many2one('product.product', string='Producto Terminado')
     currency_id = fields.Many2one('res.currency', related='product_id.currency_id')
-    location_id = fields.Many2one('stock.location')
+    location_id = fields.Many2one('stock.location', related='production_id.location_src_id')
     papel = fields.Char('Papel', compute='_compute_spec_values', store=True, readonly=False)
     flauta = fields.Char('Flauta', compute='_compute_spec_values', store=True, readonly=False)
     recub = fields.Char('Recubrimiento', compute='_compute_spec_values', store=True, readonly=False)
@@ -122,19 +122,21 @@ class LaminaSelection(models.TransientModel):
         if self.origen:
             domain += [('spec_origen', '=', self.origen)]
         components = self.env['product.product'].search(domain)
-        if self.warehouse_id:
-            this_wh = self.warehouse_id.id
-            other_whs = self.env['stock.warehouse'].search([
+        other_locs = self.env['stock.location']
+        if self.location_id:
+            this_loc = self.location_id.id
+            other_locs = self.env['stock.location'].search([
                 ('company_id', '=', self.company_id.id),
-                ('id', '!=', this_wh)
-            ], limit=1) # LIMIT1 !!! If there are 2 Whs for the company...
+                ('id', '!=', this_loc),
+                ('address_id', '!=', False)
+            ]) # LIMIT1 !!! If there are 2 Whs for the company...
         vals_list = []
         max_lines = 0
 
-        # FREE from this Planta
+        # FREE from this Planta/View Location
         for comp in components:
-            if self.warehouse_id:
-                comp = comp.with_context(warehouse=this_wh)
+            if self.location_id:
+                comp = comp.with_context(location=this_loc)
             if not comp.free_qty > 0.0:
                 continue
             max_lines += 1
@@ -143,17 +145,18 @@ class LaminaSelection(models.TransientModel):
                 'line_group': '1',
                 'product_id': comp.id,
                 }
-            if self.warehouse_id:
-                vals['warehouse_id'] = this_wh
+            if self.location_id:
+                vals['location'] = this_loc
             vals_list.append(vals)
             if max_lines == 30:
                 break
 
         # free from OTHER Planta
-        if len(vals_list) < 30 and self.warehouse_id:
+        while len(vals_list) < 30 and self.location_id and other_locs:
+            other_loc = other_locs[0].id
             max_lines = len(vals_list)
             for comp in components:
-                comp = comp.with_context(warehouse=other_whs.id)
+                comp = comp.with_context(location=other_loc)
                 if not comp.free_qty > 0.0:
                     continue
                 max_lines += 1
@@ -161,11 +164,12 @@ class LaminaSelection(models.TransientModel):
                     'wizard_id': self.id,
                     'line_group': '1',
                     'product_id': comp.id,
-                    'warehouse_id': other_whs.id
+                    'location': other_loc
                     }
                 vals_list.append(vals)
                 if max_lines == 30:
                     break
+            other_locs -= other_locs[0]
 
         # all other w/o stock
         if len(vals_list) < 30:
@@ -179,8 +183,8 @@ class LaminaSelection(models.TransientModel):
                     'line_group': '2',
                     'product_id': comp.id,
                     }
-                if self.warehouse_id:
-                    vals['warehouse_id'] = this_wh
+                if self.location_id:
+                    vals['location'] = this_loc
                 vals_list.append(vals)
                 if max_lines == 30:
                     break
@@ -199,7 +203,7 @@ class LaminaSelection(models.TransientModel):
         new_component = self.env['product.product'].search(domain, limit=1)
         if new_component:
             if self.production_id:
-                is_already = list(filter(lambda l: l['product_id'] == new_component.id and l['warehouse_id'] == this_wh, vals_list))
+                is_already = list(filter(lambda l: l['product_id'] == new_component.id and l['location'] == this_loc, vals_list))
             else:
                 is_already = list(
                     filter(lambda l: l['product_id'] == new_component.id, vals_list))
@@ -209,8 +213,8 @@ class LaminaSelection(models.TransientModel):
                     'line_group':  '0',
                     'product_id': new_component.id,
                 }
-                if self.production_id:
-                    vals['warehouse_id'] = this_wh
+                if self.location_id:
+                    vals['location'] = this_loc
                 vals_list.append(vals)
             else:
                 is_already[0]['line_group'] = '0'
@@ -233,8 +237,8 @@ class LaminaSelection(models.TransientModel):
                     ('raw_material_production_id', '=', self.production_id.id),
                     ('product_id', '=', line.product_id.id),
                 ]
-                if line.warehouse_id:
-                    domain += [('location_id', '=', line.warehouse_id.lot_stock_id.id)]
+                if line.location:
+                    domain += [('location_id', '=', line.location.id)]
                 existing_move = self.env['stock.move'].search(domain, limit=1)
                 if existing_move:
                     existing_move.product_uom_qty += line.qty_selected
@@ -246,19 +250,18 @@ class LaminaSelection(models.TransientModel):
                 )
                 new_raw['group_id'] = self.production_id.procurement_group_id.id
                 new_raw['origin'] = self.production_id.name
-                if line.warehouse_id:
-                    new_raw['location_id'] = line.warehouse_id.lot_stock_id.id
-                if line.warehouse_id != self.warehouse_id:
-                    if line.qty_selected > line.free_qty:
-                        raise ValidationError(
-                            'No se permite seleccionar de otra planta una cantidad superior a la cantidad Libre.'
-                        )
-                    # ico_route = self.env['stock.location.route'].search([
-                    #     ('rule_ids.location_id', '=', self.production_id.location_src_id.id),
-                    #     ('rule_ids.location_src_id', '=', line.warehouse_id.lot_stock_id.id)
-                    # ], limit=1)
-                    # if ico_route:
-                    #     new_raw['route_ids'] = [(4, ico_route.id)]
+                new_raw['location_id'] = line.location.id
+                # if line.warehouse_id != self.warehouse_id:
+                #     if line.qty_selected > line.free_qty:
+                #         raise ValidationError(
+                #             'No se permite seleccionar de otra planta una cantidad superior a la cantidad Libre.'
+                #         )
+                #     ico_route = self.env['stock.location.route'].search([
+                #         ('rule_ids.location_id', '=', self.production_id.location_src_id.id),
+                #         ('rule_ids.location_src_id', '=', line.warehouse_id.lot_stock_id.id)
+                #     ], limit=1)
+                #     if ico_route:
+                #         new_raw['route_ids'] = [(4, ico_route.id)]
                 new_raw_ids.append(new_raw)
         self.env['stock.move'].with_context(overwrite=True).create(new_raw_ids)
         self.unlink()

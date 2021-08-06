@@ -52,7 +52,9 @@ class MrpProduction(models.Model):
             # when manuf 1 step & negative stock allowed & pbm_loc a view location, we set it to the pbm
             if move_lines_zero:
                 warehouse = mo.move_raw_ids[0].location_id.get_warehouse()
-                move_lines_zero.location_id = warehouse and warehouse.pbm_loc_id
+                move_lines_zero.location_id = warehouse.pbm_loc_id
+                mo.button_unreserve()
+                mo.action_assign()
         return super().button_mark_done()
 
     def button_plan(self):

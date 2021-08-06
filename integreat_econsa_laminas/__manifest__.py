@@ -13,7 +13,9 @@
         'integreat_sale_product_configurator',
         'integreat_sale_mrp_mtso',
         'web_kanban_gauge',
-        'sale_stock'
+        'sale_stock',
+        'stock_no_negative',
+        'stock_location_address'
     ],
     'data': [
         'data/data.xml',

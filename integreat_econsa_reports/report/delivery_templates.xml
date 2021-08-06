@@ -36,7 +36,7 @@
                         </h3>
                     </div>
                     <div class="col-6">
-                        <strong>Shipping date: </strong><span t-field="o.date_done"/><br/>
+                        <strong>Shipping date: </strong><span t-field="o.date_done" t-options="{'widget': 'date'}"/><br/>
                         <t t-if="o.incoterm">
                             <strong>Incoterms: </strong>
                             <t t-if="o.incoterm.code == 'FCA'">

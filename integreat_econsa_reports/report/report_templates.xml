@@ -35,7 +35,7 @@
 
     <template id="web.external_layout_boxed">
         <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
-            <div class="row mb8 text-muted" style="font-size: 15px;">
+            <div class="row mb8 text-muted border-bottom border-dark" style="font-size: 15px;">
                 <div class="col-6 mb4">
                     <!--<h4 class="mt0" t-field="company.report_header"/>-->
                     <div>

@@ -51,7 +51,8 @@ class MrpProduction(models.Model):
             move_lines_zero = mo.move_raw_ids.move_line_ids.filtered(lambda x: x.location_id.usage == 'view')
             # when manuf 1 step & negative stock allowed & pbm_loc a view location, we set it to the pbm
             if move_lines_zero:
-                move_lines_zero.location_id = mo.picking_type_id.warehouse_id.pbm_loc_id
+                warehouse = mo.move_raw_ids[0].location_id.get_warehouse()
+                move_lines_zero.location_id = warehouse and warehouse.pbm_loc_id
         return super().button_mark_done()
 
     def button_plan(self):
@@ -95,23 +96,24 @@ class MrpProduction(models.Model):
     def _compute_next_workorders_and_warehouse(self):
         for mo in self:
             mo.write_previous_next_order()
-            for wo in mo.workorder_ids:
-                if wo.workcenter_id.warehouse_id and wo.workcenter_id.warehouse_id != mo.picking_type_id.warehouse_id:
-                    if wo.workcenter_id.warehouse_id.manufacture_steps == 'pbm':
-                        loc_id = wo.workcenter_id.warehouse_id.pbm_loc_id
-                    else:
-                        loc_id = wo.workcenter_id.warehouse_id.lot_stock_id
-                    if not wo.previous_work_order_id:
-                        mo.location_src_id = loc_id
-                        for move in mo.move_raw_ids:
-                            if not move.operation_id or move.operation_id == wo.operation_id:
-                                move.location_id = loc_id
-                                move.warehouse_id = wo.workcenter_id.warehouse_id
-                    else:
-                        for move in mo.move_raw_ids:
-                            if move.operation_id == wo.operation_id:
-                                move.location_id = loc_id
-                                move.warehouse_id = wo.workcenter_id.warehouse_id
+    # INACTIVATED - Lamina selection decides where the component stocks have to be taken
+    #         for wo in mo.workorder_ids:
+    #             if wo.workcenter_id.warehouse_id and wo.workcenter_id.warehouse_id != mo.picking_type_id.warehouse_id:
+    #                 if wo.workcenter_id.warehouse_id.manufacture_steps == 'pbm':
+    #                     loc_id = wo.workcenter_id.warehouse_id.pbm_loc_id
+    #                 else:
+    #                     loc_id = wo.workcenter_id.warehouse_id.lot_stock_id
+    #                 if not wo.previous_work_order_id:
+    #                     mo.location_src_id = loc_id
+    #                     for move in mo.move_raw_ids:
+    #                         if not move.operation_id or move.operation_id == wo.operation_id:
+    #                             move.location_id = loc_id
+    #                             move.warehouse_id = wo.workcenter_id.warehouse_id
+    #                 else:
+    #                     for move in mo.move_raw_ids:
+    #                         if move.operation_id == wo.operation_id:
+    #                             move.location_id = loc_id
+    #                             move.warehouse_id = wo.workcenter_id.warehouse_id
 
     # called at confirm (than wo's must be blocked for editing!)
     def write_previous_next_order(self):

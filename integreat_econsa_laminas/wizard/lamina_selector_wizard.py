@@ -229,10 +229,13 @@ class LaminaSelection(models.TransientModel):
         new_raw_ids = []
         for line in self.line_ids:
             if line.select:
-                existing_move = self.env['stock.move'].search([
+                domain = [
                     ('raw_material_production_id', '=', self.production_id.id),
-                    ('product_id', '=', line.product_id.id)
-                ], limit=1)
+                    ('product_id', '=', line.product_id.id),
+                ]
+                if line.warehouse_id:
+                    domain += [('location_id', '=', line.warehouse_id.lot_stock_id.id)]
+                existing_move = self.env['stock.move'].search(domain, limit=1)
                 if existing_move:
                     existing_move.product_uom_qty += line.qty_selected
                     continue
@@ -243,17 +246,19 @@ class LaminaSelection(models.TransientModel):
                 )
                 new_raw['group_id'] = self.production_id.procurement_group_id.id
                 new_raw['origin'] = self.production_id.name
+                if line.warehouse_id:
+                    new_raw['location_id'] = line.warehouse_id.lot_stock_id.id
                 if line.warehouse_id != self.warehouse_id:
                     if line.qty_selected > line.free_qty:
                         raise ValidationError(
                             'No se permite seleccionar de otra planta una cantidad superior a la cantidad Libre.'
                         )
-                    ico_route = self.env['stock.location.route'].search([
-                        ('rule_ids.location_id', '=', self.production_id.location_src_id.id),
-                        ('rule_ids.location_src_id', '=', line.warehouse_id.lot_stock_id.id)
-                    ], limit=1)
-                    if ico_route:
-                        new_raw['route_ids'] = [(4, ico_route.id)]
+                    # ico_route = self.env['stock.location.route'].search([
+                    #     ('rule_ids.location_id', '=', self.production_id.location_src_id.id),
+                    #     ('rule_ids.location_src_id', '=', line.warehouse_id.lot_stock_id.id)
+                    # ], limit=1)
+                    # if ico_route:
+                    #     new_raw['route_ids'] = [(4, ico_route.id)]
                 new_raw_ids.append(new_raw)
         self.env['stock.move'].with_context(overwrite=True).create(new_raw_ids)
         self.unlink()
@@ -394,15 +399,15 @@ class LaminaSelectionAvailability(models.TransientModel):
                 self.qty_per_component, precision_digits=0, rounding_method='UP')
         except ZeroDivisionError:
             self.qty_required = 0
-        if self.warehouse_id != self.wizard_id.warehouse_id and self.qty_selected > self.free_qty:
-            self.qty_selected = self.free_qty
-            return {
-                'warning': {
-                    'title': 'Attention!',
-                    'message': 'No se permite seleccionar una cantidad superior a la Libre\n'
-                               'cuando se transfiere de la otra planta.'
-                }
-            }
+        # if self.warehouse_id != self.wizard_id.warehouse_id and self.qty_selected > self.free_qty:
+        #     self.qty_selected = self.free_qty
+        #     return {
+        #         'warning': {
+        #             'title': 'Attention!',
+        #             'message': 'No se permite seleccionar una cantidad superior a la Libre\n'
+        #                        'cuando se transfiere de la otra planta.'
+        #         }
+        #     }
         if self.qty_selected > self.qty_required:
             self.qty_selected = self.qty_required
             return {

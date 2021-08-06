@@ -187,6 +187,15 @@ class MrpProduction(models.Model):
                     prod.consumption = prod.bom_id.consumption
                 if not prod.move_raw_ids:
                     raise UserError(_("Add some materials to consume before marking this MO as to do."))
+
+                # ADDITIONAL: this is for setting pbm warehouse to lamina location ...?
+                else:
+                    lamina_moves = prod.move_raw_ids.filtered(lambda x: x.product_id.categ_id.id == lamina_categ_id)
+                    if lamina_moves:
+                        warehouse = lamina_moves[0].location_id.get_warehouse()
+                        if warehouse:
+                            prod.location_src_id = warehouse.lot_stock_id
+
                 # In case of Serial number tracking, force the UoM to the UoM of product
                 if prod.product_tracking == 'serial' and prod.product_uom_id != prod.product_id.uom_id:
                     prod.write({
@@ -342,12 +351,14 @@ class MrpProduction(models.Model):
         return {}
 
     # OVERRIDE when producing qty > mo qty: components consumed won't be increased
-    # def _set_qty_producing(self):
-    #     super(MrpProduction, self)._set_qty_producing()
-    #     for move in self.move_raw_ids:
-    #         if move.quantity_done > move.product_qty:
-    #             move.move_line_ids.filtered(lambda ml: ml.state not in ('done', 'cancel')).qty_done = 0
-    #             move.move_line_ids = move._set_quantity_done_prepare_vals(move.product_qty)
+    def _set_qty_producing(self):
+        super(MrpProduction, self)._set_qty_producing()
+        for move in self.move_raw_ids:
+            if move.quantity_done > move.product_uom_qty:
+                # move.move_line_ids.filtered(lambda ml: ml.state not in ('done', 'cancel')).qty_done = 0
+                move.move_line_ids.unlink()
+                move.product_uom_qty = move.quantity_done
+                move._action_assign()
 
 
 class StockMove(models.Model):

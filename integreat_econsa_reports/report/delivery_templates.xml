@@ -18,7 +18,7 @@
                             <address t-field="o.location_id.real_address_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' />
                         </t>
                         <t t-else="">
-                            <address t-field="company" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' />
+                            <address t-field="o.company" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' />
                         </t>
 
                     </div>

@@ -188,14 +188,6 @@ class MrpProduction(models.Model):
                 if not prod.move_raw_ids:
                     raise UserError(_("Add some materials to consume before marking this MO as to do."))
 
-                # ADDITIONAL: this is for setting pbm warehouse to lamina location ...?
-                else:
-                    lamina_moves = prod.move_raw_ids.filtered(lambda x: x.product_id.categ_id.id == lamina_categ_id)
-                    if lamina_moves:
-                        warehouse = lamina_moves[0].location_id.get_warehouse()
-                        if warehouse:
-                            prod.location_src_id = warehouse.lot_stock_id
-
                 # In case of Serial number tracking, force the UoM to the UoM of product
                 if prod.product_tracking == 'serial' and prod.product_uom_id != prod.product_id.uom_id:
                     prod.write({
@@ -239,6 +231,16 @@ class MrpProduction(models.Model):
                                         filtered(lambda l: l.product_id == raw.product_id).mapped('product_qty'))
                     free = raw.product_id.with_context(warehouse=prod.location_src_id.get_warehouse().id).free_qty
                     if required > free:
+
+                        # ADDITIONAL: this is for setting pbm warehouse to lamina location ...?
+                        # just in case when lamina is already selected, but not enough...
+                        # therefore when any part is coming into the whole warehouse, it will be assigned...
+                        lamina_moves = prod.move_raw_ids.filtered(lambda x: x.product_id.categ_id.id == lamina_categ_id)
+                        if lamina_moves:
+                            warehouse = lamina_moves[0].location_id.get_warehouse()
+                            if warehouse:
+                                prod.location_src_id = warehouse.lot_stock_id
+
                         qty = required - free
                         prod._run_lamina_procurement(raw.product_id, qty, [raw])
                 if prod.reservation_state == 'assigned':

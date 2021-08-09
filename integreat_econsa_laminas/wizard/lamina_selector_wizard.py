@@ -203,7 +203,7 @@ class LaminaSelection(models.TransientModel):
         new_component = self.env['product.product'].search(domain, limit=1)
         if new_component:
             if self.production_id:
-                is_already = list(filter(lambda l: l['product_id'] == new_component.id and l['location'] == this_loc, vals_list))
+                is_already = list(filter(lambda l: l['product_id'] == new_component.id, vals_list))  # and l['location'] == this_loc
             else:
                 is_already = list(
                     filter(lambda l: l['product_id'] == new_component.id, vals_list))
@@ -251,6 +251,7 @@ class LaminaSelection(models.TransientModel):
                 new_raw['group_id'] = self.production_id.procurement_group_id.id
                 new_raw['origin'] = self.production_id.name
                 new_raw['location_id'] = line.location.id
+                self.production_id.location_src_id = line.location
                 # if line.warehouse_id != self.warehouse_id:
                 #     if line.qty_selected > line.free_qty:
                 #         raise ValidationError(

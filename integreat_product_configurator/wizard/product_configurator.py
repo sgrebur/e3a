@@ -341,6 +341,11 @@ class SaleProductConfiguratorIntegreat(models.TransientModel):
                 lamina_combination = self.env['product.template.attribute.value'].browse(lamina_combination)
                 lamina = rec.lamina_tmpl_id.sudo()._create_product_variant(lamina_combination)
                 valsl = {
+                    'spec_calibre': rec.calibre,
+                    'spec_papel': rec.papel,
+                    'spec_flauta': rec.flauta,
+                    'spec_recub': rec.recub,
+                    'spec_origen': rec.origen,
                     'spec_ancho_lamina': rec.ancho_lamina,
                     'spec_largo_lamina': rec.largo_lamina,
                     'spec_marca1': rec.marca1,
@@ -355,6 +360,7 @@ class SaleProductConfiguratorIntegreat(models.TransientModel):
                 'spec_papel': rec.papel,
                 'spec_flauta': rec.flauta,
                 'spec_recub': rec.recub,
+                'spec_origen': rec.origen,
                 'uom_size': rec.uom_input,
                 'ancho_uom': rec.ancho_input,
                 'largo_uom': rec.largo_input,
@@ -374,8 +380,15 @@ class SaleProductConfiguratorIntegreat(models.TransientModel):
             }
             #product
             if not product:
+                if rec.prd_name and rec.prd_name != rec.product_model.name:
+                    name = rec.prd_name
+                elif rec.product_name:
+                    name = rec.product_name
+                else:
+                    name = rec.product_model.name
+
                 product = rec.product_model.sudo().copy(default={
-                    'name': rec.prd_name if rec.prd_name else rec.product_model.name,
+                    'name': name,
                     'is_model': False,
                     'product_model_id': rec.product_model.id
                 })

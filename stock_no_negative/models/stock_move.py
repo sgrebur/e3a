@@ -30,7 +30,7 @@ class StockLocation(models.Model):
 
     def _action_assign(self):
         super()._action_assign()
-        for move in self:
+        for move in self.filtered(lambda x: x.state not in ['done', 'cancel']):
             wh = move.location_id.get_warehouse()
             if wh:
                 stock_loc = move.location_id.get_warehouse().lot_stock_id

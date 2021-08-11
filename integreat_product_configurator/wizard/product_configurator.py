@@ -292,6 +292,9 @@ class SaleProductConfiguratorIntegreat(models.TransientModel):
 
     def button_create_product(self):
         for rec in self:
+            rec._compute_spec_values()
+            rec.compute_lattr()
+            rec.check_lamina_combination()
             lamina = rec.lamina_id
             product = rec.product_id
             if rec.new_combination_lamina and rec.ancho_lamina > 0 and rec.largo_lamina > 0:

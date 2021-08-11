@@ -251,7 +251,7 @@ class LaminaSelection(models.TransientModel):
                 new_raw['group_id'] = self.production_id.procurement_group_id.id
                 new_raw['origin'] = self.production_id.name
                 new_raw['location_id'] = line.location.id
-                self.production_id.location_src_id = line.location
+                # self.production_id.location_src_id = line.location
                 # if line.warehouse_id != self.warehouse_id:
                 #     if line.qty_selected > line.free_qty:
                 #         raise ValidationError(

@@ -47,14 +47,20 @@ class MrpProduction(models.Model):
             if not mo.move_finished_ids:
                 mo._onchange_move_finished()
                 mo._set_qty_producing()
+
+            # unavailable_move = mo.move_raw_ids.filtered(lambda x: x.reserved_availability < x.product_uom_qty)
+            # if unavailable_move:
+            # warehouse = mo.move_raw_ids[0].location_id.get_warehouse()
+            #     mo.location_src_id = warehouse.lot_stock_id
+            #     mo.move_raw_ids.location_id = warehouse.lot_stock_id
+            #     mo.move_raw_ids.move_line_ids.unlink()
+            #     mo.move_raw_ids._action_assign()
             mo.action_assign()
-            move_lines_zero = mo.move_raw_ids.move_line_ids.filtered(lambda x: x.location_id.usage == 'view')
-            # when manuf 1 step & negative stock allowed & pbm_loc a view location, we set it to the pbm
-            if move_lines_zero:
-                warehouse = mo.move_raw_ids[0].location_id.get_warehouse()
-                mo.location_src_id = move_lines_zero.location_id = warehouse.pbm_loc_id
-                # mo.button_unreserve()
-                mo.action_assign()
+            mo._set_qty_producing()
+
+            # for ml in mo.move_raw_ids.move_line_ids.filtered(lambda x: x.location_id.usage == 'view'):
+            #     ml.location_id = warehouse.wh_qc_stock_loc_id
+
         return super().button_mark_done()
 
     def button_plan(self):

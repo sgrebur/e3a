@@ -358,8 +358,10 @@ class MrpProduction(models.Model):
         for move in self.move_raw_ids:
             if move.quantity_done > move.product_uom_qty:
                 move.product_uom_qty = move.quantity_done
-                move._do_unreserve()
+                move.move_line_ids.unlink()
                 move._action_assign()
+                for ml in move.move_line_ids:
+                    ml.qty_done = ml.product_uom_qty
 
 
 class StockMove(models.Model):

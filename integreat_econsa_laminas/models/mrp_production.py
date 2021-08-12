@@ -30,6 +30,27 @@ class MrpProduction(models.Model):
         compute='_compute_purchase_requests')
     purchase_request_count = fields.Integer('Compras', compute='_compute_purchase_requests')
 
+    # OVERRIDE - when production in one step HIDE it
+    @api.depends('procurement_group_id.stock_move_ids.created_purchase_line_id.order_id',
+                 'procurement_group_id.stock_move_ids.move_orig_ids.purchase_line_id.order_id',
+                 'picking_type_id')
+    def _compute_purchase_order_count(self):
+        for production in self:
+            wh = production.picking_type_id.default_location_src_id.get_warehouse()
+            if wh and wh.manufacture_steps == 'mrp_one_step':
+                production.purchase_order_count = 0
+            else:
+                return super()._compute_purchase_order_count()
+
+    # OVERRIDE - when production in one step HIDE it
+    @api.depends('procurement_group_id', 'picking_type_id')
+    def _compute_picking_ids(self):
+        super()._compute_picking_ids()
+        for production in self:
+            wh = production.picking_type_id.default_location_src_id.get_warehouse()
+            if wh and wh.manufacture_steps == 'mrp_one_step':
+                production.delivery_count = 0
+
     @api.depends('procurement_group_id')
     def _compute_purchase_requests(self):
         for mo in self:
@@ -224,7 +245,7 @@ class MrpProduction(models.Model):
                                    - sum(raw.move_orig_ids.mapped('quantity_done')) \
                                    - sum(raw.move_orig_ids.mapped('reserved_availability'))
                     # when 1-step production
-                    elif not raw.move_orig_ids and raw.product_id.type == 'product' and not raw.route_ids:
+                    elif not raw.move_orig_ids and raw.product_id.type == 'product':  # and not raw.route_ids:
                         required = raw.product_uom_qty - raw.quantity_done - raw.reserved_availability
                     if required > 0 and prod.purchase_request_ids:
                         required -= sum(prod.purchase_request_ids.line_ids.
@@ -241,8 +262,12 @@ class MrpProduction(models.Model):
                             if warehouse:
                                 prod.location_src_id = warehouse.lot_stock_id
 
+                        move_dest_ids = []
+                        if raw.route_ids:
+                            raw.location_id = raw.route_ids[0].rule_ids[0].location_id
+                            move_dest_ids = [raw]
                         qty = required - free
-                        prod._run_lamina_procurement(raw.product_id, qty, [raw])
+                        prod._run_lamina_procurement(raw.product_id, qty, [raw], move_dest_ids)
                 if prod.reservation_state == 'assigned':
                     prod.button_plan()
         return True
@@ -262,7 +287,7 @@ class MrpProduction(models.Model):
     #                 raise UserError('Antes de programar y lanzar la producción,\n'
     #                                 'la transferencia de los componentes debe ser procesada.')
     
-    def _run_lamina_procurement(self, product, qty, request_move_ids):
+    def _run_lamina_procurement(self, product, qty, request_move_ids, move_dest_ids):
         procurements = []
         location_dest_id = self.picking_type_id.default_location_src_id
         values = {
@@ -271,6 +296,10 @@ class MrpProduction(models.Model):
             'origin': self.name,
             'request_move_ids': request_move_ids
         }
+        if move_dest_ids:
+            values['move_dest_ids'] = move_dest_ids
+            location_dest_id = move_dest_ids[0].location_id
+
         procurements.append(
             self.env['procurement.group'].Procurement(
                 product, qty, product.uom_id, location_dest_id, self.name, self.name, self.company_id, values

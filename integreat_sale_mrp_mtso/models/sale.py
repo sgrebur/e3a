@@ -49,6 +49,7 @@ class SaleOrder(models.Model):
         for order in self:
             for line in order.order_replenishment_ids:
                 line.action_replenish_line()
+            order.action_confirm()
 
     # OVERRIDE: replenishment production ids added to mto logic
     @api.depends('procurement_group_id.stock_move_ids.created_production_id.procurement_group_id.mrp_production_ids',

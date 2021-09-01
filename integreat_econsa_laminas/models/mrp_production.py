@@ -29,6 +29,7 @@ class MrpProduction(models.Model):
     purchase_request_ids = fields.Many2many('purchase.request', string='Purchase Requests',
         compute='_compute_purchase_requests')
     purchase_request_count = fields.Integer('Compras', compute='_compute_purchase_requests')
+    raw_ml_to_do_count = fields.Integer('Reservas', compute='_compute_picking_ids')
 
     # OVERRIDE - when production in one step HIDE it
     @api.depends('procurement_group_id.stock_move_ids.created_purchase_line_id.order_id',
@@ -42,7 +43,7 @@ class MrpProduction(models.Model):
             else:
                 return super()._compute_purchase_order_count()
 
-    # OVERRIDE - when production in one step HIDE it
+    # OVERRIDE - when production in one step HIDE it, but show reserved raw move lines
     @api.depends('procurement_group_id', 'picking_type_id')
     def _compute_picking_ids(self):
         super()._compute_picking_ids()
@@ -50,6 +51,16 @@ class MrpProduction(models.Model):
             wh = production.picking_type_id.default_location_src_id.get_warehouse()
             if wh and wh.manufacture_steps == 'mrp_one_step':
                 production.delivery_count = 0
+                production.raw_ml_to_do_count = len(production.move_raw_ids.move_line_ids.filtered(lambda l: l.state != 'done'))
+            else:
+                production.raw_ml_to_do_count = 0
+
+    def action_view_mo_raw_ml_to_do(self):
+        self.ensure_one()
+        action = self.env["ir.actions.actions"]._for_xml_id("integreat_econsa_laminas.production_raw_move_lines_to_process_action")
+        mls = self.move_raw_ids.move_line_ids
+        action['domain'] = [('id', 'in', mls.ids)]
+        return action
 
     @api.depends('procurement_group_id')
     def _compute_purchase_requests(self):

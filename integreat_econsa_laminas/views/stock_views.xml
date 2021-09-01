@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="production_raw_move_lines_to_process_tree_view" model="ir.ui.view">
+        <field name="name">stock.move.line.production_to_process_tree_view</field>
+        <field name="model">stock.move.line</field>
+        <field name="arch" type="xml">
+            <tree string="Reservas de componentes por Producción" editable="bottom" create="0">
+                <field name="production_id" widget="many2one" readonly="1"/>
+                <field name="date" widget="date" readonly="1"/>
+                <field name="product_id" string="Product" readonly="1"/>
+                <field name="location_id" decoration-bf="1" readonly="1"/>
+                <field name="product_uom_qty" decoration-bf="1" decoration-danger="1" readonly="1"/>
+                <field name="qty_done" decoration-bf="1" decoration-success="1"/>
+                <field name="product_uom_id" readonly="1"/>
+                <field name="company_id" invisible="1"/>
+                <field name="product_uom_category_id" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+    <record id="production_raw_move_lines_to_process_action" model="ir.actions.act_window">
+        <field name="name">Reservas de componentes por Producción</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.move.line</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="production_raw_move_lines_to_process_tree_view"/>
+        <field name="domain">[('state', '!=', 'done'), ('production_id', '!=', False)]</field>
+    </record>
+    <menuitem id="menu_production_raw_move_lines" action="production_raw_move_lines_to_process_action" parent="mrp.menu_mrp_manufacturing" sequence="99"/>
+ </odoo>

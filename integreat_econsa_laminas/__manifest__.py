@@ -21,6 +21,7 @@
         'data/data.xml',
         'views/mrp_production_views.xml',
         'views/product_views.xml',
+        'views/stock_views.xml',
         'wizard/lamina_selector_views.xml',
         'wizard/mrp_purreq_wizard.xml',
         'security/ir.model.access.csv'

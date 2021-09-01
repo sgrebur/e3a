@@ -73,7 +73,11 @@ class SaleOrder(models.Model):
 
     # create delivery action will be available whenever order qty is not covered by delivery pickings
     def button_action_deliver(self):
-        self.order_line._action_launch_stock_rule()
+        for order in self:
+            if order.state == 'done':
+                order.state = 'sale'
+            order.order_line._action_launch_stock_rule()
+            order.state = 'done'
 
     # this is called from button action_confirm: OVERRIDE date_order will be calculated and not Datetime.now()
     def _prepare_confirmation_values(self):

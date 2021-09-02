@@ -22,6 +22,20 @@ class MrpProduction(models.Model):
     tinta_color = fields.Char('#', compute='_compute_tinta', store=True)
     product_qty_conf = product_qty = fields.Float('Cantidad original', digits='Product Unit of Measure', readonly=True)
 
+    # extend it, because does not cover the case when overproduction and 2 finished move lines
+    def copy_data(self, default=None):
+        default = dict(default or {})
+        if 'move_finished_ids' not in default:
+            move_finished_ids = self.move_finished_ids.\
+                filtered(lambda m: m.state != 'cancel' and m.product_id == self.product_id) if self.move_finished_ids else []
+            if len(move_finished_ids) > 1:
+                default['move_finished_ids'] = [(0, 0, (
+                    move_finished_ids[0].copy_data(default={
+                        'product_uom_qty': sum(move_finished_ids.mapped('product_uom_qty'))
+                    }))[0]
+                )]
+        return super(MrpProduction, self).copy_data(default=default)
+
     # from whatever reason move_finished_ids are sometimes missing (deleted by users???)
     def button_custom_mark_done(self):
         for mo in self:

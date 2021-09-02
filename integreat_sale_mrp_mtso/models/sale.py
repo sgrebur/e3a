@@ -168,7 +168,8 @@ class SaleOrderLineReplenishment(models.Model):
             if line.qty_to_deliver > 0.0:
                 # qtys
                 qty = 0.0
-                line.qty_free_product = line.product_id.free_qty
+                line.qty_free_product = \
+                    line.product_id.with_context(location=line.order_id.warehouse_id.lot_stock_id.id).free_qty
                 for production in line.production_ids:
                     if production.state != 'cancel':
                         qty += production.product_qty

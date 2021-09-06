@@ -30,8 +30,8 @@
                             <div t-field="o.dest_address_id" t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}' name="purchase_shipping_address"/>
                         </t>
                         <t t-else="">
-                            <span t-field="o.picking_type_id.warehouse_id.partner_id.name"/><br/>
-                            <div t-field="o.picking_type_id.warehouse_id.partner_id" t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}' name="purchase_shipping_address"/>
+                            <span t-field="o.picking_type_id.default_location_dest_id.real_address_id.name"/><br/>
+                            <div t-field="o.picking_type_id.default_location_dest_id.real_address_id" t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}' name="purchase_shipping_address"/>
                         </t>
                     </div>
                     <div class="col-4 text-right">

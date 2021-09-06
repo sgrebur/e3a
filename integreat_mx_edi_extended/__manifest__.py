@@ -13,6 +13,7 @@
         'views/account_payment_view.xml',
         'views/product_view.xml',
         'views/res_partner_view.xml',
+        'views/sale_view.xml'
     ],
     'installable': True,
     'auto_install': False,

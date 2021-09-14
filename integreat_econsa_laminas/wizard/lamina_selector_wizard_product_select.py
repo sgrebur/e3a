@@ -28,7 +28,8 @@ class LaminaSelection(models.TransientModel):
         self.wiz_id.line_ids.create({
             'wizard_id': self.wiz_id.id,
             'line_group':  '1',
-            'product_id': self.product_id.id
+            'product_id': self.product_id.id,
+            'location': self.wiz_id.location_id.id
         })
         action = self.wiz_id.lamina_wizard_action(self.wiz_id.id)
         self.unlink()

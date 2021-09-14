@@ -27,7 +27,7 @@ class LaminaSelection(models.TransientModel):
     def add_product_to_wizard(self):
         self.wiz_id.line_ids.create({
             'wizard_id': self.wiz_id.id,
-            'line_group':  '1',
+            'line_group':  '0',
             'product_id': self.product_id.id,
             'location': self.wiz_id.location_id.id
         })

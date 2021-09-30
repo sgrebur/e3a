@@ -298,7 +298,9 @@
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">mrp.production</field>
             <field name="view_mode">tree, form</field>
-            <field name="view_id" ref="mrp_production_tree_view_running_sequence"/>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('mrp_production_tree_view_running_sequence')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('mrp.mrp_production_form_view')})]"/>
             <field name="domain">[('state', 'in', ['confirmed', 'progress', 'to_close'])]</field>
         </record>
         <menuitem id="mrp_production_todo_sequence_menu"

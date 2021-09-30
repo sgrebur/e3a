@@ -7,11 +7,8 @@
             <field name="inherit_id" ref="mrp.mrp_production_tree_view"/>
             <field name="arch" type="xml">
                 <tree position="attributes">
-                    <attribute name="default_order">sequence, name desc</attribute>
+                    <attribute name="default_order">id desc</attribute>
                 </tree>
-                <field name="priority" position="after">
-                    <field name="sequence" widget="handle"/>
-                </field>
                 <field name="origin" position="replace"/>
                 <field name="product_qty" position="attributes">
                     <attribute name="decoration-bf">1</attribute>
@@ -31,7 +28,37 @@
                 </field>
             </field>
         </record>
-
+        <record id="mrp_production_tree_view_running_sequence" model="ir.ui.view">
+            <field name="name">mrp.production.tree.todo.sequence</field>
+            <field name="model">mrp.production</field>
+            <field name="arch" type="xml">
+                <tree string="Manufacturing Orders" default_order="sequence, id desc" create="0">
+                    <field name="sequence" widget="handle"/>
+                    <field name="message_needaction" invisible="1"/>
+                    <field name="name" decoration-bf="1"/>
+                    <field name="priority" optional="show" widget="priority" nolabel="1"/>
+                    <field name="date_planned_start" readonly="1" optional="show" widget="remaining_days"/>
+                    <field name="date_deadline" widget="remaining_days" attrs="{'invisible': [('state', 'in', ['done', 'cancel'])]}" optional="hide"/>
+                    <field name="product_id" readonly="1" optional="show"/>
+                    <field name="product_uom_id" string="Unit of Measure" options="{'no_open':True,'no_create':True}" groups="uom.group_uom" optional="show"/>
+                    <field name="citpa_c" widget="many2many_tags" options="{'color_field': 'state_color'}"/>
+                    <field name="citpa_i" widget="many2many_tags" options="{'color_field': 'state_color'}"/>
+                    <field name="citpa_t" widget="many2many_tags" options="{'color_field': 'state_color'}"/>
+                    <field name="citpa_p" widget="many2many_tags" options="{'color_field': 'state_color'}"/>
+                    <field name="citpa_a" widget="many2many_tags" options="{'color_field': 'state_color'}"/>
+                    <field name="lot_producing_id" optional="hide"/>
+                    <field name="bom_id" readonly="1" optional="hide"/>
+                    <field name="user_id" optional="hide" widget="many2one_avatar_user"/>
+                    <field name="reservation_state" optional="show" decoration-bf="1" decoration-danger="reservation_state == == 'confirmed'" decoration-warning="reservation_state == == 'waiting'" decoration-success="reservation_state == == 'assigned'"/>
+                    <field name="product_qty" sum="Total Qty" string="Quantity" readonly="1" optional="show" decoration-bf="1"/>
+                    <field name="company_id" readonly="1" groups="base.group_multi_company" optional="show"/>
+                    <field name="state" optional="show" widget="badge" decoration-success="state == 'done'" decoration-info="state not in ('done', 'cancel')"/>
+                    <field name="activity_exception_decoration" widget="activity_exception"/>
+                    <field name="delay_alert_date" invisible="1"/>
+                    <field string=" " name="json_popover" widget="stock_rescheduling_popover" attrs="{'invisible': [('delay_alert_date', '=', False)]}"/>
+                </tree>
+            </field>
+        </record>
         <record id="action_production_order_action_cancel" model="ir.actions.server">
             <field name="name">Cancelar OP</field>
             <field name="model_id" ref="mrp.model_mrp_production"/>
@@ -266,6 +293,18 @@
         <record id="mrp.mrp_production_action" model="ir.actions.act_window">
             <field name="view_id" ref="mrp.mrp_production_tree_view"/>
         </record>
+        <record id="mrp_production_todo_sequence_action" model="ir.actions.act_window">
+            <field name="name">OP en ejecución</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mrp.production</field>
+            <field name="view_mode">tree, form</field>
+            <field name="view_id" ref="mrp_production_tree_view_running_sequence"/>
+            <field name="domain">[('state', 'in', ['confirmed', 'progress', 'to_close'])]</field>
+        </record>
+        <menuitem id="mrp_production_todo_sequence_menu"
+                  action="mrp_production_todo_sequence_action"
+                  parent="mrp.menu_mrp_manufacturing"
+                  sequence="2"/>
         <menuitem id="mrp_production_herramentales_menu"
                   action="mrp_production_herramentales_action"
                   name="Herramentales para OP"

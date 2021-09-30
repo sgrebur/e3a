@@ -213,6 +213,8 @@ class MrpProduction(models.Model):
                 p.workorder_ids.filtered(lambda w: w.state != 'done').write({'state': 'done'})
             if not p.date_deadline and p.date_planned_finished:
                 p.date_deadline = p.date_planned_finished
+            if 'sequence' in vals and p.state not in ['confirmed', 'progress', 'to_close']:
+                p.sequence = 0
             if vals.get('state', False) and vals.get('state') == 'confirmed':
                 p.product_qty_conf = p.product_qty
                 sequence = self.env['mrp.production'].search([('sequence', '!=', 0)])

@@ -13,6 +13,17 @@
             </field>
         </field>
     </record>
+    <record id="mrp_production_tree_view_mtso_todo" model="ir.ui.view">
+        <field name="name">mrp.production.tree.mtso.todo</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="integreat_sale_product_configurator.mrp_production_tree_view_running_sequence"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="sale_partner_name"/>
+                <field name="sale_order_id" string="OV" widget="many2one"/>
+            </field>
+        </field>
+    </record>
     <record id="mrp_production_form_view_mtso" model="ir.ui.view">
         <field name="name">mrp.production.form.mtso</field>
         <field name="model">mrp.production</field>

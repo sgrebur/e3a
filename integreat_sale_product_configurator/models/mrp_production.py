@@ -7,6 +7,7 @@ from odoo import api, fields, models, _
 class MrpProduction(models.Model):
     _inherit = 'mrp.production'
 
+    sequence = fields.Integer('Sequence', default=0)
     suaje = fields.Many2one(related='bom_id.suaje', store=True)
     suaje_transfer_state = fields.Char('Suaje OP status')
     grabado = fields.Many2one(related='bom_id.grabado', store=True)
@@ -214,6 +215,14 @@ class MrpProduction(models.Model):
                 p.date_deadline = p.date_planned_finished
             if vals.get('state', False) and vals.get('state') == 'confirmed':
                 p.product_qty_conf = p.product_qty
+                sequence = self.env['mrp.production'].search([('sequence', '!=', 0)])
+                if sequence:
+                    sequence.sorted(key=lambda x: x.sequence, reverse=True)
+                    p.sequence = sequence[0].sequence + 1
+                else:
+                    p.sequence = 1
+            elif vals.get('state', False) and vals.get('state') not in ['confirmed', 'progress', 'to_close'] and p.sequence != 0:
+                p.sequence = 0
         return res
 
     def button_transfer_suaje(self):

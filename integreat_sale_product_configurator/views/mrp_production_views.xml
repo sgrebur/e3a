@@ -6,6 +6,12 @@
             <field name="model">mrp.production</field>
             <field name="inherit_id" ref="mrp.mrp_production_tree_view"/>
             <field name="arch" type="xml">
+                <tree position="attributes">
+                    <attribute name="default_order">sequence, name desc</attribute>
+                </tree>
+                <field name="priority" position="after">
+                    <field name="sequence" widget="handle"/>
+                </field>
                 <field name="origin" position="replace"/>
                 <field name="product_qty" position="attributes">
                     <attribute name="decoration-bf">1</attribute>

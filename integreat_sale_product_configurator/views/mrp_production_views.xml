@@ -49,7 +49,7 @@
                     <field name="lot_producing_id" optional="hide"/>
                     <field name="bom_id" readonly="1" optional="hide"/>
                     <field name="user_id" optional="hide" widget="many2one_avatar_user"/>
-                    <field name="reservation_state" optional="show" decoration-bf="1" decoration-danger="reservation_state == == 'confirmed'" decoration-warning="reservation_state == == 'waiting'" decoration-success="reservation_state == == 'assigned'"/>
+                    <field name="reservation_state" optional="show" decoration-bf="1" decoration-danger="reservation_state == 'confirmed'" decoration-warning="reservation_state == 'waiting'" decoration-success="reservation_state == 'assigned'"/>
                     <field name="product_qty" sum="Total Qty" string="Quantity" readonly="1" optional="show" decoration-bf="1"/>
                     <field name="company_id" readonly="1" groups="base.group_multi_company" optional="show"/>
                     <field name="state" optional="show" widget="badge" decoration-success="state == 'done'" decoration-info="state not in ('done', 'cancel')"/>

@@ -49,7 +49,7 @@
                         </t>
                         <strong>Purchase Order:</strong>
                         <t t-foreach="o.sale_order_ids" t-as="so">
-                            <span t-field="so.name"/>
+                            <span t-field="so.client_order_ref"/>
                         </t>
                         <br/>
                         <br/>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!--
     <record id="product_template_form_view_product_configurator" model="ir.ui.view">
         <field name="name">product.template.common.form.product.configurator</field>
         <field name="model">product.template</field>
@@ -34,6 +35,7 @@
             </header>
         </field>
     </record>
+    -->
     <record model="ir.actions.act_window" id="product_model_integreat_view">
         <field name="name">Productos Modelo</field>
         <field name="type">ir.actions.act_window</field>

@@ -275,8 +275,17 @@ class MrpProduction(models.Model):
 
                         move_dest_ids = []
                         if raw.route_ids:
-                            raw.location_id = raw.route_ids[0].rule_ids[0].location_id
-                            move_dest_ids = [raw]
+                            if raw.route_ids.rule_ids:
+                                raw.location_id = raw.route_ids[0].rule_ids[0].location_id
+                                move_dest_ids = [raw]
+                            else:
+                                continue
+                        else:
+                            prod_rules = raw.product_id.route_ids.rule_ids.filtered(lambda x: x.action == 'manufacture')
+                            if prod_rules:
+                                raw.route_ids = [(4, prod_rules[0].route_id.id)]
+                                raw.location_id = raw.route_ids[0].rule_ids[0].location_id
+                                move_dest_ids = [raw]
                         qty = required - free
                         prod._run_lamina_procurement(raw.product_id, qty, [raw], move_dest_ids)
                 if prod.reservation_state == 'assigned':

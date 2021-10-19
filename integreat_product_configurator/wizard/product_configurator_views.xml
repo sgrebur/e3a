@@ -245,7 +245,7 @@
                             </page>
                         </notebook>
                     </div>
-                    <div id="purchase_data" attrs="{'invisible': ['|', '&amp;', ('product_id', '=', False), ('purchase_ok', '=', False), '&amp;', ('product_id', '!=', False), ('product_id_purchase_ok', '=', False)]}">
+                    <div id="purchase_data" attrs="{'invisible': ['|', '|', ('model_code', '=', 'L'), '&amp;', ('product_id', '=', False), ('purchase_ok', '=', False), '&amp;', ('product_id', '!=', False), ('product_id_purchase_ok', '=', False)]}">
                         <separator string="Datos de compra"/><hr/>
                         <notebook>
                             <page name="supplierinfos" string="Proveedores y Tarifas">

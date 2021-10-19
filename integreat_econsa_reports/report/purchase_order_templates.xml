@@ -163,7 +163,7 @@
                                                 <br/>
                                                 <t t-if="line.product_id.spec_marca1">
                                                     <strong>Marca 1: </strong><span t-field="line.product_id.spec_marca1"/>
-                                                    <t t-if="line.product_id.spec_marca2 or line.product_id.marca3"><span> &#160;&#160;&#160;&#9679;&#160;&#160;&#160; </span></t>
+                                                    <t t-if="line.product_id.spec_marca2 or line.product_id.spec_marca3"><span> &#160;&#160;&#160;&#9679;&#160;&#160;&#160; </span></t>
                                                 </t>
                                                 <t t-if="line.product_id.spec_marca2">
                                                     <strong>Marca 2: </strong><span t-field="line.product_id.spec_marca2"/>

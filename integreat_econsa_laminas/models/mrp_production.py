@@ -401,16 +401,47 @@ class MrpProduction(models.Model):
             (moves_finished + moves_raw).write({'workorder_id': wo.id})
         return {}
 
-    # OVERRIDE when producing qty > mo qty: components consumed won't be increased
     def _set_qty_producing(self):
-        super(MrpProduction, self)._set_qty_producing()
+        # super(MrpProduction, self)._set_qty_producing()
+        # OVERRIDE completely...
+        consume_all = self._context.get('consume_all', False)
+        finish = self._context.get('finish', False)
+        if self.product_id.tracking == 'serial':
+            qty_producing_uom = self.product_uom_id._compute_quantity(self.qty_producing, self.product_id.uom_id,
+                                                                      rounding_method='HALF-UP')
+            if qty_producing_uom != 1:
+                self.qty_producing = self.product_id.uom_id._compute_quantity(1, self.product_uom_id,
+                                                                              rounding_method='HALF-UP')
+        for move in self.move_finished_ids.filtered(lambda m: m.product_id != self.product_id):
+            if move._should_bypass_set_qty_producing() or not move.product_uom:
+                continue
+            new_qty = float_round((self.qty_producing - self.qty_produced) * move.unit_factor,
+                                  precision_rounding=move.product_uom.rounding)
+            move.move_line_ids.filtered(lambda ml: ml.state not in ('done', 'cancel')).qty_done = 0
+            move.move_line_ids = move._set_quantity_done_prepare_vals(new_qty)
         for move in self.move_raw_ids:
-            if move.quantity_done > move.product_uom_qty:
-                move.product_uom_qty = move.quantity_done
-                move.move_line_ids.unlink()
-                move._action_assign()
+            if move._should_bypass_set_qty_producing() or not move.product_uom:
+                continue
+            if (finish and consume_all) or self.qty_producing > self.product_qty:
                 for ml in move.move_line_ids:
                     ml.qty_done = ml.product_uom_qty
+            else:
+                new_qty = float_round((self.qty_producing - self.qty_produced) * move.unit_factor,
+                                      precision_rounding=move.product_uom.rounding)
+                move.move_line_ids.filtered(lambda ml: ml.state not in ('done', 'cancel')).qty_done = 0
+                move.move_line_ids = move._set_quantity_done_prepare_vals(new_qty)
+        if finish:
+            self.product_qty = self.qty_producing
+
+        # this was before the full override
+        # OVERRIDE when producing qty > mo qty: components consumed won't be increased
+        # for move in self.move_raw_ids:
+        #     if move.quantity_done > move.product_uom_qty:
+        #         move.product_uom_qty = move.quantity_done
+        #         move.move_line_ids.unlink()
+        #         move._action_assign()
+        #         for ml in move.move_line_ids:
+        #             ml.qty_done = ml.product_uom_qty
 
 
 class StockMove(models.Model):

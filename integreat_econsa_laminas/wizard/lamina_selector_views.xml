@@ -24,8 +24,8 @@
                         <field name="calibre_search"/>
                     </group>
                     <group string="Calibre" colspan="3" attrs="{'invisible': [('product_id', '!=', False)]}">
-                        <field name="papel_search" context="{'show_attribute': 0}"/>
-                        <field name="flauta_search" context="{'show_attribute': 0}"/>
+                        <field name="papel_search" context="{'show_attribute': 0}" />
+                        <field name="flauta_search" context="{'show_attribute': 0}" />
                         <field name="recub_search" context="{'show_attribute': 0}"/>
                         <field name="calibre_search" context="{'show_attribute': 0}"/>
                     </group>

@@ -99,7 +99,7 @@ class SaleProductConfiguratorIntegreat(models.TransientModel):
 
     @api.onchange('product_model', 'picking_type_id')
     def _create_model_bom_id(self):
-        for rec in self:
+        for rec in self.sudo():
             if rec.model_code in ('P', 'Q', 'E') and rec.picking_type_id and not rec.bom_id and not rec.product_id:
                 bom_tmpl = self.env['mrp.bom'].search([
                     ('is_model', '=', True),
@@ -107,10 +107,11 @@ class SaleProductConfiguratorIntegreat(models.TransientModel):
                     ('picking_type_id', '=', rec.picking_type_id.id),
                 ], limit=1)
                 if bom_tmpl:
+                    bom_tmpl = bom_tmpl.sudo()
                     if rec.bom_id and rec.picking_type_id != rec._origin.picking_type_id:
                         new_operations = []
                         for operation in bom_tmpl.operation_ids:
-                            new_operations += [operation.copy(default={'bom_id': rec.bom_id.id}).id]
+                            new_operations += [operation.sudo().copy(default={'bom_id': rec.bom_id.id}).id]
                         rec.operation_ids = [(6, 0, new_operations)]
                     else:
                         rec.bom_id = bom_tmpl[0].sudo().copy(default={'code': rec.id, 'is_model': False})
@@ -291,7 +292,7 @@ class SaleProductConfiguratorIntegreat(models.TransientModel):
         self.flush()
 
     def button_create_product(self):
-        for rec in self:
+        for rec in self.sudo():
             rec._compute_spec_values()
             rec.compute_lattr()
             rec.check_lamina_combination()
@@ -415,10 +416,10 @@ class SaleProductConfiguratorIntegreat(models.TransientModel):
                             'product_id': rec.lamina_id.id,
                             'product_qty': 1,
                         })]
-                        quot.write({'bom_id': rec.bom_id.id})
-                    rec.bom_id.sudo().write(bom_data)
+                        quot.sudo().write({'bom_id': rec.bom_id.id})
+                    rec.sudo().bom_id.write(bom_data)
                 else:
-                    rec.product_id.write(valsp)
+                    rec.sudo().product_id.write(valsp)
             # customer product data
             if rec.product_code:
                 self.env['product.customer.code'].create({

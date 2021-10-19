@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!--<record id="product_configurator_view_tree" model="ir.ui.view">
+    <record id="product_configurator_view_tree" model="ir.ui.view">
         <field name="name">Quick Product Configurator</field>
         <field name="model">product.configurator.integreat</field>
         <field name="arch" type="xml">
@@ -8,35 +8,38 @@
                 <header>
                     <button name="button_create_product" type="object" string="Crear Producto"/>
                 </header>
-                <field name="configurator_type"/>
-                <field name="wizard_type" invisible="1"/>
-                <field name="prd_model" invisible="1"/>
-                <field name="tmpl_categ_id" invisible="1"/>
+                <field name="product_model"/>
+                <field name="sale_ok"/>
+                <field name="purchase_ok"/>
+                <field name="calibre_search"/>
+                <field name="calibre" invisible="1"/>
+                <field name="papel_search"/>
+                <field name="papel" invisible="1"/>
+                <field name="flauta_search"/>
+                <field name="flauta" invisible="1"/>
+                <field name="recub_search"/>
+                <field name="recub" invisible="1"/>
+                <field name="origen"/>
+                <field name="ancho"/>
+                <field name="largo"/>
+                <field name="alto"/>
+                <field name="ancho_lamina"/>
+                <field name="largo_lamina"/>
                 <field name="lamina_tmpl_id" invisible="1"/>
-                <field name="new_combination" invisible="1"/>
                 <field name="new_combination_lamina" invisible="1"/>
-                <field name="tmpl_attribute_line_ids" invisible="1"/>
-                <field name="product_template_id" widget="selection" attrs="{'readonly': [('product_id', '!=', False)], 'invisible': [('configurator_type', '!=', 'box')]}"/>
-                <field name="pattr1"/>
-                <field name="pattr2"/>
-                <field name="pattr3"/>
-                <field name="pattr4"/>
-                <field name="pcattr1"/>
-                <field name="pcattr2"/>
+                <field name="origin" invisible="1"/>
+                <field name="change_possible" invisible="1"/>
                 <field name="picking_type_id"/>
                 <field name="bom_id" invisible="1"/>
                 <field name="bom_qty" string="Pza/Herr"/>
-                <field name="lattr3"/>
-                <field name="lcattr1" attrs="{'invisible': [('tmpl_categ_id', '=', '%(integreat_sale_product_configurator.lamina)d')]}"/>
-                <field name="lcattr2" attrs="{'invisible': [('tmpl_categ_id', '=', '%(integreat_sale_product_configurator.lamina)d')]}"/>
-                <field name="marca1" attrs="{'invisible': [('tmpl_categ_id', '=', '%(integreat_sale_product_configurator.lamina)d')]}"/>
-                <field name="marca2" attrs="{'invisible': [('tmpl_categ_id', '=', '%(integreat_sale_product_configurator.lamina)d')]}"/>
-                <field name="marca3" attrs="{'invisible': [('tmpl_categ_id', '=', '%(integreat_sale_product_configurator.lamina)d')]}"/>
+                <field name="marca1" />
+                <field name="marca2" />
+                <field name="marca3" />
                 <field name="product_id" decoration-bf="1"/>
                 <field name="lamina_id" decoration-bf="1"/>
             </tree>
         </field>
-    </record>-->
+    </record>
     <record id="product_configurator_view_form" model="ir.ui.view">
         <field name="name">product.configurator.wizard</field>
         <field name="model">product.configurator.integreat</field>

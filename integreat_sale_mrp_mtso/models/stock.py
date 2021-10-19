@@ -146,6 +146,15 @@ class Picking(models.Model):
     delivery_truck = fields.Char('Detalles transporte')
     delivery_packaging = fields.Char('# Tarimas o Paquetes')
 
+    def _action_done(self):
+        res = super()._action_done()
+        deliveries = self.filtered(lambda p: p.picking_type_id.code == 'outgoing')
+        if deliveries:
+            seq_id = self.env['ir.sequence'].search([('code', '=', 'ENTREGA')], limit=1)
+            for picking in deliveries:
+                picking.write({'name': seq_id.next_by_id()})
+        return res
+
     @api.depends('move_lines.move_orig_ids', 'move_lines.move_dest_ids')
     def _compute_orig_dest_picking_ids(self):
         for pick in self:

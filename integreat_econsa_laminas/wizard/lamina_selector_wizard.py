@@ -34,7 +34,7 @@ class LaminaSelection(models.TransientModel):
     line_ids = fields.One2many('wizard.lamina.selection.line', 'wizard_id')
     product_id = fields.Many2one('product.product', string='Producto Terminado')
     currency_id = fields.Many2one('res.currency', related='product_id.currency_id')
-    location_id = fields.Many2one('stock.location', related='production_id.location_src_id')
+    location_id = fields.Many2one('stock.location', compute='_compute_warehouse_id', store=True, domain="[('company_id', '=', company_id),('usage', '=', 'view')]")
     papel = fields.Char('Papel', compute='_compute_spec_values', store=True, readonly=False)
     flauta = fields.Char('Flauta', compute='_compute_spec_values', store=True, readonly=False)
     recub = fields.Char('Recubrimiento', compute='_compute_spec_values', store=True, readonly=False)
@@ -60,8 +60,10 @@ class LaminaSelection(models.TransientModel):
         for wiz in self:
             if wiz.production_id:
                 wiz.warehouse_id = wiz.production_id.location_src_id.get_warehouse()
+                wiz.location_id = wiz.production_id.location_src_id
             else:
                 wiz.warehouse_id = self.env['stock.warehouse'].search([('company_id', '=', self.company_id.id)], limit=1)
+                wiz.location_id = wiz.warehouse_id.manu_type_id.default_location_src_id
 
     @api.depends('line_ids.product_id', 'line_ids.qty_selected')
     def _compute_sum(self):

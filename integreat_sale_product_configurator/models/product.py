@@ -89,24 +89,22 @@ class ProductTemplate(models.Model):
 
     def write(self, values):
         if self.env.user.id not in [1, 2] and not self.env.su:
-            blocked_categs = [self.env.ref('integreat_sale_product_configurator.caja_troquelada').id,
-                                self.env.ref('integreat_sale_product_configurator.lamina').id]
+            blocked_categs = [self.env.ref('integreat_sale_product_configurator.lamina').id]
             for tmpl in self:
-                if tmpl.categ_id.id in blocked_categs or \
-                        (values.get('categ_id', False) and values.get('categ_id') in blocked_categs):
+                if tmpl.categ_id.id in blocked_categs or tmpl.is_model \
+                        or (values.get('categ_id', False) and values.get('categ_id') in blocked_categs):
                     raise ValidationError('¡No está autorizado para crear o editar '
-                                          'productos de la categoría Lámina o Caja Troquelada!')
+                                          'productos de la categoría Lámina!')
         return super().write(values)
 
     @api.model_create_multi
     def create(self, vals_list):
         if self.env.user.id not in [1, 2] and not self.env.su:
             for values in vals_list:
-                blocked_categs = [self.env.ref('integreat_sale_product_configurator.caja_troquelada').id,
-                                    self.env.ref('integreat_sale_product_configurator.lamina').id]
+                blocked_categs = [self.env.ref('integreat_sale_product_configurator.lamina').id]
                 if values.get('categ_id', False) and values.get('categ_id') in blocked_categs:
                     raise ValidationError('¡No está autorizado para crear o editar '
-                                          'productos de la categoría Lámina o Caja Troquelada!')
+                                          'productos de la categoría Lámina!')
         return super().create(vals_list)
 
 

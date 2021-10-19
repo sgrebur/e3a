@@ -26,7 +26,7 @@
             </button>
         </t>
     </t>
-    <t t-name="KanbanView.buttons">
+<!--    <t t-name="KanbanView.buttons">
         <div>
             <t t-if="widget and widget.modelName and widget.modelName == 'product.template' or widget.modelName == 'product.product'">
                 <button type="button" name="button_action_open_product_configurator" icon="fa-cog" class="btn btn-primary oe_product_configurator_button" accesskey="c">
@@ -39,5 +39,5 @@
                 </button>
             </t>
         </div>
-    </t>
+    </t>-->
 </templates>

@@ -24,7 +24,22 @@
                         </group>
                     </group>
                     <group>
-                        <field name="qty" decoration-bf="1"/>
+                        <group>
+                            <field name="qty" decoration-bf="1"/>
+                        </group>
+                        <group>
+                            <button class="btn-primary"><i class="fa fa-refresh"/> Actualizar</button>
+                        </group>
+                    </group>
+                </div>
+                <div attrs="{'invisible': [('mark_done', '!=', False)]}">
+                    <group>
+                        <field name="finish" string='Finalizar' widget="radio"/>
+                            <label for="consume_all" attrs="{'invisible': [('finish', '!=', 'finish')]}"/>
+                            <div class="o_row no-gutters d-flex" attrs="{'invisible': [('finish', '!=', 'finish')]}">
+                                <field name="consume_all" string="Consumo" />
+                                Consumir todo el material reservado originalmente
+                            </div>
                     </group>
                 </div>
                 <footer>

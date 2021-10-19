@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- OVERRIDE to show in product views the tree view first, not the kanban -->
+    <record id="stock.product_template_action_product" model="ir.actions.act_window">
+        <field name="view_mode">tree,kanban,form</field>
+    </record>
+    <record id="sale.product_template_action" model="ir.actions.act_window">
+        <field name="view_mode">tree,kanban,form,activity</field>
+        <field name="view_id"></field>
+    </record>
+    <record id="purchase.product_normal_action_puchased" model="ir.actions.act_window">
+        <field name="view_mode">tree,kanban,form,activity</field>
+    </record>
+    <record id="mrp.product_template_action" model="ir.actions.act_window">
+        <field name="view_mode">tree,kanban,form</field>
+    </record>
     <!--
     <record id="product_template_form_view_product_configurator" model="ir.ui.view">
         <field name="name">product.template.common.form.product.configurator</field>

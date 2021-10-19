@@ -41,6 +41,16 @@ class AccountMove(models.Model):
     company_id = fields.Many2one(comodel_name='res.company', string='Company', compute='_compute_company_id',
         store=True, readonly=True, default=lambda self: self.env.company)
     migration_invoice_value = fields.Monetary('Monto Original Factura', currency_field='currency_id')
+    # we duplicate it in db from the inheritance account.payment, but required for sequence sql
+    payment_partner_type = fields.Selection(related='payment_id.partner_type', store=True)
+
+    # other sequence for customer and supplier payments
+    def _get_last_sequence_domain(self, relaxed=False):
+        where_string, param = super(AccountMove, self)._get_last_sequence_domain(relaxed)
+        if self.payment_partner_type:
+            where_string += " AND payment_partner_type = %(payment_partner_type)s"
+            param['payment_partner_type'] = self.payment_partner_type
+        return where_string, param
 
     # OVERRIDE ...
     @api.depends('edi_document_ids')

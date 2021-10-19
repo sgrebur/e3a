@@ -14,18 +14,20 @@ class MrpWorkordorRecordQtyWizard(models.TransientModel):
     qty = fields.Float('Cantidad producida', digits='Product Unit of Measure')
     mark_done = fields.Boolean('Mark Done', compute='_compute_mark_done')
     to_backorder = fields.Boolean('To Backorder', compute='_compute_mark_done')
-    finish = fields.Boolean('Finish Button')
+    finish = fields.Selection([('partial', 'Registrar la cantidad y crear un OP parcial para la cantidad pendiente'),
+        ('finish', 'Finalizar completamente el OP')], default='partial')
+    consume_all = fields.Boolean('Consumo', default=True)
     qty_info = fields.Float('Cantidad info', digits='Product Unit of Measure', compute='_compute_mark_done')
 
-    @api.onchange('qty')
+    @api.onchange('qty', 'finish')
     def _compute_mark_done(self):
         self.mark_done = False
         self.to_backorder = False
         self.qty_info = self.qty
         if not self.wo_id.next_work_order_id:
-            if self.qty == self.wo_id.qty_possible:
+            if self.qty == self.mo_id.product_qty:
                 self.mark_done = True
-            if self.qty < self.wo_id.qty_production:
+            if self.qty < self.wo_id.qty_production and self.finish == 'partial':
                 self.to_backorder = True
 
     def record_workorder_qty(self):
@@ -41,6 +43,10 @@ class MrpWorkordorRecordQtyWizard(models.TransientModel):
             wo.qty_produced += self.qty
             if mo.qty_producing < wo.qty_produced:
                 mo.qty_producing = wo.qty_produced
+                if self.finish == 'finish':
+                    mo = mo.with_context(finish=True)
+                if self.consume_all:
+                    mo = mo.with_context(consume_all=True)
                 mo._set_qty_producing()
             # from whatever reason move_finished_ids are sometimes missing (deleted by users???)
             if self.to_backorder:

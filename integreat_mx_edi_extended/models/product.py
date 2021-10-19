@@ -33,6 +33,6 @@ class AccountMoveLine(models.Model):
     def _compute_unspsc_code(self):
         for line in self:
             if line.product_id:
-                line.product_unspsc_code_id = line.product_id.product_unspsc_code_id
+                line.product_unspsc_code_id = line.product_id.product_tmpl_id.unspsc_code_id
             else:
                 line.product_unspsc_code_id = False

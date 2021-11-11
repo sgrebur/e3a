@@ -44,8 +44,8 @@
                             <field name="spec_marca3"/>
                         </group>
                         <group string="Medidas de lámina (mm)">
-                            <field name="spec_ancho_lamina"/>
-                            <field name="spec_largo_lamina"/>
+                            <field name="spec_ancho_lamina" attrs="{'readonly': [('model_code', '=', 'L')]}"/>
+                            <field name="spec_largo_lamina" attrs="{'readonly': [('model_code', '=', 'L')]}"/>
                         </group>
                     </group>
                 </page>
@@ -84,8 +84,8 @@
                         <field name="spec_marca3"/>
                     </group>
                     <group string="Medidas de lámina (mm)">
-                        <field name="spec_ancho_lamina"/>
-                        <field name="spec_largo_lamina"/>
+                        <field name="spec_ancho_lamina" attrs="{'readonly': [('model_code', '=', 'L')]}"/>
+                        <field name="spec_largo_lamina" attrs="{'readonly': [('model_code', '=', 'L')]}"/>
                     </group>
                 </group>
             </xpath>

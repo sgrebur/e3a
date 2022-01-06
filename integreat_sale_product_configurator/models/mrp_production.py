@@ -21,7 +21,7 @@ class MrpProduction(models.Model):
     citpa_a = fields.One2many('mrp.workorder', 'production_citpa_a_id', string='A')
     tinta_name = fields.Char('Tinta', compute='_compute_tinta', store=True)
     tinta_color = fields.Char('#', compute='_compute_tinta', store=True)
-    product_qty_conf = product_qty = fields.Float('Cantidad original', digits='Product Unit of Measure', readonly=True)
+    product_qty_conf = fields.Float('Cantidad original', digits='Product Unit of Measure', readonly=True)
 
     # extend it, because does not cover the case when overproduction and 2 finished move lines
     def copy_data(self, default=None):

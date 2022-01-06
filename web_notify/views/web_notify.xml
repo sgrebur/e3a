@@ -5,9 +5,7 @@
         name="web_notify assets"
         inherit_id="web.assets_backend"
     >
-        <link
-            rel="stylesheet"
-            type="text/scss"
+        <link rel="stylesheet" type="text/scss"
             href="/web/static/src/scss/webclient.scss"
             position="after"
         >

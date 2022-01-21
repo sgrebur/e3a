@@ -18,7 +18,7 @@ class MrpWorkorder(models.Model):
     operation_group = fields.Char(
         'Proceso', required=True,
         states={'done': [('readonly', True)], 'cancel': [('readonly', True)]})
-    operation_template_id = fields.Many2one('mrp.routing.workcenter.template', 'Operación', check_company=True)
+    operation_template_id = fields.Many2one('mrp.routing.wkc.tmpl', 'Operación', check_company=True)
     available_workcenter_ids = fields.Many2many(related='operation_template_id.available_workcenter_ids')
     state_color = fields.Integer(compute='_compute_state_color')
     operation_display_name = fields.Char('Operación', compute='_compute_operation_display_name')

@@ -342,7 +342,7 @@ msgstr "Costo proceso"
 
 #. module: integreat_product_quotation
 #: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_routing_workcenter__quot_unit_cost
-#: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_routing_workcenter_template__quot_unit_cost
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_routing_wkc_tmpl__quot_unit_cost
 #, fuzzy
 msgid "Costo unitario"
 msgstr "Costo unitario"
@@ -431,7 +431,7 @@ msgstr "Ctd requerida"
 #. module: integreat_product_quotation
 #: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_bom_line__quot_currency
 #: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_routing_workcenter__quot_currency
-#: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_routing_workcenter_template__quot_currency
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_routing_wkc_tmpl__quot_currency
 #: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_integreat__currency_id
 #: model:ir.model.fields,field_description:integreat_product_quotation.field_product_quotation_line_integreat__currency_id
 msgid "Currency"
@@ -944,7 +944,7 @@ msgstr "Línea de Cotización MOQ"
 #: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_bom__quotation_id
 #: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_bom_line__quotation_id
 #: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_routing_workcenter__quotation_id
-#: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_routing_workcenter_template__quotation_id
+#: model:ir.model.fields,field_description:integreat_product_quotation.field_mrp_routing_wkc_tmpl__quotation_id
 #, fuzzy
 msgid "Product Quotations"
 msgstr "Cotizaciones de productos"

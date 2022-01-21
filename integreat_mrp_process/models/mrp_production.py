@@ -32,7 +32,7 @@ class MrpRoutingWorkcenter(models.Model):
         ('P', 'P'),
         ('A', 'A')
     ], string="Proceso", required=True)
-    operation_template_id = fields.Many2one('mrp.routing.workcenter.template')
+    operation_template_id = fields.Many2one('mrp.routing.wkc.tmpl')
     available_workcenters_from_template = fields.Many2many(related='operation_template_id.available_workcenter_ids')
     time_cycle_manual = fields.Float(default=0.0166666666666667)
 
@@ -47,7 +47,7 @@ class MrpRoutingWorkcenter(models.Model):
                 
 
 class MrpRoutingWorkcenterTemplate(models.Model):
-    _name = 'mrp.routing.workcenter.template'
+    _name = 'mrp.routing.wkc.tmpl'
     _description = 'Operations Template'
     _inherit = 'mrp.routing.workcenter'
 

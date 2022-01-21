@@ -44,9 +44,9 @@
             </field>
         </record>
         <!-- Routings Workcenter -->
-        <record id="mrp_routing_wkc_tmpl_tree_view" model="ir.ui.view">
-            <field name="name">mrp.routing.wkc.tmpl.tree</field>
-            <field name="model">mrp.routing.wkc.tmpl</field>
+        <record id="mrp_routing_workcenter_template_tree_view" model="ir.ui.view">
+            <field name="name">mrp.routing.workcenter.template.tree</field>
+            <field name="model">mrp.routing.workcenter.template</field>
             <field name="arch" type="xml">
                 <tree string="Routing Work Centers">
                     <field name="sequence" widget="handle"/>
@@ -58,9 +58,9 @@
             </field>
         </record>
 
-        <record id="mrp_routing_wkc_tmpl_form_view" model="ir.ui.view">
-            <field name="name">mrp.routing.wkc.tmpl.form</field>
-            <field name="model">mrp.routing.wkc.tmpl</field>
+        <record id="mrp_routing_workcenter_template_form_view" model="ir.ui.view">
+            <field name="name">mrp.routing.workcenter.template.form</field>
+            <field name="model">mrp.routing.workcenter.template</field>
             <field name="arch" type="xml">
                 <form string="Routing Work Centers">
                     <sheet>
@@ -108,9 +108,9 @@
         <record id="mrp_routing_template_action" model="ir.actions.act_window">
             <field name="name">Operaciones modelo</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">mrp.routing.wkc.tmpl</field>
+            <field name="res_model">mrp.routing.workcenter.template</field>
             <field name="view_mode">tree,form</field>
-            <field name="view_id" ref="mrp_routing_wkc_tmpl_tree_view"/>
+            <field name="view_id" ref="mrp_routing_workcenter_template_tree_view"/>
             <field name="help" type="html">
               <p class="o_view_nocontent_smiling_face">
                 Create a new operation template
